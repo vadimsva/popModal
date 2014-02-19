@@ -86,7 +86,6 @@ function popModal(elem, html, params, okFun, cancelFun, onLoad, onClose) {
       var target = $(event.target);
       if (!target.parents().andSelf().is('.' + modalClass) && !target.parents().andSelf().is(elem)) {
         popModalClose();
-        $('html').removeClass('popModalOpen');
       }
     });
 
@@ -116,6 +115,7 @@ function popModal(elem, html, params, okFun, cancelFun, onLoad, onClose) {
       setTimeout(function () {
         $('.' + modalClass).remove();
         $('html.popModalOpen').off('click');
+        $('html').removeClass('popModalOpen');
       }, animTime);
     }, animTime);
   }
