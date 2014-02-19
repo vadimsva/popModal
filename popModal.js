@@ -5,14 +5,14 @@ function popModal(elem, html, params, okFun, cancelFun, onLoad, onClose) {
   var showCloseBut = true;
   var overflowContent = true;
 
-  if(params != undefined){
-    if(params.placement != undefined){
+  if (params != undefined) {
+    if (params.placement != undefined) {
       placement = params.placement;
     }
-    if(params.showCloseBut != undefined){
+    if (params.showCloseBut != undefined) {
       showCloseBut = params.showCloseBut;
     }
-    if(params.overflowContent != undefined){
+    if (params.overflowContent != undefined) {
       overflowContent = params.overflowContent;
     }
   }
@@ -33,60 +33,60 @@ function popModal(elem, html, params, okFun, cancelFun, onLoad, onClose) {
   } else {
     $('html.popModalOpen').off('click');
     $('.' + modalClass).remove();
-		
-  	if(elem.css('position') == 'fixed'){
-  	  var isFixed = 'position:fixed;';
-  	} else {
-  	  var isFixed = '';
-  	}
-  	var getTop = 'top:' + eval(elem.position().top + parseInt(elem.css('marginTop')) + elem.outerHeight() + 10) + 'px';
-		
+
+    if (elem.css('position') == 'fixed') {
+      var isFixed = 'position:fixed;';
+    } else {
+      var isFixed = '';
+    }
+    var getTop = 'top:' + eval(elem.position().top + parseInt(elem.css('marginTop')) + elem.outerHeight() + 10) + 'px';
+
     var tooltipContainer = $('<div class="' + modalClass + ' ' + placement + '" style="' + isFixed + getTop + '"></div>');
     var tooltipContent = $('<div class="' + modalClass + '_content ' + overflowContentClass + '"></div>');
     tooltipContainer.append(closeBut, tooltipContent);
     tooltipContent.append(html);
     elem.after(tooltipContainer);
-		
-		animTime=$('.' + modalClass).css('transitionDuration').replace('s','')*1000;
+
+    animTime = $('.' + modalClass).css('transitionDuration').replace('s', '') * 1000;
 
     if (onLoad && $.isFunction(onLoad)) {
       onLoad();
     }
 
-		$('.' + modalClass).on('destroyed', function(){
+    $('.' + modalClass).on('destroyed', function () {
       if (onClose && $.isFunction(onClose)) {
-				onClose();
-			}
-		});
-		
-		if (placement == 'bottomLeft') {
-			$('.' + modalClass).css({left: elem.position().left + parseInt(elem.css('marginRight')) + 'px'});
+        onClose();
+      }
+    });
+
+    if (placement == 'bottomLeft') {
+      $('.' + modalClass).css({left: elem.position().left + parseInt(elem.css('marginRight')) + 'px'});
     } else if (placement == 'bottomRight') {
-      $('.' + modalClass).css({left: elem.position().left + parseInt(elem.css('marginRight')) + elem.outerWidth() - $('.' + modalClass).outerWidth() + 'px', width:$('.' + modalClass).outerWidth() + 'px'});
+      $('.' + modalClass).css({left: elem.position().left + parseInt(elem.css('marginRight')) + elem.outerWidth() - $('.' + modalClass).outerWidth() + 'px', width: $('.' + modalClass).outerWidth() + 'px'});
     } else if (placement == 'bottomCenter') {
-      $('.' + modalClass).css({left: elem.position().left + parseInt(elem.css('marginRight')) + (elem.outerWidth() - $('.' + modalClass).outerWidth()) / 2 + 'px', width:$('.' + modalClass).outerWidth() + 'px'});
+      $('.' + modalClass).css({left: elem.position().left + parseInt(elem.css('marginRight')) + (elem.outerWidth() - $('.' + modalClass).outerWidth()) / 2 + 'px', width: $('.' + modalClass).outerWidth() + 'px'});
     }
     if (overflowContent) {
       $('.' + modalClass).append($('.' + modalClass).find('.' + modalClass + '_content .' + modalClass + '_footer'));
     }
-		
-    setTimeout(function(){
-			$('.' + modalClass).addClass('open');
-		}, animTime);
+
+    setTimeout(function () {
+      $('.' + modalClass).addClass('open');
+    }, animTime);
 
     $('.popModal .close').bind('click', function () {
       popModalClose();
     });
 
-    $('html').on('click', function(event) {
+    $('html').on('click', function (event) {
       $(this).addClass('popModalOpen');
-	    if($('.' + modalClass).is(':hidden')){
-		    popModalClose();
-	    }
-	    var target = $(event.target);
+      if ($('.' + modalClass).is(':hidden')) {
+        popModalClose();
+      }
+      var target = $(event.target);
       if (!target.parents().andSelf().is('.' + modalClass) && !target.parents().andSelf().is(elem)) {
         popModalClose();
-				$('html').removeClass('popModalOpen');
+        $('html').removeClass('popModalOpen');
       }
     });
 
@@ -110,14 +110,14 @@ function popModal(elem, html, params, okFun, cancelFun, onLoad, onClose) {
     popModalClose();
   });
 
-	function popModalClose() {
-    setTimeout(function(){
-			$('.' + modalClass).removeClass('open');
-			setTimeout(function(){
-				$('.' + modalClass).remove();
-				$('html.popModalOpen').off('click');
-			}, animTime);
-		}, animTime);
+  function popModalClose() {
+    setTimeout(function () {
+      $('.' + modalClass).removeClass('open');
+      setTimeout(function () {
+        $('.' + modalClass).remove();
+        $('html.popModalOpen').off('click');
+      }, animTime);
+    }, animTime);
   }
 
   $('html').keydown(function (event) {
@@ -126,9 +126,9 @@ function popModal(elem, html, params, okFun, cancelFun, onLoad, onClose) {
     }
   });
 }
-(function($){
+(function ($) {
   $.event.special.destroyed = {
-    remove: function(o) {
+    remove: function (o) {
       if (o.handler) {
         o.handler()
       }
@@ -137,7 +137,7 @@ function popModal(elem, html, params, okFun, cancelFun, onLoad, onClose) {
 })(jQuery);
 
 
-function notifyModal(html, duration){
+function notifyModal(html, duration) {
   var notifyModal = 'notifyModal';
   duration = duration || 2500;
 
@@ -149,30 +149,30 @@ function notifyModal(html, duration){
   notifyContainer.append(notifyContent);
   $('body').append(notifyContainer);
 
-	animTime=$('.' + notifyModal).css('transitionDuration').replace('s','')*1000;
-	
-	setTimeout(function(){
-		$('.' + notifyModal).addClass('open');
-	}, animTime);
-	
-  $('.' + notifyModal).click(function(){
+  animTime = $('.' + notifyModal).css('transitionDuration').replace('s', '') * 1000;
+
+  setTimeout(function () {
+    $('.' + notifyModal).addClass('open');
+  }, animTime);
+
+  $('.' + notifyModal).click(function () {
     notifyModalClose();
   });
-  if(duration!=-1){
-    notifDur=setTimeout(notifyModalClose, duration);
+  if (duration != -1) {
+    notifDur = setTimeout(notifyModalClose, duration);
   }
 
   function notifyModalClose() {
-		setTimeout(function(){
-			$('.' + notifyModal).removeClass('open');
-			setTimeout(function(){
-				$('.' + notifyModal).remove();
-				if(duration!=-1){
-					clearTimeout(notifDur);
-				}
-			}, animTime);
-		}, animTime);
-	
+    setTimeout(function () {
+      $('.' + notifyModal).removeClass('open');
+      setTimeout(function () {
+        $('.' + notifyModal).remove();
+        if (duration != -1) {
+          clearTimeout(notifDur);
+        }
+      }, animTime);
+    }, animTime);
+
   }
 
   $('html').keydown(function (event) {
@@ -183,34 +183,34 @@ function notifyModal(html, duration){
 }
 
 
-function hintModal(){
+function hintModal() {
   var hintModal = 'hintModal';
   var focus = false;
 
-  if($('.' + hintModal).length){
-	  animTime=$('.' + hintModal + '_container').css('transitionDuration').replace('s','')*1000;
+  if ($('.' + hintModal).length) {
+    animTime = $('.' + hintModal + '_container').css('transitionDuration').replace('s', '') * 1000;
   }
-	
-  $('.' + hintModal).mouseenter(function(){
-    $('.' + hintModal + '_container').css({display:'block'});
-		setTimeout(function(){
-			$('.' + hintModal + '_container').addClass('open');
-			focus = true;
-		}, animTime);
+
+  $('.' + hintModal).mouseenter(function () {
+    $('.' + hintModal + '_container').css({display: 'block'});
+    setTimeout(function () {
+      $('.' + hintModal + '_container').addClass('open');
+      focus = true;
+    }, animTime);
   });
 
-  $('.' + hintModal).mouseleave(function(){
-    if(focus){
-			setTimeout(function(){
-				$('.' + hintModal + '_container').removeClass('open');
-				setTimeout(function(){
-					$('.' + hintModal + '_container').css({display:'none'});
-					focus = false;
-				}, animTime);
-			}, animTime);
+  $('.' + hintModal).mouseleave(function () {
+    if (focus) {
+      setTimeout(function () {
+        $('.' + hintModal + '_container').removeClass('open');
+        setTimeout(function () {
+          $('.' + hintModal + '_container').css({display: 'none'});
+          focus = false;
+        }, animTime);
+      }, animTime);
     }
   });
 }
-(function($){
-	hintModal();
+(function ($) {
+  hintModal();
 })(jQuery);
