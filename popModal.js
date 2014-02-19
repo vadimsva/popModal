@@ -4,6 +4,7 @@ function popModal(elem, html, params, okFun, cancelFun, onLoad, onClose) {
   var placement = 'bottomLeft';
   var showCloseBut = true;
   var overflowContent = true;
+  var popModalOpen = 'popModalOpen'; 
 
   if (params != undefined) {
     if (params.placement != undefined) {
@@ -31,7 +32,7 @@ function popModal(elem, html, params, okFun, cancelFun, onLoad, onClose) {
   if (modal.hasClass(modalClass)) {
     popModalClose();
   } else {
-    $('html.popModalOpen').off('click');
+    $('html.' + popModalOpen).off('click');
     $('.' + modalClass).remove();
 
     if (elem.css('position') == 'fixed') {
@@ -79,7 +80,7 @@ function popModal(elem, html, params, okFun, cancelFun, onLoad, onClose) {
     });
 
     $('html').on('click', function (event) {
-      $(this).addClass('popModalOpen');
+      $(this).addClass(popModalOpen);
       if ($('.' + modalClass).is(':hidden')) {
         popModalClose();
       }
@@ -114,8 +115,8 @@ function popModal(elem, html, params, okFun, cancelFun, onLoad, onClose) {
       $('.' + modalClass).removeClass('open');
       setTimeout(function () {
         $('.' + modalClass).remove();
-        $('html.popModalOpen').off('click');
-        $('html').removeClass('popModalOpen');
+        $('html.' + popModalOpen).off('click');
+        $('html').removeClass(popModalOpen);
       }, animTime);
     }, animTime);
   }
