@@ -34,12 +34,12 @@ function popModal(elem, html, params, okFun, cancelFun, onLoad, onClose) {
     $('html.popModalOpen').off('click');
     $('.' + modalClass).remove();
 		
-		if(elem.css('position') == 'fixed'){
-			var isFixed = 'position:fixed;';
-		} else {
-			var isFixed = '';
-		}
-		var getTop = 'top:' + eval(elem.position().top + parseInt(elem.css('marginTop')) + elem.outerHeight() + 10) + 'px';
+  	if(elem.css('position') == 'fixed'){
+  	  var isFixed = 'position:fixed;';
+  	} else {
+  	  var isFixed = '';
+  	}
+  	var getTop = 'top:' + eval(elem.position().top + parseInt(elem.css('marginTop')) + elem.outerHeight() + 10) + 'px';
 		
     var tooltipContainer = $('<div class="' + modalClass + ' ' + placement + '" style="' + isFixed + getTop + '"></div>');
     var tooltipContent = $('<div class="' + modalClass + '_content ' + overflowContentClass + '"></div>');
