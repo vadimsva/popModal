@@ -111,3 +111,6 @@ notifyModal($(el), 2500);
   &lt;/div&gt;
 &lt;/div&gt;
 </pre>
+
+
+<a href="http://vadimsva.github.io/popModal/" target="_blank">DEMO</a>
