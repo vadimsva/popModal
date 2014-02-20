@@ -16,37 +16,37 @@ Documentation
 <p><i>popModal(<b>elem</b>, <b>html</b>, <b>params</b>, <b>okFun</b>, <b>cancelFun</b>, <b>onLoad</b>, <b>onClose</b>);</i></p>
 
 <b>elem</b> - parent element, where popup will be placed (object) - <b>required</b><br>
-Use: <b>el</b> or <b>$(el)</b><br>
+Use: <code>el</code> or <code>$(el)</code><br>
 
 <b>html</b> - static html, dinamic html or string (object, string) - <b>required</b><br>
-Use: <b>el.append(html)</b>, <b>$(el).html()</b> or <b>'text'</b><br>
+Use: <code>el.append(html)</code>, <code>$(el).html()</code> or <code>'text'</code><br>
 
-<b>params</b> - some parameters for popup (put parameters in <b>{}</b>):<br>
+<b>params</b> - some parameters for popup (put parameters in <code>{}</code>):<br>
 &nbsp;&nbsp;&nbsp;<b>placement</b> - popup position (string).<br>
-&nbsp;&nbsp;&nbsp;Use: <b>'bottomLeft'</b> - default, <b>'bottomCenter'</b>, <b>'bottomRight'</b><br>
+&nbsp;&nbsp;&nbsp;Use: <code>'bottomLeft'</code> - default, <code>'bottomCenter'</code>, <code>'bottomRight'</code><br>
 
 &nbsp;&nbsp;&nbsp;<b>showCloseBut</b> - show/hide close button on popup (boolean).<br>
-&nbsp;&nbsp;&nbsp;Use: <b>true</b> - default, <b>false</b><br>
+&nbsp;&nbsp;&nbsp;Use: <code>true</code> - default, <code>false</code><br>
 
 &nbsp;&nbsp;&nbsp;<b>overflowContent</b> - limit/no limit height of the content (boolean).<br>
-&nbsp;&nbsp;&nbsp;Use: <b>true</b> - default, <b>false</b><br>
+&nbsp;&nbsp;&nbsp;Use: <code>true</code> - default, <code>false</code><br>
 
 <b>okFun</b> - code execution by clicking on OK button, contained in popup (function).<br>
-Use: <b>function(){}</b>.<br>
-For work you need put an attribute to element - <b>data-popmodal="ok"</b>. <i>Popup will close automatically</i><br>
+Use: <code>function(){}</code>.<br>
+For work you need put an attribute to element - <code>data-popmodal="ok"</code>. <i>Popup will close automatically</i><br>
 
 <b>cancelFun</b> - code execution by clicking on Cancel button, contained in popup (function).<br>
-Use: <b>function(){}</b>.<br>
-For work you need put an attribute to element - <b>data-popmodal="cancel"</b>. <i>Popup will close automatically</i><br>
+Use: <code>function(){}</code>.<br>
+For work you need put an attribute to element - <code>data-popmodal="cancel"</code>. <i>Popup will close automatically</i><br>
 
 <b>onLoad</b> - code execution before popup shows (function).<br>
-Use: <b>function(){}</b><br>
+Use: <code>function(){}</code><br>
 
 <b>onClose</b> - code execution after popup closed (function).<br>
-Use: <b>function(){}</b><br>
+Use: <code>function(){}</code><br>
 
 <i>Popup is dynamically created. When you create the second popup, the first will be deleted!</i><br>
-<i>For create footer in popup, use element div with <b>class="popModal_footer"</b>. You can use attribute for element <b>data-popmodal="close"</b> for close popup, also you can press ESC, or click on any place.</i>
+<i>For create footer in popup, use element div with <code>class="popModal_footer"</code>. You can use attribute for element <code>data-popmodal="close"</code> for close popup, also you can press ESC, or click on any place.</i>
 
 
 
@@ -54,10 +54,10 @@ Use: <b>function(){}</b><br>
 <p><i>notifyModal(<b>html</b>, <b>duration</b>);</i></p>
 
 <b>html</b> - static html, dinamic html or string (object, string) - <b>required</b><br>
-Use: <b>el.append(html)</b>, <b>$(el).html()</b> or <b>'text'</b><br>
+Use: <code>el.append(html)</code>, <code>$(el).html()</code> or <code>'text'</code><br>
 
 <b>duration</b> - duration for show notification in ms (integer)<br>
-Use: <b>2500</b> - default, <b>-1</b> for infinity<br>
+Use: <code>2500</code> - default, <code>-1</code> for infinity<br>
 
 <i>You can close this notification popup, by clicking on any place, by clicking on close button or press ESC.</i><br>
 
@@ -67,7 +67,8 @@ Use: <b>2500</b> - default, <b>-1</b> for infinity<br>
 <h3>hintModal</h3>
 <p><i>hintModal();</i></p>
 
-You need to create html with <b>class="hintModal"</b> as parent element and put in this element div with <b>class="hintModal_container"</b>, put here html, to be displayed.<br>
+You need to create html with <code>class="hintModal"</code> as parent element and put in this element div with <code>class="hintModal_container"</code>, put here html, to be displayed.<br>
+To change position, add additional class <code>class="hintModal_center"</code> or <code>class="hintModal_right"</code> to parent element.<br>
 
 
 
@@ -113,4 +114,4 @@ notifyModal($(el), 2500);
 </pre>
 
 
-<a href="http://vadimsva.github.io/popModal/" target="_blank">DEMO</a>
+<a href="http://vadimsva.github.io/popModal/" target="_blank"><b>DEMO</b></a>
