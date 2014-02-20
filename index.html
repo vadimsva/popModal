@@ -1,1 +1,130 @@
-hello
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+* {margin:0;font-family:sans-serif}
+body {background:#fafafa}
+#page {background:#fff;border:1px solid #ccc;box-shadow:0 0 0 3px #eee;padding:30px;margin:40px auto;width:40%;min-height:500px;border-radius:3px}
+
+#page h2 {margin:30px 0}
+#page h2:first-child {margin-top:0}
+.codeBox {padding:20px;background:#fafafa;border:1px solid #ddd;border-radius:3px;margin:10px 0}
+.codeBox > button {margin-right:10px;padding:6px}
+
+.sep {border-top:1px solid #eee;margin:40px 0 0}
+</style>
+<link type="text/css" rel="stylesheet" href="popModal.css">
+</head>
+<body>
+
+<div id="page">
+
+	<h2>popModal</h2>
+	<div class="codeBox">
+		<button id="elem_bl">bottom Left</button>
+		<button id="elem_bc">bottom Center</button>
+		<button id="elem_br">bottom Right</button>
+	</div>
+
+	<div class="sep"></div>
+	
+	<h2>notifyModal</h2>
+	<div class="codeBox">
+		<button id="elem_alert">alert</button>
+	</div>
+	
+	<div class="sep"></div>
+	
+	<h2>hintModal</h2>
+	<div class="codeBox">
+		<button id="hintModal" class="hintModal">hint
+			<div class="hintModal_container">
+				Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+			</div>
+		</button>
+	</div>
+	
+
+</div>
+
+
+<div id="content_bl" style="display:none">
+	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+</div>
+<div id="content_bc" style="display:none">
+	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+</div>
+<div id="content_br" style="display:none">
+	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+	<div class="popModal_footer">
+		<button type="button" data-popmodal="ok">ok</button>
+		<button type="button" data-popmodal="cancel">cancel</button>
+	</div>
+</div>
+
+
+<script src="http://cdn.jsdelivr.net/jquery/1.11.0/jquery.min.js"></script>
+<script src="popModal.js"></script>
+<script>
+$(function(){
+
+	$('#elem_bl').click(function(){
+		popModal($(this),$('#content_bl').html(), {placement:'bottomLeft', showCloseBut:true, overflowContent:true},
+			function(){
+			
+			},
+			function(){
+			
+			},
+			function(){
+			
+			},
+			function(){
+			
+			}
+		);
+	});
+	$('#elem_bc').click(function(){
+		popModal($(this),$('#content_bc').html(), {placement:'bottomCenter', showCloseBut:false, overflowContent:true},
+			function(){
+			
+			},
+			function(){
+			
+			},
+			function(){
+			
+			},
+			function(){
+			
+			}
+		);
+	});
+	$('#elem_br').click(function(){
+		popModal($(this),$('#content_br').html(), {placement:'bottomRight', showCloseBut:true, overflowContent:false},
+			function(){
+				notifyModal('You click OK');
+			},
+			function(){
+				notifyModal('You click CANCEL');
+			},
+			function(){
+			
+			},
+			function(){
+			
+			}
+		);
+	});
+	
+
+	$('#elem_alert').click(function(){
+		notifyModal('alert',-1);
+	});
+
+});
+</script>
+
+</body>
+</html>
