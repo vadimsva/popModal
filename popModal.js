@@ -61,11 +61,11 @@ function popModal(elem, html, params, okFun, cancelFun, onLoad, onClose) {
     });
 
     if (placement == 'bottomLeft') {
-      $('.' + modalClass).css({left: elem.position().left + parseInt(elem.css('marginRight')) + 'px'});
+      $('.' + modalClass).css({left: elem.position().left + parseInt(elem.css('marginLeft')) + 'px'});
     } else if (placement == 'bottomRight') {
-      $('.' + modalClass).css({left: elem.position().left + parseInt(elem.css('marginRight')) + elem.outerWidth() - $('.' + modalClass).outerWidth() + 'px', width: $('.' + modalClass).outerWidth() + 'px'});
+      $('.' + modalClass).css({left: elem.position().left + parseInt(elem.css('marginLeft')) + elem.outerWidth() - $('.' + modalClass).outerWidth() + 'px', width: $('.' + modalClass).outerWidth() + 'px'});
     } else if (placement == 'bottomCenter') {
-      $('.' + modalClass).css({left: elem.position().left + parseInt(elem.css('marginRight')) + (elem.outerWidth() - $('.' + modalClass).outerWidth()) / 2 + 'px', width: $('.' + modalClass).outerWidth() + 'px'});
+      $('.' + modalClass).css({left: elem.position().left + parseInt(elem.css('marginLeft')) + (elem.outerWidth() - $('.' + modalClass).outerWidth()) / 2 + 'px', width: $('.' + modalClass).outerWidth() + 'px'});
     }
     if (overflowContent) {
       $('.' + modalClass).append($('.' + modalClass).find('.' + modalClass + '_content .' + modalClass + '_footer'));
