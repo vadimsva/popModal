@@ -2,6 +2,9 @@
 <html>
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>popModal</title>
 <style>
 * {margin:0;font-family:sans-serif}
 body {background:#fafafa}
@@ -9,10 +12,17 @@ body {background:#fafafa}
 
 #page h2 {margin:30px 0}
 #page h2:first-child {margin-top:0}
-.codeBox {padding:20px;background:#fafafa;border:1px solid #ddd;border-radius:3px;margin:10px 0}
-.codeBox > button {margin-right:10px;padding:6px}
+.codeBox {padding:10px;background:#fafafa;border:1px solid #ddd;border-radius:3px;margin:10px 0}
+.codeBox > button {margin:5px;padding:6px}
 
 .sep {border-top:1px solid #eee;margin:40px 0 0}
+
+@media (max-width: 1280px){
+#page {width:60%}
+}
+@media (max-width: 860px){
+#page {margin:40px 20px;width:auto}
+}
 </style>
 <link type="text/css" rel="stylesheet" href="popModal.css">
 </head>
@@ -25,6 +35,10 @@ body {background:#fafafa}
 		<button id="elem_bl">bottom Left</button>
 		<button id="elem_bc">bottom Center</button>
 		<button id="elem_br">bottom Right</button>
+		<button id="elem_lt">left Top</button>
+		<button id="elem_lc">left Center</button>
+		<button id="elem_rt">right Top</button>
+		<button id="elem_rc">right Center</button>
 	</div>
 
 	<div class="sep"></div>
@@ -38,7 +52,7 @@ body {background:#fafafa}
 	
 	<h2>hintModal</h2>
 	<div class="codeBox">
-		<button id="hintModal" class="hintModal">hint
+		<button id="hintModal" class="hintModal hintModal_center">hint
 			<div class="hintModal_container">
 				Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 			</div>
@@ -50,9 +64,6 @@ body {background:#fafafa}
 
 
 <div id="content_bl" style="display:none">
-	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-</div>
-<div id="content_bc" style="display:none">
 	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 </div>
 <div id="content_br" style="display:none">
@@ -86,7 +97,7 @@ $(function(){
 		);
 	});
 	$('#elem_bc').click(function(){
-		popModal($(this),$('#content_bc').html(), {placement:'bottomCenter', showCloseBut:false, overflowContent:true},
+		popModal($(this),$('#content_bl').html(), {placement:'bottomCenter', showCloseBut:false, overflowContent:true},
 			function(){
 			
 			},
@@ -116,6 +127,18 @@ $(function(){
 			
 			}
 		);
+	});
+	$('#elem_lt').click(function(){
+		popModal($(this),$('#content_bl').html(), {placement:'leftTop'});
+	});
+	$('#elem_lc').click(function(){
+		popModal($(this),$('#content_bl').html(), {placement:'leftCenter'});
+	});
+	$('#elem_rt').click(function(){
+		popModal($(this),$('#content_bl').html(), {placement:'rightTop'});
+	});
+	$('#elem_rc').click(function(){
+		popModal($(this),$('#content_bl').html(), {placement:'rightCenter'});
 	});
 	
 
