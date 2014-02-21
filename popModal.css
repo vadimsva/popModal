@@ -5,7 +5,7 @@
 .popModal .close:hover {opacity:1}
 .popModal .popModal_content {}
 .popModal .close + .popModal_content.popModal_contentOverflow {margin-top:15px}
-.popModal .popModal_content.popModal_contentOverflow {max-height:200px;overflow:auto;margin:0 -8px;word-wrap:break-word;padding:0 7px}
+.popModal .popModal_content.popModal_contentOverflow {max-height:200px;overflow-y:auto;overflow-x:hidden;margin:0 -8px;word-wrap:break-word;padding:0 7px}
 .popModal.bottomLeft .popModal_content:before,
 .popModal.bottomRight .popModal_content:before,
 .popModal.bottomCenter .popModal_content:before {content:'';position:absolute;left:0;right:0;height:20px;bottom:-20px}
@@ -15,18 +15,37 @@
 .popModal.bottomRight,
 .popModal.bottomCenter {margin-top:10px}
 .popModal.bottomRight {right:0}
-.popModal:before {content:'';position:absolute;border:10px solid transparent;z-index:1}
-.popModal:after {content:'';position:absolute;border:10px solid transparent}
+.popModal:before {content:'';position:absolute;border:10px solid transparent}
+.popModal:after {content:'';position:absolute;border:10px solid transparent;z-index:1}
 .popModal.bottomLeft:before,
 .popModal.bottomRight:before,
-.popModal.bottomCenter:before{border-top-width:0;border-bottom-color:#fff;top:-9px;left:6px}
+.popModal.bottomCenter:before {border-top-width:0;border-bottom-color:#aaa;top:-10px;left:6px}
 .popModal.bottomLeft:after,
 .popModal.bottomRight:after,
-.popModal.bottomCenter:after {border-top-width:0;border-bottom-color:#aaa;top:-10px;left:6px}
+.popModal.bottomCenter:after {border-top-width:0;border-bottom-color:#fff;top:-9px;left:6px}
 .popModal.bottomRight:before,
 .popModal.bottomRight:after {left:auto;right:6px}
 .popModal.bottomCenter:before,
 .popModal.bottomCenter:after {left:50%;margin-left:-10px}
+.popModal.leftTop,
+.popModal.leftCenter {margin-left:-10px}
+.popModal.rightTop,
+.popModal.rightCenter {margin-left:10px}
+.popModal.leftTop:before,
+.popModal.leftCenter:before {border-right-width:0;border-left-color:#aaa;top:6px;right:-10px}
+.popModal.leftTop:after,
+.popModal.leftCenter:after {border-right-width:0;border-left-color:#fff;top:6px;right:-9px}
+.popModal.rightTop:before,
+.popModal.rightCenter:before {border-left-width:0;border-right-color:#aaa;top:6px;left:-10px}
+.popModal.rightTop:after,
+.popModal.rightCenter:after {border-left-width:0;border-right-color:#fff;top:6px;left:-9px}
+.popModal.leftCenter:before,
+.popModal.rightCenter:before {top:50%;margin-top:-10px}
+.popModal.leftCenter:after, 
+.popModal.rightCenter:after {top:50%;margin-top:-10px}
+
+/*ie7*/
+.popModal .close {width:14px;height:14px}
 
 
 /* notifyModal */
@@ -36,13 +55,17 @@
 .notifyModal_content .close {line-height:12px;font-size:25px;font-weight:bold;font-family:serif;position:absolute;right:8px;top:8px;color:#000;opacity:0.2;padding:0;cursor:pointer;background:transparent;border:0;outline:0}
 .notifyModal_content .close:hover {opacity:1}
 
+/*ie7*/
+.notifyModal_content {left:50%;margin-left:-185px}
+.notifyModal_content .close {width:14px;height:14px}
+
 
 /* hintModal */
 .hintModal {position:relative;overflow:visible}
 .hintModal .hintModal_container {display:none;opacity:0;margin:0;font-family:sans-serif;font-size:14px;-webkit-transition:all 200ms ease;transition:all 200ms ease}
 .hintModal .hintModal_container.open {display:block;opacity:1;margin-top:6px}
-.hintModal .hintModal_container:before {content:'';position:absolute;border:6px solid transparent;z-index:1;border-top-width:0;border-bottom-color:#F8F4E1;top:-5px;left:6px}
-.hintModal .hintModal_container:after {content:'';position:absolute;border:6px solid transparent;border-top-width:0;border-bottom-color:#B4A984;top:-6px;left:6px}
+.hintModal .hintModal_container:before {content:'';position:absolute;border:6px solid transparent;border-top-width:0;border-bottom-color:#B4A984;top:-6px;left:6px}
+.hintModal .hintModal_container:after {content:'';position:absolute;border:6px solid transparent;z-index:1;border-top-width:0;border-bottom-color:#F8F4E1;top:-5px;left:6px}
 .hintModal.hintModal_right .hintModal_container {right:0}
 .hintModal.hintModal_right .hintModal_container:before {left:auto;right:6px}
 .hintModal.hintModal_right .hintModal_container:after {left:auto;right:6px}
