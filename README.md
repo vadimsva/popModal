@@ -23,7 +23,7 @@ Use: <code>el.append(html)</code>, <code>$(el).html()</code> or <code>'text'</co
 
 <b>params</b> - some parameters for popup (put parameters in <code>{}</code>):<br>
 &nbsp;&nbsp;&nbsp;<b>placement</b> - popup position (string).<br>
-&nbsp;&nbsp;&nbsp;Use: <code>'bottomLeft'</code> - default, <code>'bottomCenter'</code>, <code>'bottomRight'</code><br>
+&nbsp;&nbsp;&nbsp;Use: <code>'bottomLeft'</code> - default, <code>'bottomCenter'</code>, <code>'bottomRight'</code>, <code>'leftTop'</code>, <code>'leftCenter'</code>, <code>'rightTop'</code>, <code>'rightCenter'</code><br>
 
 &nbsp;&nbsp;&nbsp;<b>showCloseBut</b> - show/hide close button on popup (boolean).<br>
 &nbsp;&nbsp;&nbsp;Use: <code>true</code> - default, <code>false</code><br>
