@@ -41,14 +41,19 @@ function popModal(elem, html, params, okFun, cancelFun, onLoad, onClose) {
       var isFixed = '';
     }
     var getTop = 'top:' + eval(elem.position().top + parseInt(elem.css('marginTop')) + elem.outerHeight() + 10) + 'px';
-
+		
     var tooltipContainer = $('<div class="' + modalClass + ' ' + placement + '" style="' + isFixed + getTop + '"></div>');
     var tooltipContent = $('<div class="' + modalClass + '_content ' + overflowContentClass + '"></div>');
     tooltipContainer.append(closeBut, tooltipContent);
     tooltipContent.append(html);
     elem.after(tooltipContainer);
 
-    animTime = $('.' + modalClass).css('transitionDuration').replace('s', '') * 1000;
+		animTime = $('.' + modalClass + '_container').css('transitionDuration');
+		if (animTime != undefined) {
+			animTime = animTime.replace('s', '') * 1000;
+		} else {
+			animTime = 200;
+		}
 
     if (onLoad && $.isFunction(onLoad)) {
       onLoad();
@@ -61,12 +66,45 @@ function popModal(elem, html, params, okFun, cancelFun, onLoad, onClose) {
     });
 
     if (placement == 'bottomLeft') {
-      $('.' + modalClass).css({left: elem.position().left + parseInt(elem.css('marginLeft')) + 'px'});
+      $('.' + modalClass).css({
+				left: elem.position().left + parseInt(elem.css('marginLeft')) + 'px'
+			});
     } else if (placement == 'bottomRight') {
-      $('.' + modalClass).css({left: elem.position().left + parseInt(elem.css('marginLeft')) + elem.outerWidth() - $('.' + modalClass).outerWidth() + 'px', width: $('.' + modalClass).outerWidth() + 'px'});
+      $('.' + modalClass).css({
+				left: elem.position().left + parseInt(elem.css('marginLeft')) + elem.outerWidth() - $('.' + modalClass).outerWidth() + 'px',
+				width: $('.' + modalClass).outerWidth() + 'px'
+			});
     } else if (placement == 'bottomCenter') {
-      $('.' + modalClass).css({left: elem.position().left + parseInt(elem.css('marginLeft')) + (elem.outerWidth() - $('.' + modalClass).outerWidth()) / 2 + 'px', width: $('.' + modalClass).outerWidth() + 'px'});
-    }
+      $('.' + modalClass).css({
+				left: elem.position().left + parseInt(elem.css('marginLeft')) + (elem.outerWidth() - $('.' + modalClass).outerWidth()) / 2 + 'px',
+				width: $('.' + modalClass).outerWidth() + 'px'
+			});
+    } else if (placement == 'leftTop') {
+			$('.' + modalClass).css({
+				top: eval(elem.position().top + parseInt(elem.css('marginTop'))) + 'px',
+				left: elem.position().left + parseInt(elem.css('marginLeft')) - $('.' + modalClass).outerWidth() - 10 + 'px',
+				width: $('.' + modalClass).outerWidth() + 'px'
+			});
+		} else if (placement == 'rightTop') {
+			$('.' + modalClass).css({
+				top: eval(elem.position().top + parseInt(elem.css('marginTop'))) + 'px',
+				left: elem.position().left + parseInt(elem.css('marginLeft')) + elem.outerWidth() + 10 + 'px',
+				width: $('.' + modalClass).outerWidth() + 'px'
+			});
+		} else if (placement == 'leftCenter') {
+			$('.' + modalClass).css({
+				top: eval(elem.position().top + parseInt(elem.css('marginTop')) + elem.outerHeight() / 2 - $('.' + modalClass).outerHeight() / 2) + 'px',
+				left: elem.position().left + parseInt(elem.css('marginLeft')) - $('.' + modalClass).outerWidth() - 10 + 'px',
+				width: $('.' + modalClass).outerWidth() + 'px'
+			});
+		} else if (placement == 'rightCenter') {
+			$('.' + modalClass).css({
+				top: eval(elem.position().top + parseInt(elem.css('marginTop')) + elem.outerHeight() / 2 - $('.' + modalClass).outerHeight() / 2) + 'px',
+				left: elem.position().left + parseInt(elem.css('marginLeft')) + elem.outerWidth() + 10 + 'px',
+				width: $('.' + modalClass).outerWidth() + 'px'
+			});
+		}
+		
     if (overflowContent) {
       $('.' + modalClass).append($('.' + modalClass).find('.' + modalClass + '_content .' + modalClass + '_footer'));
     }
@@ -150,7 +188,12 @@ function notifyModal(html, duration) {
   notifyContainer.append(notifyContent);
   $('body').append(notifyContainer);
 
-  animTime = $('.' + notifyModal).css('transitionDuration').replace('s', '') * 1000;
+	animTime = $('.' + notifyModal + '_container').css('transitionDuration');
+	if (animTime != undefined) {
+		animTime = animTime.replace('s', '') * 1000;
+	} else {
+		animTime = 200;
+	}
 
   setTimeout(function () {
     $('.' + notifyModal).addClass('open');
@@ -189,7 +232,12 @@ function hintModal() {
   var focus = false;
 
   if ($('.' + hintModal).length) {
-    animTime = $('.' + hintModal + '_container').css('transitionDuration').replace('s', '') * 1000;
+		animTime = $('.' + hintModal + '_container').css('transitionDuration');
+		if (animTime != undefined) {
+			animTime = animTime.replace('s', '') * 1000;
+		} else {
+			animTime = 200;
+		}
   }
 
   $('.' + hintModal).mouseenter(function () {
