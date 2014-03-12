@@ -115,3 +115,11 @@ notifyModal($(el), 2500);
 
 
 <a href="http://vadimsva.github.io/popModal/" target="_blank"><b>DEMO</b></a>
+
+
+<h3>Direct links to libs<h3>
+<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a>
+<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a>
+<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a>
+<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a>
+
