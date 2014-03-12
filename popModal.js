@@ -22,12 +22,12 @@
 				_options = $.extend(_defaults, params);
 				
 				
-				if (_defaults.showCloseBut) {
+				if (_options.showCloseBut) {
 					closeBut = $('<button type="button" class="close">&times;</button>');
 				} else {
 					closeBut = '';
 				}
-				if (_defaults.overflowContent) {
+				if (_options.overflowContent) {
 					overflowContentClass = 'popModal_contentOverflow';
 				} else {
 					overflowContentClass = '';
@@ -55,18 +55,18 @@
 						}
 						var getTop = 'top:' + eval(elem.position().top + parseInt(elem.css('marginTop')) + elem.outerHeight() + 10) + 'px';
 
-						var tooltipContainer = $('<div class="' + modalClass + ' ' + _defaults.placement + '" style="' + isFixed + getTop + '"></div>');
+						var tooltipContainer = $('<div class="' + modalClass + ' ' + _options.placement + '" style="' + isFixed + getTop + '"></div>');
 						var tooltipContent = $('<div class="' + modalClass + '_content ' + overflowContentClass + '"></div>');
 						tooltipContainer.append(closeBut, tooltipContent);
 						
-						if ($.isFunction(_defaults.html)) {
+						if ($.isFunction(_options.html)) {
 							var beforeLoadingContent = 'Please, waiting...';
 							tooltipContent.append(beforeLoadingContent);
-							var htmlContent = html(function (loadedContent) {
+							_options.html(function (loadedContent) {
 								tooltipContent.empty().append(loadedContent);
 							});
 						} else {
-							tooltipContent.append(_defaults.html);
+							tooltipContent.append(_options.html);
 						}
 						elem.after(tooltipContainer);
 
@@ -77,19 +77,19 @@
 							animTime = 200;
 						}
 
-						if (_defaults.onLoad && $.isFunction(_defaults.onLoad)) {
-							_defaults.onLoad();
+						if (_options.onLoad && $.isFunction(_options.onLoad)) {
+							_options.onLoad();
 						}
 
 						$('.' + modalClass).on('destroyed', function () {
-							if (_defaults.onClose && $.isFunction(_defaults.onClose)) {
-								_defaults.onClose();
+							if (_options.onClose && $.isFunction(_options.onClose)) {
+								_options.onClose();
 							}
 						});
 
 						getPlacement();
 						
-						if (_defaults.overflowContent) {
+						if (_options.overflowContent) {
 							$('.' + modalClass).append($('.' + modalClass).find('.' + modalClass + '_content .' + modalClass + '_footer'));
 						}
 
@@ -122,8 +122,8 @@
 
 						$('.popModal [data-popmodal="ok"]').bind('click', function (event) {
 							var ok;
-							if (_defaults.okFun && $.isFunction(_defaults.okFun)) {
-								ok = _defaults.okFun(event);
+							if (_options.okFun && $.isFunction(_options.okFun)) {
+								ok = _options.okFun(event);
 							}
 							if (ok !== false) {
 								popModalClose();
@@ -131,8 +131,8 @@
 						});
 
 						$('.popModal [data-popmodal="cancel"]').bind('click', function () {
-							if (_defaults.cancelFun && $.isFunction(_defaults.cancelFun)) {
-								_defaults.cancelFun();
+							if (_options.cancelFun && $.isFunction(_options.cancelFun)) {
+								_options.cancelFun();
 							}
 							popModalClose();
 						});
@@ -148,7 +148,7 @@
 				}
 				
 				function getPlacement(){
-					switch (_defaults.placement){
+					switch (_options.placement){
 						case ('bottomLeft'):
 							$('.' + modalClass).css({
 								left: elem.position().left + parseInt(elem.css('marginLeft')) + 'px'
