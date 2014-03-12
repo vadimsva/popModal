@@ -1,169 +1,242 @@
-function popModal(elem, html, params, okFun, cancelFun, onLoad, onClose) {
-  var modal = elem.next('div');
-  var modalClass = 'popModal';
-  var placement = 'bottomLeft';
-  var showCloseBut = true;
-  var overflowContent = true;
-  var popModalOpen = 'popModalOpen'; 
+(function ($) {
+	$.fn.popModal = function(method){
+		var elem = $(this);
+		var isClick = checkEvent(elem, 'click');
+		var isFixed, overflowContentClass, closeBut; 
+		var modalClass = 'popModal';
+		var popModalOpen = 'popModalOpen';
+		var _options;
+	
+		var methods = {
+			init : function( params ) {
+				var _defaults = {
+					html: '',
+					placement: 'bottomLeft',
+					showCloseBut: true,
+					overflowContent: true,
+					okFun: function() {return true;},
+					cancelFun: function() {},
+					onLoad: function() {},
+					onClose: function() {}
+				};
+				_options = $.extend(_defaults, params);
+				
+				
+				if (_defaults.showCloseBut) {
+					closeBut = $('<button type="button" class="close">&times;</button>');
+				} else {
+					closeBut = '';
+				}
+				if (_defaults.overflowContent) {
+					overflowContentClass = 'popModal_contentOverflow';
+				} else {
+					overflowContentClass = '';
+				}
+				
+				if (isClick) {
+					_init();
+				} else {
+					elem.on('click',function(){
+						_init();
+					});
+				}
+				
+				function _init(){
+					if (elem.next('div').hasClass(modalClass)) {
+						popModalClose();
+					} else {
+						$('html.' + popModalOpen).off('click').removeClass(popModalOpen);
+						$('.' + modalClass).remove();
 
-  if (params != undefined) {
-    if (params.placement != undefined) {
-      placement = params.placement;
-    }
-    if (params.showCloseBut != undefined) {
-      showCloseBut = params.showCloseBut;
-    }
-    if (params.overflowContent != undefined) {
-      overflowContent = params.overflowContent;
-    }
-  }
+						if (elem.css('position') == 'fixed') {
+							isFixed = 'position:fixed;';
+						} else {
+							isFixed = '';
+						}
+						var getTop = 'top:' + eval(elem.position().top + parseInt(elem.css('marginTop')) + elem.outerHeight() + 10) + 'px';
 
-  if (showCloseBut) {
-    var closeBut = $('<button type="button" class="close">&times;</button>');
-  } else {
-    var closeBut = '';
-  }
-  if (overflowContent) {
-    var overflowContentClass = 'popModal_contentOverflow';
-  } else {
-    var overflowContentClass = '';
-  }
+						var tooltipContainer = $('<div class="' + modalClass + ' ' + _defaults.placement + '" style="' + isFixed + getTop + '"></div>');
+						var tooltipContent = $('<div class="' + modalClass + '_content ' + overflowContentClass + '"></div>');
+						tooltipContainer.append(closeBut, tooltipContent);
+						
+						if ($.isFunction(_defaults.html)) {
+							var beforeLoadingContent = 'Please, waiting...';
+							tooltipContent.append(beforeLoadingContent);
+							var htmlContent = html(function (loadedContent) {
+								tooltipContent.empty().append(loadedContent);
+							});
+						} else {
+							tooltipContent.append(_defaults.html);
+						}
+						elem.after(tooltipContainer);
 
-  if (modal.hasClass(modalClass)) {
-    popModalClose();
-  } else {
-    $('html.' + popModalOpen).off('click');
-    $('.' + modalClass).remove();
+						animTime = $('.' + modalClass + '_container').css('transitionDuration');
+						if (animTime != undefined) {
+							animTime = animTime.replace('s', '') * 1000;
+						} else {
+							animTime = 200;
+						}
 
-    if (elem.css('position') == 'fixed') {
-      var isFixed = 'position:fixed;';
-    } else {
-      var isFixed = '';
-    }
-    var getTop = 'top:' + eval(elem.position().top + parseInt(elem.css('marginTop')) + elem.outerHeight() + 10) + 'px';
+						if (_defaults.onLoad && $.isFunction(_defaults.onLoad)) {
+							_defaults.onLoad();
+						}
+
+						$('.' + modalClass).on('destroyed', function () {
+							if (_defaults.onClose && $.isFunction(_defaults.onClose)) {
+								_defaults.onClose();
+							}
+						});
+
+						getPlacement();
+						
+						if (_defaults.overflowContent) {
+							$('.' + modalClass).append($('.' + modalClass).find('.' + modalClass + '_content .' + modalClass + '_footer'));
+						}
+
+						setTimeout(function () {
+							$('.' + modalClass).addClass('open');
+						}, animTime);
+
+						$('.popModal .close').bind('click', function () {
+							popModalClose();
+						});
+
+						$('html').on('click', function (event) {
+							$(this).addClass(popModalOpen);
+							if ($('.' + modalClass).is(':hidden')) {
+								popModalClose();
+							}
+							var target = $(event.target);
+							if (!target.parents().andSelf().is('.' + modalClass) && !target.parents().andSelf().is(elem)) {
+								popModalClose();
+							}
+						});
+						
+						$(window).resize(function(){
+							getPlacement();
+						});
+						
+						$('.popModal [data-popmodal="close"]').bind('click', function () {
+							popModalClose();
+						});
+
+						$('.popModal [data-popmodal="ok"]').bind('click', function (event) {
+							var ok;
+							if (_defaults.okFun && $.isFunction(_defaults.okFun)) {
+								ok = _defaults.okFun(event);
+							}
+							if (ok !== false) {
+								popModalClose();
+							}
+						});
+
+						$('.popModal [data-popmodal="cancel"]').bind('click', function () {
+							if (_defaults.cancelFun && $.isFunction(_defaults.cancelFun)) {
+								_defaults.cancelFun();
+							}
+							popModalClose();
+						});
+
+						$('html').keydown(function (event) {
+							if (event.keyCode == 27) {
+								popModalClose();
+							}
+						});
+
+					}
+					
+				}
+				
+				function getPlacement(){
+					switch (_defaults.placement){
+						case ('bottomLeft'):
+							$('.' + modalClass).css({
+								left: elem.position().left + parseInt(elem.css('marginLeft')) + 'px'
+							});
+							break;
+						case ('bottomRight'):
+							$('.' + modalClass).css({
+								left: elem.position().left + parseInt(elem.css('marginLeft')) + elem.outerWidth() - $('.' + modalClass).outerWidth() + 'px',
+								width: $('.' + modalClass).outerWidth() + 'px'
+							});
+							break;
+						case ('bottomCenter'):
+							$('.' + modalClass).css({
+								left: elem.position().left + parseInt(elem.css('marginLeft')) + (elem.outerWidth() - $('.' + modalClass).outerWidth()) / 2 + 'px',
+								width: $('.' + modalClass).outerWidth() + 'px'
+							});
+							break;
+						case ('leftTop'):
+							$('.' + modalClass).css({
+								top: eval(elem.position().top + parseInt(elem.css('marginTop'))) + 'px',
+								left: elem.position().left + parseInt(elem.css('marginLeft')) - $('.' + modalClass).outerWidth() - 10 + 'px',
+								width: $('.' + modalClass).outerWidth() + 'px'
+							});
+							break;
+						case ('rightTop'):
+							$('.' + modalClass).css({
+								top: eval(elem.position().top + parseInt(elem.css('marginTop'))) + 'px',
+								left: elem.position().left + parseInt(elem.css('marginLeft')) + elem.outerWidth() + 10 + 'px',
+								width: $('.' + modalClass).outerWidth() + 'px'
+							});
+							break;
+						case ('leftCenter'):
+							$('.' + modalClass).css({
+								top: eval(elem.position().top + parseInt(elem.css('marginTop')) + elem.outerHeight() / 2 - $('.' + modalClass).outerHeight() / 2) + 'px',
+								left: elem.position().left + parseInt(elem.css('marginLeft')) - $('.' + modalClass).outerWidth() - 10 + 'px',
+								width: $('.' + modalClass).outerWidth() + 'px'
+							});
+							break;
+						case ('rightCenter'):
+							$('.' + modalClass).css({
+								top: eval(elem.position().top + parseInt(elem.css('marginTop')) + elem.outerHeight() / 2 - $('.' + modalClass).outerHeight() / 2) + 'px',
+								left: elem.position().left + parseInt(elem.css('marginLeft')) + elem.outerWidth() + 10 + 'px',
+								width: $('.' + modalClass).outerWidth() + 'px'
+							});
+							break;
+					}
+				}
+				
+			},
+			hide : function( ) {
+				popModalClose();
+			}
+		};
 		
-    var tooltipContainer = $('<div class="' + modalClass + ' ' + placement + '" style="' + isFixed + getTop + '"></div>');
-    var tooltipContent = $('<div class="' + modalClass + '_content ' + overflowContentClass + '"></div>');
-    tooltipContainer.append(closeBut, tooltipContent);
-    tooltipContent.append(html);
-    elem.after(tooltipContainer);
-
-		animTime = $('.' + modalClass + '_container').css('transitionDuration');
-		if (animTime != undefined) {
-			animTime = animTime.replace('s', '') * 1000;
+		function popModalClose() {
+			setTimeout(function () {
+				$('.' + modalClass).removeClass('open');
+				setTimeout(function () {
+					$('.' + modalClass).remove();
+					$('html.' + popModalOpen).off('click').removeClass(popModalOpen);
+				}, animTime);
+			}, animTime);
+		}
+		
+		if ( methods[method] ) {
+			return methods[method].apply( this, Array.prototype.slice.call( arguments, 1 ));
+		} else if ( typeof method === 'object' || ! method ) {
+			return methods.init.apply( this, arguments );
 		} else {
-			animTime = 200;
-		}
+			
+		}	
 
-    if (onLoad && $.isFunction(onLoad)) {
-      onLoad();
-    }
+	};
+})(jQuery);
+function checkEvent(element, eventname) {
+	var events,
+	ret = false;
 
-    $('.' + modalClass).on('destroyed', function () {
-      if (onClose && $.isFunction(onClose)) {
-        onClose();
-      }
-    });
+	events = $._data(element[0], 'events');
+	if (events) {
+		$.each(events, function(evName, e) {
+			if (evName == eventname) {
+				ret = true;
+			}
+		});
+	}
 
-    if (placement == 'bottomLeft') {
-      $('.' + modalClass).css({
-				left: elem.position().left + parseInt(elem.css('marginLeft')) + 'px'
-			});
-    } else if (placement == 'bottomRight') {
-      $('.' + modalClass).css({
-				left: elem.position().left + parseInt(elem.css('marginLeft')) + elem.outerWidth() - $('.' + modalClass).outerWidth() + 'px',
-				width: $('.' + modalClass).outerWidth() + 'px'
-			});
-    } else if (placement == 'bottomCenter') {
-      $('.' + modalClass).css({
-				left: elem.position().left + parseInt(elem.css('marginLeft')) + (elem.outerWidth() - $('.' + modalClass).outerWidth()) / 2 + 'px',
-				width: $('.' + modalClass).outerWidth() + 'px'
-			});
-    } else if (placement == 'leftTop') {
-			$('.' + modalClass).css({
-				top: eval(elem.position().top + parseInt(elem.css('marginTop'))) + 'px',
-				left: elem.position().left + parseInt(elem.css('marginLeft')) - $('.' + modalClass).outerWidth() - 10 + 'px',
-				width: $('.' + modalClass).outerWidth() + 'px'
-			});
-		} else if (placement == 'rightTop') {
-			$('.' + modalClass).css({
-				top: eval(elem.position().top + parseInt(elem.css('marginTop'))) + 'px',
-				left: elem.position().left + parseInt(elem.css('marginLeft')) + elem.outerWidth() + 10 + 'px',
-				width: $('.' + modalClass).outerWidth() + 'px'
-			});
-		} else if (placement == 'leftCenter') {
-			$('.' + modalClass).css({
-				top: eval(elem.position().top + parseInt(elem.css('marginTop')) + elem.outerHeight() / 2 - $('.' + modalClass).outerHeight() / 2) + 'px',
-				left: elem.position().left + parseInt(elem.css('marginLeft')) - $('.' + modalClass).outerWidth() - 10 + 'px',
-				width: $('.' + modalClass).outerWidth() + 'px'
-			});
-		} else if (placement == 'rightCenter') {
-			$('.' + modalClass).css({
-				top: eval(elem.position().top + parseInt(elem.css('marginTop')) + elem.outerHeight() / 2 - $('.' + modalClass).outerHeight() / 2) + 'px',
-				left: elem.position().left + parseInt(elem.css('marginLeft')) + elem.outerWidth() + 10 + 'px',
-				width: $('.' + modalClass).outerWidth() + 'px'
-			});
-		}
-		
-    if (overflowContent) {
-      $('.' + modalClass).append($('.' + modalClass).find('.' + modalClass + '_content .' + modalClass + '_footer'));
-    }
-
-    setTimeout(function () {
-      $('.' + modalClass).addClass('open');
-    }, animTime);
-
-    $('.popModal .close').bind('click', function () {
-      popModalClose();
-    });
-
-    $('html').on('click', function (event) {
-      $(this).addClass(popModalOpen);
-      if ($('.' + modalClass).is(':hidden')) {
-        popModalClose();
-      }
-      var target = $(event.target);
-      if (!target.parents().andSelf().is('.' + modalClass) && !target.parents().andSelf().is(elem)) {
-        popModalClose();
-      }
-    });
-
-  }
-
-  $('.popModal [data-popmodal="close"]').bind('click', function () {
-    popModalClose();
-  });
-
-  $('.popModal [data-popmodal="ok"]').bind('click', function (event) {
-    var ok = okFun ? okFun(event) : true;
-    if (ok !== false) {
-      popModalClose();
-    }
-  });
-
-  $('.popModal [data-popmodal="cancel"]').bind('click', function () {
-    if (cancelFun) {
-      cancelFun();
-    }
-    popModalClose();
-  });
-
-  function popModalClose() {
-    setTimeout(function () {
-      $('.' + modalClass).removeClass('open');
-      setTimeout(function () {
-        $('.' + modalClass).remove();
-        $('html.' + popModalOpen).off('click');
-        $('html').removeClass(popModalOpen);
-      }, animTime);
-    }, animTime);
-  }
-
-  $('html').keydown(function (event) {
-    if (event.keyCode == 27) {
-      popModalClose();
-    }
-  });
+	return ret;
 }
 (function ($) {
   $.event.special.destroyed = {
@@ -176,10 +249,11 @@ function popModal(elem, html, params, okFun, cancelFun, onLoad, onClose) {
 })(jQuery);
 
 
+
 function notifyModal(html, duration) {
   var notifyModal = 'notifyModal';
   duration = duration || 2500;
-
+	
   $('.' + notifyModal).remove();
   var notifyContainer = $('<div class="' + notifyModal + '"></div>');
   var notifyContent = $('<div class="' + notifyModal + '_content"></div>');
@@ -227,6 +301,7 @@ function notifyModal(html, duration) {
 }
 
 
+
 function hintModal() {
   var hintModal = 'hintModal';
   var focus = false;
@@ -263,3 +338,9 @@ function hintModal() {
 (function ($) {
   hintModal();
 })(jQuery);
+
+
+
+function dialogModal(){
+//preview
+}
