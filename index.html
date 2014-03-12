@@ -13,7 +13,7 @@ body {background:#fafafa}
 #page h2 {margin:30px 0}
 #page h2:first-child {margin-top:0}
 .codeBox {padding:10px;background:#fafafa;border:1px solid #ddd;border-radius:3px;margin:10px 0}
-.codeBox > button {margin:5px;padding:6px}
+.codeBox > button {margin:5px;padding:6px;cursor:pointer}
 
 .sep {border-top:1px solid #eee;margin:40px 0 0}
 
@@ -39,6 +39,7 @@ body {background:#fafafa}
 		<button id="elem_lc">left Center</button>
 		<button id="elem_rt">right Top</button>
 		<button id="elem_rc">right Center</button>
+		<button id="elem_ajax">ajax</button>
 	</div>
 
 	<div class="sep"></div>
@@ -63,10 +64,10 @@ body {background:#fafafa}
 </div>
 
 
-<div id="content_bl" style="display:none">
+<div id="content_br" style="display:none">
 	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 </div>
-<div id="content_br" style="display:none">
+<div id="content_bl" style="display:none">
 	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 	<div class="popModal_footer">
 		<button type="button" data-popmodal="ok">ok</button>
@@ -80,67 +81,55 @@ body {background:#fafafa}
 <script>
 $(function(){
 
-	$('#elem_bl').click(function(){
-		popModal($(this),$('#content_bl').html(), {placement:'bottomLeft', showCloseBut:true, overflowContent:true},
-			function(){
-			
-			},
-			function(){
-			
-			},
-			function(){
-			
-			},
-			function(){
-			
-			}
-		);
+	$('#elem_bl').popModal({
+		html : $('#content_bl').html(),
+		placement : 'bottomLeft',
+		showCloseBut : true,
+		overflowContent : true,
+		okFun : function(){
+			notifyModal('You click OK');
+		},
+		cancelFun : function(){
+			notifyModal('You click Cancel');
+		},
+		onLoad : function(){
+			notifyModal('on load function');
+		},
+		onClose : function(){
+			notifyModal('on close function');
+		}
 	});
-	$('#elem_bc').click(function(){
-		popModal($(this),$('#content_bl').html(), {placement:'bottomCenter', showCloseBut:false, overflowContent:true},
-			function(){
-			
-			},
-			function(){
-			
-			},
-			function(){
-			
-			},
-			function(){
-			
-			}
-		);
+	$('#elem_bc').popModal({
+		html : $('#content_br').html(),
+		placement : 'bottomCenter'
 	});
-	$('#elem_br').click(function(){
-		popModal($(this),$('#content_br').html(), {placement:'bottomRight', showCloseBut:true, overflowContent:false},
-			function(){
-				notifyModal('You click OK');
-			},
-			function(){
-				notifyModal('You click CANCEL');
-			},
-			function(){
-			
-			},
-			function(){
-			
-			}
-		);
+	$('#elem_br').popModal({
+		html : $('#content_br').html(),
+		placement : 'bottomRight'
 	});
-	$('#elem_lt').click(function(){
-		popModal($(this),$('#content_bl').html(), {placement:'leftTop'});
+	$('#elem_lt').popModal({
+		html : $('#content_br').html(),
+		placement : 'leftTop'
 	});
-	$('#elem_lc').click(function(){
-		popModal($(this),$('#content_bl').html(), {placement:'leftCenter'});
+	$('#elem_lc').popModal({
+		html : $('#content_br').html(),
+		placement : 'leftCenter'
 	});
-	$('#elem_rt').click(function(){
-		popModal($(this),$('#content_bl').html(), {placement:'rightTop'});
+	$('#elem_rt').popModal({
+		html : $('#content_br').html(),
+		placement : 'rightTop'
 	});
-	$('#elem_rc').click(function(){
-		popModal($(this),$('#content_bl').html(), {placement:'rightCenter'});
+	$('#elem_rc').popModal({
+		html : $('#content_br').html(),
+		placement : 'rightCenter'
 	});
-	
+	$('#elem_ajax').popModal({
+		html : function(callback) {
+			$.ajax({url:'ajax.html'}).done(function(html){
+				callback(html);
+			});
+		}
+	});
 
 	$('#elem_alert').click(function(){
 		notifyModal('alert',-1);
