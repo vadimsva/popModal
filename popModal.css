@@ -49,8 +49,8 @@
 
 
 /* notifyModal */
-.notifyModal {position:fixed;top:0;bottom:0;left:0;right:0;z-index:222;background:rgba(255,255,255,0.5);opacity:0;cursor:pointer;font-family:sans-serif;font-size:14px;-webkit-transition:all 200ms ease;transition:all 200ms ease}
-.notifyModal.open {opacity:1}
+.notifyModal {position:fixed;top:0;bottom:0;left:0;right:0;z-index:999999;background:rgba(255,255,255,0.5);opacity:0;cursor:pointer;font-family:sans-serif;font-size:14px;-webkit-transition:all 200ms ease;transition:all 200ms ease;-webkit-transform:scale(0.95,0.95);-moz-transform:scale(0.95,0.95);transform:scale(0.95,0.95)}
+.notifyModal.open {opacity:1;-webkit-transform:scale(1,1);-moz-transform:scale(1,1);transform:scale(1,1)}
 .notifyModal_content {position:absolute;background:#F9EDBE;width:340px;padding:15px;margin:auto;top:35%;left:0;right:0;border:1px solid #CAB388;text-align:center;box-shadow:0 2px 6px rgba(0, 0, 0, 0.3)}
 .notifyModal_content .close {line-height:12px;font-size:25px;font-weight:bold;font-family:serif;position:absolute;right:8px;top:8px;color:#000;opacity:0.2;padding:0;cursor:pointer;background:transparent;border:0;outline:0}
 .notifyModal_content .close:hover {opacity:1}
