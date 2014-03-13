@@ -78,6 +78,7 @@ Use: <code>2500</code> - default, <code>-1</code> for infinity<br>
 <code>placement</code> - position (string).<br>
 Use: <code>'center'</code> - default, <code>'leftTop'</code>, <code>'centerTop'</code>, <code>'rightTop'</code>, <code>'leftBottom'</code>, <code>'centerBottom'</code>, <code>'rightBottom'</code><br>
 
+<h5>Notes</h5>
 <i>You can close this notification popup, by clicking on any place, close button or press ESC.</i><br>
 
 
@@ -86,8 +87,11 @@ Use: <code>'center'</code> - default, <code>'leftTop'</code>, <code>'centerTop'<
 <h3>hintModal</h3>
 <p><i>hintModal();</i></p>
 
-You need to create html with <code>class="hintModal"</code> as parent element and put in this element div with <code>class="hintModal_container"</code>, put here html, to be displayed.<br>
+Use: You need to create html with <code>class="hintModal"</code> as parent element and put in this element div with <code>class="hintModal_container"</code>, put here html, to be displayed.<br>
 To change position, add additional class <code>class="hintModal_center"</code> or <code>class="hintModal_right"</code> to parent element.<br>
+
+<h5>Notes</h5>
+<i>hintModal will be called automatically if document have elements with the class "hintModal".</i>
 
 
 
