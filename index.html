@@ -46,7 +46,13 @@ body {background:#fafafa}
 	
 	<h2>notifyModal</h2>
 	<div class="codeBox">
-		<button id="elem_alert">alert</button>
+		<button id="elem_alert_lt">left top</button>
+		<button id="elem_alert_ct">center top</button>
+		<button id="elem_alert_rt">right top</button>
+		<button id="elem_alert_c">center</button>
+		<button id="elem_alert_lb">left bottom</button>
+		<button id="elem_alert_cb">center bottom</button>
+		<button id="elem_alert_rb">right bottom</button>
 	</div>
 	
 	<div class="sep"></div>
@@ -131,9 +137,57 @@ $(function(){
 		}
 	});
 
-	$('#elem_alert').click(function(){
-		notifyModal('alert',-1);
+	$('#elem_alert_lt').click(function(){
+		notifyModal({
+			html : $('#content_br').html(),
+			duration : -1,
+			placement : 'leftTop'
+		});
 	});
+	$('#elem_alert_ct').click(function(){
+		notifyModal({
+			html : $('#content_br').html(),
+			duration : -1,
+			placement : 'centerTop'
+		});
+	});
+	$('#elem_alert_rt').click(function(){
+		notifyModal({
+			html : $('#content_br').html(),
+			duration : -1,
+			placement : 'rightTop'
+		});
+	});
+	$('#elem_alert_c').click(function(){
+		notifyModal({
+			html : $('#content_br').html(),
+			duration : -1,
+			placement : 'center'
+		});
+	});
+	$('#elem_alert_lb').click(function(){
+		notifyModal({
+			html : $('#content_br').html(),
+			duration : -1,
+			placement : 'leftBottom'
+		});
+	});
+	$('#elem_alert_cb').click(function(){
+		notifyModal({
+			html : $('#content_br').html(),
+			duration : -1,
+			placement : 'centerBottom'
+		});
+	});
+	$('#elem_alert_rb').click(function(){
+		notifyModal({
+			html : $('#content_br').html(),
+			duration : -1,
+			placement : 'rightBottom'
+		});
+	});
+
+});
 
 });
 </script>
