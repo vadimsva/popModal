@@ -66,15 +66,19 @@ $(el).popModal({param1 : value1, param2 : value2, ...});
 
 
 <h3>notifyModal</h3>
-<p><i>notifyModal(<b>html</b>, <b>duration</b>);</i></p>
+<p><i>notifyModal({param1 : value1, param2 : value2, ...});</i></p>
 
-<b>html</b> - static html, dinamic html or string (object, string) - <b>required</b><br>
+<h5>Parameters</h5>
+<code>html</code> - static html, dinamic html or string (object, string) - <b>required</b><br>
 Use: <code>el.append(html)</code>, <code>$(el).html()</code> or <code>'text'</code><br>
-
-<b>duration</b> - duration for show notification in ms (integer)<br>
+<br>
+<code>duration</code> - duration for show notification in ms (integer)<br>
 Use: <code>2500</code> - default, <code>-1</code> for infinity<br>
+<br>
+<code>placement</code> - position (string).<br>
+Use: <code>'center'</code> - default, <code>'leftTop'</code>, <code>'centerTop'</code>, <code>'rightTop'</code>, <code>'leftBottom'</code>, <code>'centerBottom'</code>, <code>'rightBottom'</code><br>
 
-<i>You can close this notification popup, by clicking on any place, by clicking on close button or press ESC.</i><br>
+<i>You can close this notification popup, by clicking on any place, close button or press ESC.</i><br>
 
 
 
@@ -116,7 +120,11 @@ $(el).popModal({
 
 <h3>notifyModal</h3>
 <pre>
-notifyModal($(el), 2500);
+notifyModal({
+  html : $(el).html(),
+  duration : 2500,
+  placement : 'center'
+});
 </pre>
 
 
