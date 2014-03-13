@@ -13,37 +13,52 @@ Documentation
 =============
 
 <h3>popModal</h3>
-<p><i>popModal(<b>elem</b>, <b>html</b>, <b>params</b>, <b>okFun</b>, <b>cancelFun</b>, <b>onLoad</b>, <b>onClose</b>);</i></p>
+<p><i>$(el).popModal({param1 : value1, param2 : value2, ...});</i></p>
 
-<b>elem</b> - parent element, where popup will be placed (object) - <b>required</b><br>
-Use: <code>el</code> or <code>$(el)</code><br>
-
-<b>html</b> - static html, dinamic html or string (object, string) - <b>required</b><br>
-Use: <code>el.append(html)</code>, <code>$(el).html()</code> or <code>'text'</code><br>
-
-<b>params</b> - some parameters for popup (put parameters in <code>{}</code>):<br>
-&nbsp;&nbsp;&nbsp;<b>placement</b> - popup position (string).<br>
-&nbsp;&nbsp;&nbsp;Use: <code>'bottomLeft'</code> - default, <code>'bottomCenter'</code>, <code>'bottomRight'</code>, <code>'leftTop'</code>, <code>'leftCenter'</code>, <code>'rightTop'</code>, <code>'rightCenter'</code><br>
-
-&nbsp;&nbsp;&nbsp;<b>showCloseBut</b> - show/hide close button on popup (boolean).<br>
-&nbsp;&nbsp;&nbsp;Use: <code>true</code> - default, <code>false</code><br>
-
-&nbsp;&nbsp;&nbsp;<b>overflowContent</b> - limit/no limit height of the content (boolean).<br>
-&nbsp;&nbsp;&nbsp;Use: <code>true</code> - default, <code>false</code><br>
-
-<b>okFun</b> - code execution by clicking on OK button, contained in popup (function).<br>
+<h5>Parameters</h5>
+<code>html</code> - static html, dinamic html, string, function (object, string, function). Use function if you want load content via ajax.<br>
+Use: <code>el.append(html)</code>, <code>$(el).html()</code>, <code>'text'</code> or <code>function(){}</code><br>
+<br>
+<code>placement</code> - popup position (string).<br>
+Use: <code>'bottomLeft'</code> - default, <code>'bottomCenter'</code>, <code>'bottomRight'</code>, <code>'leftTop'</code>, <code>'leftCenter'</code>, <code>'rightTop'</code>, <code>'rightCenter'</code><br>
+<br>
+<code>showCloseBut</code> - show/hide close button on popup (boolean).<br>
+Use: <code>true</code> - default, <code>false</code><br>
+<br>
+<code>overflowContent</code> - limit/no limit height of the content (boolean).<br>
+Use: <code>true</code> - default, <code>false</code><br>
+<br>
+<code>okFun</code> - code execution by clicking on OK button, contained in popup (function).<br>
 Use: <code>function(){}</code>.<br>
 For work you need put an attribute to element - <code>data-popmodal="ok"</code>. <i>Popup will close automatically</i><br>
-
-<b>cancelFun</b> - code execution by clicking on Cancel button, contained in popup (function).<br>
+<br>
+<code>cancelFun</code> - code execution by clicking on Cancel button, contained in popup (function).<br>
 Use: <code>function(){}</code>.<br>
 For work you need put an attribute to element - <code>data-popmodal="cancel"</code>. <i>Popup will close automatically</i><br>
-
-<b>onLoad</b> - code execution before popup shows (function).<br>
+<br>
+<code>onLoad</code> - code execution before popup shows (function).<br>
 Use: <code>function(){}</code><br>
-
-<b>onClose</b> - code execution after popup closed (function).<br>
+<br>
+<code>onClose</code> - code execution after popup closed (function).<br>
 Use: <code>function(){}</code><br>
+<br>
+
+<h5>Methods</h5>
+<code>hide</code> - for close popModal.<br>
+Use: <code>$(el).popModal("hide");</code><br>
+<br>
+
+<h5>Notes</h5>
+You may use external click function for element
+<pre>
+$(el).click(function(){
+  $(el).popModal({param1 : value1, param2 : value2, ...});
+});
+</pre>
+or use
+<pre>
+$(el).popModal({param1 : value1, param2 : value2, ...});
+</pre>
 
 <i>Popup is dynamically created. When you create the second popup, the first will be deleted!</i><br>
 <i>For create footer in popup, use element div with <code>class="popModal_footer"</code>. You can use attribute for element <code>data-popmodal="close"</code> for close popup, also you can press ESC, or click on any place.</i>
@@ -77,21 +92,24 @@ Examples
 
 <h3>popModal</h3>
 <pre>
-$(el).click(function(){
-  popModal($(this), el2.html(), { placement : 'bottomLeft', showCloseBut : true, overflowContent : true },
-    function(){
-      alert('you click OK');
-    },
-    function(){
-      alert('you click CANCEL');
-    },
-    function(){
-      alert('before load');
-    },
-    function(){
-      alert('after close');
-    }
-  );
+$(el).popModal({
+  html : $(content).html(),
+  placement : 'bottomLeft',
+  showCloseBut : true,
+  overflowContent : true,
+  okFun : function(){},
+  cancelFun : function(){},
+  onLoad : function(){},
+  onClose : function(){}
+});
+</pre>
+<pre>
+$(el).popModal({
+  html : function(callback) {
+    $.ajax({url:'ajax.html'}).done(function(content){
+      callback(content);
+    });
+  }
 });
 </pre>
 
