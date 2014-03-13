@@ -250,15 +250,24 @@ function checkEvent(element, eventname) {
 
 
 
-function notifyModal(html, duration) {
+function notifyModal(params) {
   var notifyModal = 'notifyModal';
-  duration = duration || 2500;
+	var _defaults = {
+		html: '',
+		duration: 2500,
+		placement: 'center'
+	};
+	_options = $.extend(_defaults, params);
+	
+	if (_options.placement == '') {
+		_options.placement = 'center';
+	}
 	
   $('.' + notifyModal).remove();
   var notifyContainer = $('<div class="' + notifyModal + '"></div>');
-  var notifyContent = $('<div class="' + notifyModal + '_content"></div>');
+  var notifyContent = $('<div class="' + notifyModal + '_content ' + _options.placement + '"></div>');
   var closeBut = $('<button type="button" class="close">&times;</button>');
-  notifyContent.append(closeBut, html);
+  notifyContent.append(closeBut, _options.html);
   notifyContainer.append(notifyContent);
   $('body').append(notifyContainer);
 
@@ -276,8 +285,8 @@ function notifyModal(html, duration) {
   $('.' + notifyModal).click(function () {
     notifyModalClose();
   });
-  if (duration != -1) {
-    notifDur = setTimeout(notifyModalClose, duration);
+  if (_options.duration != -1) {
+    notifDur = setTimeout(notifyModalClose, _options.duration);
   }
 
   function notifyModalClose() {
@@ -285,7 +294,7 @@ function notifyModal(html, duration) {
       $('.' + notifyModal).removeClass('open');
       setTimeout(function () {
         $('.' + notifyModal).remove();
-        if (duration != -1) {
+        if (_options.duration != -1) {
           clearTimeout(notifDur);
         }
       }, animTime);
