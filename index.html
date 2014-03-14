@@ -53,13 +53,24 @@ body {background:#fafafa}
 		<button id="elem_alert_lb">left bottom</button>
 		<button id="elem_alert_cb">center bottom</button>
 		<button id="elem_alert_rb">right bottom</button>
+		<button id="elem_alert_rb2">not on top</button>
 	</div>
 	
 	<div class="sep"></div>
 	
 	<h2>hintModal</h2>
 	<div class="codeBox">
-		<button id="hintModal" class="hintModal hintModal_center">hint
+		<button class="hintModal">hint left
+			<div class="hintModal_container">
+				Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+			</div>
+		</button>
+		<button class="hintModal hintModal_center">hint center
+			<div class="hintModal_container">
+				Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+			</div>
+		</button>
+		<button class="hintModal hintModal_right">hint right
 			<div class="hintModal_container">
 				Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 			</div>
@@ -92,18 +103,10 @@ $(function(){
 		placement : 'bottomLeft',
 		showCloseBut : true,
 		overflowContent : true,
-		okFun : function(){
-			notifyModal('You click OK');
-		},
-		cancelFun : function(){
-			notifyModal('You click Cancel');
-		},
-		onLoad : function(){
-			notifyModal('on load function');
-		},
-		onClose : function(){
-			notifyModal('on close function');
-		}
+		okFun : function(){},
+		cancelFun : function(){},
+		onLoad : function(){},
+		onClose : function(){}
 	});
 	$('#elem_bc').popModal({
 		html : $('#content_br').html(),
@@ -131,8 +134,8 @@ $(function(){
 	});
 	$('#elem_ajax').popModal({
 		html : function(callback) {
-			$.ajax({url:'ajax.html'}).done(function(html){
-				callback(html);
+			$.ajax({url:'ajax.html'}).done(function(content){
+				callback(content);
 			});
 		}
 	});
@@ -184,6 +187,14 @@ $(function(){
 			html : $('#content_br').html(),
 			duration : -1,
 			placement : 'rightBottom'
+		});
+	});
+	$('#elem_alert_rb2').click(function(){
+		notifyModal({
+			html : $('#content_br').html(),
+			duration : -1,
+			placement : 'rightBottom',
+			onTop : false
 		});
 	});
 
