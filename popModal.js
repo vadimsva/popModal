@@ -6,6 +6,7 @@
 		var modalClass = 'popModal';
 		var popModalOpen = 'popModalOpen';
 		var _options;
+		var animTime;
 	
 		var methods = {
 			init : function( params ) {
@@ -252,26 +253,33 @@ function checkEvent(element, eventname) {
 
 function notifyModal(params) {
   var notifyModal = 'notifyModal';
+	var onTop;
 	var _defaults = {
 		html: '',
 		duration: 2500,
-		placement: 'center'
+		placement: 'center',
+		onTop : true
 	};
 	_options = $.extend(_defaults, params);
 	
 	if (_options.placement == '') {
 		_options.placement = 'center';
 	}
+	if (_options.onTop) {
+		onTop = 'onTop';
+	} else {
+		onTop = '';
+	}
 	
   $('.' + notifyModal).remove();
-  var notifyContainer = $('<div class="' + notifyModal + '"></div>');
-  var notifyContent = $('<div class="' + notifyModal + '_content ' + _options.placement + '"></div>');
+  var notifyContainer = $('<div class="' + notifyModal + ' ' + _options.placement + ' ' + onTop + '"></div>');
+  var notifyContent = $('<div class="' + notifyModal + '_content"></div>');
   var closeBut = $('<button type="button" class="close">&times;</button>');
   notifyContent.append(closeBut, _options.html);
   notifyContainer.append(notifyContent);
   $('body').append(notifyContainer);
 
-	animTime = $('.' + notifyModal + '_container').css('transitionDuration');
+	var animTime = $('.' + notifyModal + '_container').css('transitionDuration');
 	if (animTime != undefined) {
 		animTime = animTime.replace('s', '') * 1000;
 	} else {
@@ -316,7 +324,7 @@ function hintModal() {
   var focus = false;
 
   if ($('.' + hintModal).length) {
-		animTime = $('.' + hintModal + '_container').css('transitionDuration');
+		var animTime = $('.' + hintModal + '_container').css('transitionDuration');
 		if (animTime != undefined) {
 			animTime = animTime.replace('s', '') * 1000;
 		} else {
@@ -325,20 +333,24 @@ function hintModal() {
   }
 
   $('.' + hintModal).mouseenter(function () {
-    $('.' + hintModal + '_container').css({display: 'block'});
+		var el = $(this).find('.' + hintModal + '_container');
+		$('.' + hintModal + '_container').removeClass('open').css({display: 'none'});
+		el.css({display: 'block'});
     setTimeout(function () {
-      $('.' + hintModal + '_container').addClass('open');
+      el.addClass('open');
       focus = true;
     }, animTime);
   });
 
   $('.' + hintModal).mouseleave(function () {
+		var el = $('.' + hintModal + '_container');
     if (focus) {
       setTimeout(function () {
-        $('.' + hintModal + '_container').removeClass('open');
+        el.removeClass('open');
         setTimeout(function () {
-          $('.' + hintModal + '_container').css({display: 'none'});
+          el.css({display: 'none'});
           focus = false;
+					animTime = 0;
         }, animTime);
       }, animTime);
     }
