@@ -77,6 +77,10 @@ Use: <code>2500</code> - default, <code>-1</code> for infinity<br>
 <br>
 <code>placement</code> - position (string).<br>
 Use: <code>'center'</code> - default, <code>'leftTop'</code>, <code>'centerTop'</code>, <code>'rightTop'</code>, <code>'leftBottom'</code>, <code>'centerBottom'</code>, <code>'rightBottom'</code><br>
+<br>
+<code>onTop</code> - show notification popup on top of the content (boolean).<br>
+Use: <code>true</code> - default, <code>false</code><br>
+With <code>placement : 'center'</code>, <code>onTop</code> will work as <code>true</code>.
 
 <h5>Notes</h5>
 <i>You can close this notification popup, by clicking on any place, close button or press ESC.</i><br>
@@ -127,7 +131,8 @@ $(el).popModal({
 notifyModal({
   html : $(el).html(),
   duration : 2500,
-  placement : 'center'
+  placement : 'center',
+  onTop : true
 });
 </pre>
 
@@ -144,12 +149,14 @@ notifyModal({
 </pre>
 
 
+========
+
 <a href="http://vadimsva.github.io/popModal/" target="_blank"><b>DEMO</b></a>
 
 
 <h3>Direct links to libs</h3>
-<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a><br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a><br>
-<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a><br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a>
+<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [10.5Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [6.4Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [6.3Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [5.8Kb]
 
