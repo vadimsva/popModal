@@ -88,3 +88,29 @@
 .hintModal.hintModal_center .hintModal_container:before {left:50%;margin-left:-6px}
 .hintModal.hintModal_center .hintModal_container:after {left:50%;margin-left:-6px}
 .hintModal .hintModal_container {position:absolute;background:#F8F4E1;padding:10px;border:1px solid #B4A984;box-shadow:0 2px 6px rgba(0, 0, 0, 0.3);display:none;opacity:0;text-align:left;max-width:240px;min-width:240px;z-index:1;font-size:12px;font-weight:normal;margin-top:16px;color:#555;top:100%}
+
+
+/* dialogModal */
+.dialogModal {position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:888888;overflow:auto;opacity:0;font-family:sans-serif;font-size:14px;-webkit-transition:all 200ms ease;transition:all 200ms ease}
+.dialogModal .dialogModal_container {position:absolute;width:50%;max-width:650px;left:0;right:0;margin:auto auto 40px;box-shadow:0 2px 6px rgba(0, 0, 0, 0.6);opacity:0;background:#fff;-webkit-transition:all 200ms ease;transition:all 200ms ease}
+.dialogModal.open {opacity:1}
+.dialogModal.open .dialogModal_container {opacity:1}
+.dialogModal .dialogModal_container .dialogPrev.notactive,
+.dialogModal .dialogModal_container .dialogNext.notactive {display:none}
+.dialogModal .dialogModal_container .dialogPrev {position:absolute;width:60px;top:0;bottom:0;left:-60px;cursor:pointer}
+.dialogModal .dialogModal_container .dialogPrev:after {content:'';position:absolute;border:10px solid transparent;border-left:0;border-right-color:#aaa;top:50%;margin-top:-10px;margin-left:-5px;left:50%}
+.dialogModal .dialogModal_container .dialogNext {position:absolute;width:60px;top:0;bottom:0;right:-60px;cursor:pointer}
+.dialogModal .dialogModal_container .dialogNext:after {content:'';position:absolute;border:10px solid transparent;border-right:0;border-left-color:#aaa;top:50%;margin-top:-10px;margin-left:-5px;left:50%}
+.dialogModal .dialogModal_container .dialogPrev:hover,
+.dialogModal .dialogModal_container .dialogNext:hover {background:rgba(0,0,0,0.2)}
+.dialogModal .dialogModal_container .close {line-height:12px;font-size:25px;font-weight:bold;font-family:serif;position:absolute;right:12px;top:12px;color:#000;opacity:0.2;padding:0;cursor:pointer;background:transparent;border:0;outline:0}
+.dialogModal .dialogModal_container .close:hover {opacity:1}
+.dialogModal .dialogModal_body {}
+.dialogModal .dialogModal_header {padding:10px 20px;background:#eaeaea;line-height:20px}
+.dialogModal .dialogModal_content {padding:25px 20px}
+.dialogModal .dialogModal_footer {background:#fafafa;padding:15px 20px;border-top:1px solid #ddd;text-align:right}
+.dialogModal .dialogModal_footer button {margin:0}
+
+@media (max-width: 1000px){
+.dialogModal .dialogModal_container {width:98%}
+}
