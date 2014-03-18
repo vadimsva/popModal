@@ -1,10 +1,11 @@
 popModal
 ========
 
-This library includes 3 components:<br>
+This library includes 4 components:<br>
 <b>popModal</b> - popup window, displayed near the parent element. Invoked by clicking on an element<br>
 <b>notifyModal</b> - notification popup, displayed on top of all elements. Invoked by event and hide after a certain time<br>
 <b>hintModal</b> - tooltip, displayed near the parent element. Invoked on mouse hover on an element and hide after element lost focus<br>
+<b>dialogModal</b> - modal dialog, displayed on top of all elements. Invoked by clicking on an element<br>
 
 <i>For work required only jQuery, other libraries are not required.</i>
 
@@ -45,7 +46,7 @@ Use: <code>function(){}</code><br>
 
 <h5>Methods</h5>
 <code>hide</code> - for close popModal.<br>
-Use: <code>$(el).popModal("hide");</code><br>
+Use: <code>$('html').popModal("hide");</code><br>
 <br>
 
 <h5>Notes</h5>
@@ -63,6 +64,8 @@ $(el).popModal({param1 : value1, param2 : value2, ...});
 <i>Popup is dynamically created. When you create the second popup, the first will be deleted!</i><br>
 <i>For create footer in popup, use element div with <code>class="popModal_footer"</code>. You can use attribute for element <code>data-popmodal="close"</code> for close popup, also you can press ESC, or click on any place.</i>
 
+
+<br><br>
 
 
 <h3>notifyModal</h3>
@@ -86,6 +89,7 @@ With <code>placement : 'center'</code>, <code>onTop</code> will work as <code>tr
 <i>You can close this notification popup, by clicking on any place, close button or press ESC.</i><br>
 
 
+<br><br>
 
 
 <h3>hintModal</h3>
@@ -97,6 +101,54 @@ To change position, add additional class <code>class="hintModal_center"</code> o
 <h5>Notes</h5>
 <i>hintModal will be called automatically if document have elements with the class "hintModal".</i>
 
+
+<br><br>
+
+
+<h3>dialogModal</h3>
+<p><i>$(el).dialogModal({param1 : value1, param2 : value2, ...});</i></p>
+
+<h5>Parameters</h5>
+<code>html</code> - static html, dinamic html, string, array (object, string, array). Use array if you want show collection of content, like pages in one modal dialog.<br>
+Use: <code>el.append(html)</code>, <code>$(el).html()</code>, <code>'text'</code> or <code>[ $(el1).html(), $(el2).html() ]</code><br>
+<br>
+<code>okFun</code> - code execution by clicking on OK button, contained in dialog (function).<br>
+Use: <code>function(){}</code>.<br>
+For work you need put an attribute to element - <code>data-dialogmodal="ok"</code>. <i>Dialog will close automatically</i><br>
+<br>
+<code>cancelFun</code> - code execution by clicking on Cancel button, contained in dialog (function).<br>
+Use: <code>function(){}</code>.<br>
+For work you need put an attribute to element - <code>data-dialogmodal="cancel"</code>. <i>Dialog will close automatically</i><br>
+<br>
+<code>onLoad</code> - code execution before dialog shows (function).<br>
+Use: <code>function(){}</code><br>
+<br>
+<code>onClose</code> - code execution after dialog closed (function).<br>
+Use: <code>function(){}</code><br>
+<br>
+
+<h5>Methods</h5>
+<code>hide</code> - for close dialogModal.<br>
+Use: <code>$('html').dialogModal("hide");</code><br>
+<br>
+
+<h5>Notes</h5>
+You may use external click function for element
+<pre>
+$(el).click(function(){
+  $(el).dialogModal({param1 : value1, param2 : value2, ...});
+});
+</pre>
+or use
+<pre>
+$(el).dialogModal({param1 : value1, param2 : value2, ...});
+</pre>
+
+<i>Dialog is dynamically created. When you create the second dialog, the first will be deleted!</i><br>
+<i>You need to create div elements with classes <code>class="dialogModal_header"</code> - for show header,
+<code>class="dialogModal_content"</code> - for show content, and <code>class="dialogModal_footer"</code> - for show footer.</i><br>
+<i>You can use attribute for element <code>data-dialogmodal="close"</code> for close dialog, also you can press ESC.</i>
+<i>If you want to use collection of content, you can change content by clicking to arrows, or press left/right arrow on keayboard.</i>
 
 
 Examples
@@ -138,7 +190,6 @@ notifyModal({
 
 
 <h3>hintModal</h3>
-
 <pre>
 &lt;div class="hintModal"&gt;
   hover on me
@@ -149,14 +200,30 @@ notifyModal({
 </pre>
 
 
+<h3>dialogModal</h3>
+<pre>
+$(el).dialogModal({
+  html : $(content).html()
+});
+</pre>
+<pre>
+$(el).dialogModal({
+  html : [
+    $(content1).html(),
+    $(content2).html()
+  ]
+});
+</pre>
+
+
 ========
 
 <a href="http://vadimsva.github.io/popModal/" target="_blank"><b>DEMO</b></a>
 
 
 <h3>Direct links to libs</h3>
-<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [10.5Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [6.4Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [6.3Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [5.8Kb]
+<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [16.8Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [9.3Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [8.5Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [7.9Kb]
 
