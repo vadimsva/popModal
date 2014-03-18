@@ -97,9 +97,9 @@
 .dialogModal.open .dialogModal_container {opacity:1}
 .dialogModal .dialogModal_container .dialogPrev.notactive,
 .dialogModal .dialogModal_container .dialogNext.notactive {display:none}
-.dialogModal .dialogModal_container .dialogPrev {position:absolute;width:60px;top:0;bottom:0;left:-60px;cursor:pointer}
+.dialogModal .dialogModal_container .dialogPrev {position:absolute;width:10%;top:0;bottom:0;left:-10%;cursor:pointer}
 .dialogModal .dialogModal_container .dialogPrev:after {content:'';position:absolute;border:10px solid transparent;border-left:0;border-right-color:#aaa;top:50%;margin-top:-10px;margin-left:-5px;left:50%}
-.dialogModal .dialogModal_container .dialogNext {position:absolute;width:60px;top:0;bottom:0;right:-60px;cursor:pointer}
+.dialogModal .dialogModal_container .dialogNext {position:absolute;width:10%;top:0;bottom:0;right:-10%;cursor:pointer}
 .dialogModal .dialogModal_container .dialogNext:after {content:'';position:absolute;border:10px solid transparent;border-right:0;border-left-color:#aaa;top:50%;margin-top:-10px;margin-left:-5px;left:50%}
 .dialogModal .dialogModal_container .dialogPrev:hover,
 .dialogModal .dialogModal_container .dialogNext:hover {background:rgba(0,0,0,0.2)}
@@ -112,5 +112,5 @@
 .dialogModal .dialogModal_footer button {margin:0}
 
 @media (max-width: 1000px){
-.dialogModal .dialogModal_container {width:98%}
+.dialogModal .dialogModal_container {width:78%}
 }
