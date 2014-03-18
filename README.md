@@ -8,6 +8,16 @@ This library includes 4 components:<br>
 <b>dialogModal</b> - modal dialog, displayed on top of all elements. Invoked by clicking on an element<br>
 
 <i>For work required only jQuery, other libraries are not required.</i>
+<br>
+
+<a href="http://vadimsva.github.io/popModal/" target="_blank"><b>DEMO</b></a>
+
+
+<h4>Direct links to libs</h4>
+<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [17.1Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [9.4Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [8.5Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [7.9Kb]
 
 
 Documentation
@@ -214,16 +224,3 @@ $(el).dialogModal({
   ]
 });
 </pre>
-
-
-========
-
-<a href="http://vadimsva.github.io/popModal/" target="_blank"><b>DEMO</b></a>
-
-
-<h3>Direct links to libs</h3>
-<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [17.1Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [9.4Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [8.5Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [7.9Kb]
-
