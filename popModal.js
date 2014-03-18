@@ -4,7 +4,6 @@
 		var isClick = checkEvent(elem, 'click');
 		var isFixed, overflowContentClass, closeBut; 
 		var modalClass = 'popModal';
-		var popModalOpen = 'popModalOpen';
 		var _options;
 		var animTime;
 	
@@ -21,8 +20,6 @@
 					onClose: function() {}
 				};
 				_options = $.extend(_defaults, params);
-				
-				
 				
 				if (_options.showCloseBut) {
 					closeBut = $('<button type="button" class="close">&times;</button>');
@@ -48,7 +45,7 @@
 					if (elem.next('div').hasClass(modalClass)) {
 						popModalClose();
 					} else {
-						$('html.' + popModalOpen).off('click').removeClass(popModalOpen);
+						$('html.' + modalClass + 'Open').off('click, keydown').removeClass(modalClass + 'Open');
 						$('.' + modalClass).remove();
 
 						if (elem.css('position') == 'fixed') {
@@ -100,12 +97,12 @@
 							$('.' + modalClass).addClass('open');
 						}, animTime);
 
-						$('.popModal .close').bind('click', function () {
+						$('.' + modalClass + ' .close').bind('click', function () {
 							popModalClose();
 						});
 
 						$('html').on('click', function (event) {
-							$(this).addClass(popModalOpen);
+							$(this).addClass(modalClass + 'Open');
 							if ($('.' + modalClass).is(':hidden')) {
 								popModalClose();
 							}
@@ -119,11 +116,11 @@
 							getPlacement();
 						});
 						
-						$('.popModal [data-popmodal="close"]').bind('click', function () {
+						$('.' + modalClass + ' [data-popmodal="close"]').bind('click', function () {
 							popModalClose();
 						});
 
-						$('.popModal [data-popmodal="ok"]').bind('click', function (event) {
+						$('.' + modalClass + ' [data-popmodal="ok"]').bind('click', function (event) {
 							var ok;
 							if (_options.okFun && $.isFunction(_options.okFun)) {
 								ok = _options.okFun(event);
@@ -133,7 +130,7 @@
 							}
 						});
 
-						$('.popModal [data-popmodal="cancel"]').bind('click', function () {
+						$('.' + modalClass + ' [data-popmodal="cancel"]').bind('click', function () {
 							if (_options.cancelFun && $.isFunction(_options.cancelFun)) {
 								_options.cancelFun();
 							}
@@ -211,7 +208,7 @@
 				$('.' + modalClass).removeClass('open');
 				setTimeout(function () {
 					$('.' + modalClass).remove();
-					$('html.' + popModalOpen).off('click').removeClass(popModalOpen);
+					$('html.' + modalClass + 'Open').off('click, keydown').removeClass(modalClass + 'Open');
 				}, animTime);
 			}, animTime);
 		}
@@ -369,7 +366,6 @@ function hintModal() {
 		var elem = $(this);
 		var isClick = checkEvent(elem, 'click');
 		var modalClass = 'dialogModal';
-		var dialogModalOpen = 'dialogModalOpen';
 		var _options;
 		var animTime;
 	
@@ -393,7 +389,8 @@ function hintModal() {
 				}
 				
 				function _init(){
-					$('html.' + dialogModalOpen).off('click').removeClass(dialogModalOpen);
+					$('html.' + modalClass + 'Open').off('click, keydown').removeClass(modalClass + 'Open');
+					$('.dialogModal .dialogPrev, .dialogModal .dialogNext').off('click');
 					$('.' + modalClass).remove();
 
 					var dialogMain = $('<div class="' + modalClass + '"></div>');
@@ -413,7 +410,7 @@ function hintModal() {
 					}
 
 					$('html').append(dialogMain);
-
+					
 					animTime = $('.' + modalClass + '_container').css('transitionDuration');
 					if (animTime != undefined && animTime != '0s') {
 						animTime = animTime.replace('s', '') * 1000;
@@ -457,11 +454,11 @@ function hintModal() {
 					}
 					
 					function bindFooterButtons() {
-						$('.dialogModal [data-dialogmodal="close"]').bind('click', function () {
+						$('.' + modalClass + ' [data-dialogmodal="close"]').bind('click', function () {
 							dialogModalClose();
 						});
 
-						$('.dialogModal [data-dialogmodal="ok"]').bind('click', function (event) {
+						$('.' + modalClass + ' [data-dialogmodal="ok"]').bind('click', function (event) {
 							var ok;
 							if (_options.okFun && $.isFunction(_options.okFun)) {
 								ok = _options.okFun(event);
@@ -471,7 +468,7 @@ function hintModal() {
 							}
 						});
 
-						$('.dialogModal [data-dialogmodal="cancel"]').bind('click', function () {
+						$('.' + modalClass + ' [data-dialogmodal="cancel"]').bind('click', function () {
 							if (_options.cancelFun && $.isFunction(_options.cancelFun)) {
 								_options.cancelFun();
 							}
@@ -480,41 +477,41 @@ function hintModal() {
 					}
 					
 					centerDialog();
-					
-					$('.dialogModal .dialogPrev').bind('click', function () {
+
+					$('.' + modalClass + ' .dialogPrev').bind('click', function () {
 						if (currentDialog > 0) {
 							--currentDialog;
 							if (currentDialog < maxDialog) {
-								$('.dialogModal .dialogNext').removeClass('notactive');
+								$('.' + modalClass + ' .dialogNext').removeClass('notactive');
 							}
 							if (currentDialog == 0) {
-								$('.dialogModal .dialogPrev').addClass('notactive');
+								$('.' + modalClass + ' .dialogPrev').addClass('notactive');
 							}
 							dialogBody.empty().append(_options.html[currentDialog]);
 							centerDialog();
 						}
 					});
 					
-					$('.dialogModal .dialogNext').bind('click', function () {
+					$('.' + modalClass + ' .dialogNext').bind('click', function () {
 						if (currentDialog < maxDialog) {
 							++currentDialog;
 							if (currentDialog > 0) {
-								$('.dialogModal .dialogPrev').removeClass('notactive');
+								$('.' + modalClass + ' .dialogPrev').removeClass('notactive');
 							}
 							if (currentDialog == maxDialog) {
-								$('.dialogModal .dialogNext').addClass('notactive');
+								$('.' + modalClass + ' .dialogNext').addClass('notactive');
 							}
 							dialogBody.empty().append(_options.html[currentDialog]);
 							centerDialog();
 						}
 					});
 
-					$('.dialogModal .close').bind('click', function () {
+					$('.' + modalClass + ' .close').bind('click', function () {
 						dialogModalClose();
 					});
 
 					$('html').on('click', function (event) {
-						$(this).addClass(dialogModalOpen);
+						$(this).addClass(modalClass + 'Open');
 						if ($('.' + modalClass).is(':hidden')) {
 							dialogModalClose();
 						}
@@ -528,9 +525,9 @@ function hintModal() {
 						if (event.keyCode == 27) {
 							dialogModalClose();
 						} else if (event.keyCode == 37) {
-							$('.dialogModal .dialogPrev').click();
+							$('.' + modalClass + ' .dialogPrev').click();
 						} else if (event.keyCode == 39) {
-							$('.dialogModal .dialogNext').click();
+							$('.' + modalClass + ' .dialogNext').click();
 						}
 					});
 					
@@ -547,7 +544,8 @@ function hintModal() {
 				$('.' + modalClass).removeClass('open');
 				setTimeout(function () {
 					$('.' + modalClass).remove();
-					$('html.' + dialogModalOpen).off('click').removeClass(dialogModalOpen);
+					$('html.' + modalClass + 'Open').off('click, keydown').removeClass(modalClass + 'Open');
+					$('.' + modalClass + ' .dialogPrev, .' + modalClass + ' .dialogNext').off('click');
 				}, animTime);
 			}, animTime);
 		}
