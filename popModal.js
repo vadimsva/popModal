@@ -14,6 +14,7 @@
 					placement: 'bottomLeft',
 					showCloseBut: true,
 					overflowContent: true,
+					onDocumentClickClose : true,
 					okFun: function() {return true;},
 					cancelFun: function() {},
 					onLoad: function() {},
@@ -45,8 +46,9 @@
 					if (elem.next('div').hasClass(modalClass)) {
 						popModalClose();
 					} else {
-						$('html.' + modalClass + 'Open').off('click, keydown').removeClass(modalClass + 'Open');
+						$('html.' + modalClass + 'Open').off('.popModalEvent').removeClass(modalClass + 'Open');
 						$('.' + modalClass).remove();
+						
 
 						if (elem.css('position') == 'fixed') {
 							isFixed = 'position:fixed;';
@@ -101,16 +103,26 @@
 							popModalClose();
 						});
 
-						$('html').on('click', function (event) {
-							$(this).addClass(modalClass + 'Open');
-							if ($('.' + modalClass).is(':hidden')) {
-								popModalClose();
-							}
-							var target = $(event.target);
-							if (!target.parents().andSelf().is('.' + modalClass) && !target.parents().andSelf().is(elem)) {
-								popModalClose();
-							}
-						});
+						if (_options.onDocumentClickClose) {
+							$('html').on('click.popModalEvent', function (event) {
+								$(this).addClass(modalClass + 'Open');
+								if ($('.' + modalClass).is(':hidden')) {
+									popModalClose();
+								}
+								var target = $(event.target);
+								if (!target.parents().andSelf().is('.' + modalClass) && !target.parents().andSelf().is(elem)) {
+								  var zIndex = parseInt(target.parents().filter(function(){
+										return $(this).css('zIndex') !== 'auto';
+									}).first().css('zIndex'));
+									if (zIndex < target.css('zIndex')){
+										zIndex = target.css('zIndex');
+									}
+									if(zIndex <= $('.' + modalClass).css('zIndex')){
+										popModalClose();
+									}
+								}
+							});
+						}
 						
 						$(window).resize(function(){
 							getPlacement();
@@ -137,7 +149,7 @@
 							popModalClose();
 						});
 
-						$('html').keydown(function (event) {
+						$('html').on('keydown.popModalEvent', function (event) {
 							if (event.keyCode == 27) {
 								popModalClose();
 							}
@@ -208,7 +220,7 @@
 				$('.' + modalClass).removeClass('open');
 				setTimeout(function () {
 					$('.' + modalClass).remove();
-					$('html.' + modalClass + 'Open').off('click, keydown').removeClass(modalClass + 'Open');
+					$('html.' + modalClass + 'Open').off('.popModalEvent').removeClass(modalClass + 'Open');
 				}, animTime);
 			}, animTime);
 		}
@@ -389,7 +401,7 @@ function hintModal() {
 				}
 				
 				function _init(){
-					$('html.' + modalClass + 'Open').off('click, keydown').removeClass(modalClass + 'Open');
+					$('html.' + modalClass + 'Open').off('.dialogModalEvent').removeClass(modalClass + 'Open');
 					$('.dialogModal .dialogPrev, .dialogModal .dialogNext').off('click');
 					$('.' + modalClass).remove();
 
@@ -510,7 +522,7 @@ function hintModal() {
 						dialogModalClose();
 					});
 
-					$('html').on('click', function (event) {
+					$('html').on('click.dialogModalEvent', function (event) {
 						$(this).addClass(modalClass + 'Open');
 						if ($('.' + modalClass).is(':hidden')) {
 							dialogModalClose();
@@ -521,7 +533,7 @@ function hintModal() {
 						}
 					});
 					
-					$('html').keydown(function (event) {
+					$('html').on('keydown.dialogModalEvent', function (event) {
 						if (event.keyCode == 27) {
 							dialogModalClose();
 						} else if (event.keyCode == 37) {
@@ -544,7 +556,7 @@ function hintModal() {
 				$('.' + modalClass).removeClass('open');
 				setTimeout(function () {
 					$('.' + modalClass).remove();
-					$('html.' + modalClass + 'Open').off('click, keydown').removeClass(modalClass + 'Open');
+					$('html.' + modalClass + 'Open').off('.dialogModalEvent').removeClass(modalClass + 'Open');
 					$('.' + modalClass + ' .dialogPrev, .' + modalClass + ' .dialogNext').off('click');
 				}, animTime);
 			}, animTime);
