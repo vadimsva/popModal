@@ -14,8 +14,8 @@ This library includes 4 components:<br>
 
 
 <h4>Direct links to libs</h4>
-<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [17.1Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [9.4Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [17.6Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [9.7Kb]<br>
 <a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [8.5Kb]<br>
 <a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [7.9Kb]
 
@@ -37,6 +37,9 @@ Use: <code>'bottomLeft'</code> - default, <code>'bottomCenter'</code>, <code>'bo
 Use: <code>true</code> - default, <code>false</code><br>
 <br>
 <code>overflowContent</code> - limit/no limit height of the content (boolean).<br>
+Use: <code>true</code> - default, <code>false</code><br>
+<br>
+<code>onDocumentClickClose</code> - close popup when click on any place (boolean).<br>
 Use: <code>true</code> - default, <code>false</code><br>
 <br>
 <code>okFun</code> - code execution by clicking on OK button, contained in popup (function).<br>
