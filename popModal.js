@@ -32,7 +32,7 @@
 				} else {
 					overflowContentClass = '';
 				}
-				
+
 				if (isClick) {
 					_init();
 				} else {
@@ -48,8 +48,10 @@
 					} else {
 						$('html.' + modalClass + 'Open').off('.popModalEvent').removeClass(modalClass + 'Open');
 						$('.' + modalClass).remove();
-						
-
+					
+						if(!$.isFunction(_options.html) && _options.html.search(/<form/) != -1){
+							overflowContentClass = '';
+						}
 						if (elem.css('position') == 'fixed') {
 							isFixed = 'position:fixed;';
 						} else {
