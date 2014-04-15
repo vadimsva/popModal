@@ -37,10 +37,11 @@
 
 
 /* notifyModal */
-.notifyModal {position:fixed;z-index:999999;background:rgba(255,255,255,0.5);opacity:0;cursor:pointer;font-family:sans-serif;font-size:14px;transition:all 200ms ease;-webkit-transform:scale(0.95,0.95);-ms-transform:scale(0.95,0.95);transform:scale(0.95,0.95)}
+.notifyModal {position:fixed;z-index:999999;background:rgba(255,255,255,0.5);opacity:0;cursor:pointer;font-family:sans-serif;font-size:14px;transition:all 200ms ease}
 .notifyModal.onTop {top:0;bottom:0;left:0;right:0}
-.notifyModal.open {opacity:1;-webkit-transform:scale(1,1);-ms-transform:scale(1,1);transform:scale(1,1)}
-.notifyModal_content {position:absolute;background:#F9EDBE;width:340px;padding:25px 20px;margin:auto;border:1px solid #CAB388;text-align:center;box-shadow:0 2px 6px rgba(0, 0, 0, 0.3)}
+.notifyModal.open {opacity:1}
+.notifyModal.open .notifyModal_content {-webkit-transform:scale(1,1);-ms-transform:scale(1,1);transform:scale(1,1)}
+.notifyModal_content {position:absolute;background:#F9EDBE;width:340px;padding:25px 20px;margin:auto;border:1px solid #CAB388;text-align:center;box-shadow:0 2px 6px rgba(0, 0, 0, 0.3);transition:all 200ms ease;-webkit-transform:scale(0.95,0.95);-ms-transform:scale(0.95,0.95);transform:scale(0.95,0.95)}
 .notifyModal.leftTop {top:0;left:0}
 .notifyModal.centerTop {top:0;left:0;right:0}
 .notifyModal.rightTop {top:0;right:0}
