@@ -2,12 +2,15 @@
 /* popModal */
 (function ($) {
 	$.fn.popModal = function(method){
-		var elem = $(this);
-		var isClick = checkEvent(elem, 'click');
-		var isFixed, overflowContentClass, closeBut; 
-		var elemClass = 'popModal';
-		var _options;
-		var animTime;
+		var elem = $(this),
+		elemObj,
+		isClick = checkEvent(elem, 'click'),
+		isFixed,
+		overflowContentClass,
+		closeBut,
+		elemClass = 'popModal',
+		_options,
+		animTime;
 	
 		var methods = {
 			init : function( params ) {
@@ -50,7 +53,7 @@
 					} else {
 						$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
 						$('.' + elemClass).remove();
-					
+
 						if(!$.isFunction(_options.html) && _options.html.search(/<form/) != -1){
 							overflowContentClass = '';
 						}
@@ -76,8 +79,9 @@
 						}
 						elem.after(tooltipContainer);
 
-						animTime = $('.' + elemClass).css('animationDuration');
-						if (animTime != undefined && animTime != '0s') {
+						elemObj = $('.' + elemClass);
+						animTime = elemObj.css('animationDuration');
+						if (animTime != undefined) {
 							animTime = animTime.replace('s', '') * 1000;
 						} else {
 							animTime = 0;
@@ -87,7 +91,7 @@
 							_options.onLoad();
 						}
 
-						$('.' + elemClass).on('destroyed', function () {
+						elemObj.on('destroyed', function () {
 							if (_options.onClose && $.isFunction(_options.onClose)) {
 								_options.onClose();
 							}
@@ -96,17 +100,13 @@
 						getPlacement();
 						
 						if (_options.overflowContent) {
-							$('.' + elemClass).append($('.' + elemClass).find('.' + elemClass + '_content .' + elemClass + '_footer'));
+							elemObj.append(elemObj.find('.' + elemClass + '_content .' + elemClass + '_footer'));
 						}
-
-						$('.' + elemClass + ' .close').bind('click', function () {
-							popModalClose();
-						});
 
 						if (_options.onDocumentClickClose) {
 							$('html').on('click.' + elemClass + 'Event', function (event) {
 								$(this).addClass(elemClass + 'Open');
-								if ($('.' + elemClass).is(':hidden')) {
+								if (elemObj.is(':hidden')) {
 									popModalClose();
 								}
 								var target = $(event.target);
@@ -124,7 +124,7 @@
 									if (zIndex < target_zIndex) {
 										zIndex = target_zIndex;
 									}
-									if (zIndex <= $('.' + elemClass).css('zIndex')) {
+									if (zIndex <= elemObj.css('zIndex')) {
 										popModalClose();
 									}
 								}
@@ -135,11 +135,15 @@
 							getPlacement();
 						});
 						
-						$('.' + elemClass + ' [data-popModalBut="close"]').bind('click', function () {
+						elemObj.find('.close').bind('click', function () {
+							popModalClose();
+						});
+						
+						elemObj.find('[data-popModalBut="close"]').bind('click', function () {
 							popModalClose();
 						});
 
-						$('.' + elemClass + ' [data-popModalBut="ok"]').bind('click', function (event) {
+						elemObj.find('[data-popModalBut="ok"]').bind('click', function (event) {
 							var ok;
 							if (_options.onOkBut && $.isFunction(_options.onOkBut)) {
 								ok = _options.onOkBut(event);
@@ -149,7 +153,7 @@
 							}
 						});
 
-						$('.' + elemClass + ' [data-popModalBut="cancel"]').bind('click', function () {
+						elemObj.find('[data-popModalBut="cancel"]').bind('click', function () {
 							if (_options.onCancelBut && $.isFunction(_options.onCancelBut)) {
 								_options.onCancelBut();
 							}
@@ -173,56 +177,51 @@
 					eMTop = elem.css('marginTop'),
 					eHeight = elem.outerHeight(),
 					eWidth = elem.outerWidth(),
-					eClassWidth = $('.' + elemClass).outerWidth(),
-					eClassHeight = $('.' + elemClass).outerHeight()
+					eClassWidth = elemObj.outerWidth(),
+					eClassHeight = elemObj.outerHeight()
 
 					switch (_options.placement){
 						case ('bottomLeft'):
-							$('.' + elemClass).css({
+							elemObj.css({
 								left: eLeft + parseInt(eMLeft) + 'px'
 							}).addClass('fadeInBottom');
 						break;
 						case ('bottomRight'):
-							$('.' + elemClass).css({
-								left: eLeft + parseInt(eMLeft) + eWidth - eClassWidth + 'px',
-								width: eClassWidth + 'px'
+							elemObj.css({
+								left: eLeft + parseInt(eMLeft) + eWidth - eClassWidth + 'px'
 							}).addClass('fadeInBottom');
 						break;
 						case ('bottomCenter'):
-							$('.' + elemClass).css({
-								left: eLeft + parseInt(eMLeft) + (eWidth - eClassWidth) / 2 + 'px',
-								width: eClassWidth + 'px'
+							elemObj.css({
+								left: eLeft + parseInt(eMLeft) + (eWidth - eClassWidth) / 2 + 'px'
 							}).addClass('fadeInBottom');
 						break;
 						case ('leftTop'):
-							$('.' + elemClass).css({
-								top: eval(eTop + parseInt(eMTop)) + 'px',
-								left: eLeft + parseInt(eMLeft) - eClassWidth - 10 + 'px',
-								width: eClassWidth + 'px'
+							elemObj.css({
+								top: eTop + parseInt(eMTop) + 'px',
+								left: eLeft + parseInt(eMLeft) - eClassWidth - 10 + 'px'
 							}).addClass('fadeInLeft');
 						break;
 						case ('rightTop'):
-							$('.' + elemClass).css({
-								top: eval(eTop + parseInt(eMTop)) + 'px',
-								left: eLeft + parseInt(eMLeft) + eWidth + 10 + 'px',
-								width: eClassWidth + 'px'
+							elemObj.css({
+								top: eTop + parseInt(eMTop) + 'px',
+								left: eLeft + parseInt(eMLeft) + eWidth + 10 + 'px'
 							}).addClass('fadeInRight');
 						break;
 						case ('leftCenter'):
-							$('.' + elemClass).css({
-								top: eval(eTop + parseInt(eMTop) + eHeight / 2 - eClassHeight / 2) + 'px',
-								left: eLeft + parseInt(eMLeft) - eClassWidth - 10 + 'px',
-								width: eClassWidth + 'px'
+							elemObj.css({
+								top: eTop + parseInt(eMTop) + eHeight / 2 - eClassHeight / 2 + 'px',
+								left: eLeft + parseInt(eMLeft) - eClassWidth - 10 + 'px'
 							}).addClass('fadeInLeft');
 						break;
 						case ('rightCenter'):
-							$('.' + elemClass).css({
-								top: eval(eTop + parseInt(eMTop) + eHeight / 2 - eClassHeight / 2) + 'px',
-								left: eLeft + parseInt(eMLeft) + eWidth + 10 + 'px',
-								width: eClassWidth + 'px'
+							elemObj.css({
+								top: eTop + parseInt(eMTop) + eHeight / 2 - eClassHeight / 2 + 'px',
+								left: eLeft + parseInt(eMLeft) + eWidth + 10 + 'px'
 							}).addClass('fadeInRight');
 						break;
 					}
+					elemObj.width(eClassWidth);
 				}
 				
 			},
@@ -232,11 +231,13 @@
 		};
 		
 		function popModalClose() {
-			var animClassOld = $('.' + elemClass).attr('class');
-			var animClassNew = animClassOld.replace('fadeIn', 'fadeOut');
-			$('.' + elemClass).removeClass(animClassOld).addClass(animClassNew);
+			var elemObj = $('.' + elemClass),
+			animClassOld = elemObj.attr('class'),
+			animClassNew = animClassOld.replace('fadeIn', 'fadeOut');
+			elemObj.removeClass(animClassOld).addClass(animClassNew);
+			console.log(animTime)
 			setTimeout(function () {
-				$('.' + elemClass).remove();
+				elemObj.remove();
 				$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
 			}, animTime);
 		}
@@ -297,11 +298,12 @@
 /* notifyModal */
 (function ($) {
 	$.fn.notifyModal = function(method){
-		var elem = $(this);
-		var notifyModal = 'notifyModal';
-		var onTopClass;
-		var _options;
-		var animTime;
+		var elem = $(this),
+		elemObj,
+		notifyModal = 'notifyModal',
+		onTopClass,
+		_options,
+		animTime;
 		
 		var methods = {
 			init : function( params ) {
@@ -329,18 +331,19 @@
 				notifyContainer.append(notifyContent);
 				$('body').append(notifyContainer);
 
-				animTime = $('.' + notifyModal).css('transitionDuration');
-				if (animTime != undefined && animTime != '0s') {
+				elemObj = $('.' + notifyModal);
+				animTime = elemObj.css('transitionDuration');
+				if (animTime != undefined) {
 					animTime = animTime.replace('s', '') * 1000;
 				} else {
 					animTime = 0;
 				}
 				
 				setTimeout(function () {
-					$('.' + notifyModal).addClass('open');
+					elemObj.addClass('open');
 				}, animTime);
 
-				$('.' + notifyModal).click(function () {
+				elemObj.click(function () {
 					notifyModalClose();
 				});
 				if (_options.duration != -1) {
@@ -354,10 +357,11 @@
 		};
 		
 		function notifyModalClose() {
+			var elemObj = $('.' + notifyModal);
 			setTimeout(function () {
-				$('.' + notifyModal).removeClass('open');
+				elemObj.removeClass('open');
 				setTimeout(function () {
-					$('.' + notifyModal).remove();
+					elemObj.remove();
 					if (_options.duration != -1) {
 						clearTimeout(notifDur);
 					}
@@ -406,11 +410,12 @@
 		var methods = {
 			init : function( params ) {
 		
-				var hintModal = 'hintModal';
-				var el = $('.' + hintModal + '_container');
+				var hintModal = 'hintModal',
+				el = $('.' + hintModal + '_container'),
+				elObj = $('.' + hintModal);
 				el.addClass('animated fadeInBottom');
 
-				$('.' + hintModal).mouseenter(function () {
+				elObj.mouseenter(function () {
 					var elCur = $(this).find('.' + hintModal + '_container');
 					el.css({display: 'none'});
 					var animClassOld = elCur.attr('class');
@@ -418,7 +423,7 @@
 					elCur.removeClass(animClassOld).addClass(animClassNew).css({display: 'block'});
 				});
 
-				$('.' + hintModal).mouseleave(function () {
+				elObj.mouseleave(function () {
 					var animClassOld = el.attr('class');
 					var animClassNew = animClassOld.replace('fadeIn', 'fadeOut');
 					el.removeClass(animClassOld).addClass(animClassNew).css({display: 'none'});
@@ -442,10 +447,12 @@
 /* dialogModal */
 (function ($) {
 	$.fn.dialogModal = function(method){
-		var elem = $(this);	
-		var elemClass = 'dialogModal';
-		var _options;
-		var animTime;
+		var elem = $(this),
+		elemObj,
+		elemContObj,
+		elemClass = 'dialogModal',
+		_options,
+		animTime;
 	
 		var methods = {
 			init : function( params ) {
@@ -463,23 +470,25 @@
 					$('.dialogModal .dialogPrev, .dialogModal .dialogNext').off('click');
 					$('.' + elemClass).remove();
 
-					var dialogMain = $('<div class="' + elemClass + '"></div>');
-					var dialogContainer = $('<div class="' + elemClass + '_container"></div>');
-					var dialogCloseBut = $('<button type="button" class="close">&times;</button>');
-					var dialogBody = $('<div class="' + elemClass + '_body"></div>');
+					var currentDialog = 0,
+					maxDialog = elem.length - 1,
+					dialogMain = $('<div class="' + elemClass + '"></div>'),
+					dialogContainer = $('<div class="' + elemClass + '_container"></div>'),
+					dialogCloseBut = $('<button type="button" class="close">&times;</button>'),
+					dialogBody = $('<div class="' + elemClass + '_body"></div>');
 					dialogMain.append(dialogContainer);
 					dialogContainer.append(dialogCloseBut, dialogBody);
-					
-					var currentDialog = 0;
-					var maxDialog = elem.length - 1;
 					dialogBody.append(elem[currentDialog].innerHTML);
+					
 					if (maxDialog > 0) {
 						dialogContainer.prepend($('<div class="dialogPrev notactive"></div><div class="dialogNext"></div>'));
 					}
 					$('html').append(dialogMain);
+					elemObj = $('.' + elemClass);
+					elemContObj = $('.' + elemClass + '_container');
 					
-					animTime = $('.' + elemClass + '_container').css('transitionDuration');
-					if (animTime != undefined && animTime != '0s') {
+					animTime = elemContObj.css('transitionDuration');
+					if (animTime != undefined) {
 						animTime = animTime.replace('s', '') * 1000;
 					} else {
 						animTime = 0;
@@ -489,29 +498,29 @@
 						_options.onLoad();
 					}
 
-					$('.' + elemClass).on('destroyed', function () {
+					elemObj.on('destroyed', function () {
 						if (_options.onClose && $.isFunction(_options.onClose)) {
 							_options.onClose();
 						}
 					});
 
 					function centerDialog() {
-						var dialogHeight = $('.' + elemClass + '_container').outerHeight();
-						var windowHeight = $(window).height();
+						var dialogHeight = elemContObj.outerHeight(),
+						windowHeight = $(window).height();
 						if (windowHeight > dialogHeight + 80) {
-							$('.' + elemClass + '_container').css({
+							elemContObj.css({
 								marginTop: ($(window).height() - dialogHeight) / 2 + 'px'
 							});	
 						} else {
-							$('.' + elemClass + '_container').css({
+							elemContObj.css({
 								marginTop: '60px'
 							});						
 						}
 						
 						setTimeout(function () {
-							$('.' + elemClass).addClass('open');
-							$('.' + elemClass + '_container').css({
-								marginTop: parseInt($('.' + elemClass + '_container').css('marginTop')) - 20 + 'px'
+							elemObj.addClass('open');
+							elemContObj.css({
+								marginTop: parseInt(elemContObj.css('marginTop')) - 20 + 'px'
 							});	
 						}, animTime);
 						
@@ -519,11 +528,11 @@
 					}
 					
 					function bindFooterButtons() {
-						$('.' + elemClass + ' [data-dialogModalBut="close"]').bind('click', function () {
+						elemObj.find('[data-dialogModalBut="close"]').bind('click', function () {
 							dialogModalClose();
 						});
 
-						$('.' + elemClass + ' [data-dialogModalBut="ok"]').bind('click', function (event) {
+						elemObj.find('[data-dialogModalBut="ok"]').bind('click', function (event) {
 							var ok;
 							if (_options.onOkBut && $.isFunction(_options.onOkBut)) {
 								ok = _options.onOkBut(event);
@@ -533,7 +542,7 @@
 							}
 						});
 
-						$('.' + elemClass + ' [data-dialogModalBut="cancel"]').bind('click', function () {
+						elemObj.find('[data-dialogModalBut="cancel"]').bind('click', function () {
 							if (_options.onCancelBut && $.isFunction(_options.onCancelBut)) {
 								_options.onCancelBut();
 							}
@@ -543,35 +552,35 @@
 					
 					centerDialog();
 
-					$('.' + elemClass + ' .dialogPrev').bind('click', function () {
+					elemObj.find('.dialogPrev').bind('click', function () {
 						if (currentDialog > 0) {
 							--currentDialog;
 							if (currentDialog < maxDialog) {
-								$('.' + elemClass + ' .dialogNext').removeClass('notactive');
+								elemObj.find('.dialogNext').removeClass('notactive');
 							}
 							if (currentDialog == 0) {
-								$('.' + elemClass + ' .dialogPrev').addClass('notactive');
+								elemObj.find('.dialogPrev').addClass('notactive');
 							}
 							dialogBody.empty().append(elem[currentDialog].innerHTML);
 							centerDialog();
 						}
 					});
 					
-					$('.' + elemClass + ' .dialogNext').bind('click', function () {
+					elemObj.find('.dialogNext').bind('click', function () {
 						if (currentDialog < maxDialog) {
 							++currentDialog;
 							if (currentDialog > 0) {
-								$('.' + elemClass + ' .dialogPrev').removeClass('notactive');
+								elemObj.find('.dialogPrev').removeClass('notactive');
 							}
 							if (currentDialog == maxDialog) {
-								$('.' + elemClass + ' .dialogNext').addClass('notactive');
+								elemObj.find('.dialogNext').addClass('notactive');
 							}
 							dialogBody.empty().append(elem[currentDialog].innerHTML);
 							centerDialog();
 						}
 					});
 
-					$('.' + elemClass + ' .close').bind('click', function () {
+					elemObj.find('.close').bind('click', function () {
 						dialogModalClose();
 					});
 					
@@ -579,9 +588,9 @@
 						if (event.keyCode == 27) {
 							dialogModalClose();
 						} else if (event.keyCode == 37) {
-							$('.' + elemClass + ' .dialogPrev').click();
+							elemObj.find('.dialogPrev').click();
 						} else if (event.keyCode == 39) {
-							$('.' + elemClass + ' .dialogNext').click();
+							elemObj.find('.dialogNext').click();
 						}
 					});
 					
@@ -594,12 +603,14 @@
 		};
 		
 		function dialogModalClose() {
+		var elemObj = $('.' + elemClass);
 			setTimeout(function () {
-				$('.' + elemClass).removeClass('open');
+				elemObj.removeClass('open');
 				setTimeout(function () {
-					$('.' + elemClass).remove();
+					elemObj.remove();
 					$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
-					$('.' + elemClass + ' .dialogPrev, .' + elemClass + ' .dialogNext').off('click');
+					elemObj.find('.dialogPrev').off('click');
+					elemObj.find('.dialogNext').off('click');
 				}, animTime);
 			}, animTime);
 		}
