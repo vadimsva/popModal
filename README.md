@@ -14,10 +14,10 @@ This library includes 4 components:<br>
 
 
 <h4>Direct links to libs</h4>
-<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [17.6Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [9.7Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [8.5Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [7.9Kb]
+<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [18.2Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [10Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [10Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [9Kb]
 
 
 Documentation
@@ -42,13 +42,13 @@ Use: <code>true</code> - default, <code>false</code><br>
 <code>onDocumentClickClose</code> - close popup when click on any place (boolean).<br>
 Use: <code>true</code> - default, <code>false</code><br>
 <br>
-<code>okFun</code> - code execution by clicking on OK button, contained in popup (function).<br>
+<code>onOkBut</code> - code execution by clicking on OK button, contained in popup (function).<br>
 Use: <code>function(){}</code>.<br>
-For work you need put an attribute to element - <code>data-popmodal="ok"</code>. <i>Popup will close automatically</i><br>
+For work you need put an attribute to element - <code>data-popModalBut="ok"</code>. <i>Popup will close automatically</i><br>
 <br>
-<code>cancelFun</code> - code execution by clicking on Cancel button, contained in popup (function).<br>
+<code>onCancelBut</code> - code execution by clicking on Cancel button, contained in popup (function).<br>
 Use: <code>function(){}</code>.<br>
-For work you need put an attribute to element - <code>data-popmodal="cancel"</code>. <i>Popup will close automatically</i><br>
+For work you need put an attribute to element - <code>data-popModalBut="cancel"</code>. <i>Popup will close automatically</i><br>
 <br>
 <code>onLoad</code> - code execution before popup shows (function).<br>
 Use: <code>function(){}</code><br>
@@ -74,20 +74,22 @@ or use
 $(el).popModal({param1 : value1, param2 : value2, ...});
 </pre>
 
+Also you may use inline bind
+<pre>
+&lt;button id="elem" data-popModalBind="#content" data-placement="bottomLeft" data-showCloseBut="true" data-overflowContent="true" data-onDocumentClickClose="true"&gt;example&lt;/button&gt;
+</pre>
+
 <i>Popup is dynamically created. When you create the second popup, the first will be deleted!</i><br>
-<i>For create footer in popup, use element div with <code>class="popModal_footer"</code>. You can use attribute for element <code>data-popmodal="close"</code> for close popup, also you can press ESC, or click on any place.</i>
+<i>For create footer in popup, use element div with <code>class="popModal_footer"</code>. You can use attribute for element <code>data-popModalBut="close"</code> for close popup, also you can press ESC, or click on any place.</i>
 
 
 <br><br>
 
 
 <h3>notifyModal</h3>
-<p><i>notifyModal({param1 : value1, param2 : value2, ...});</i></p>
+<p><i>$(content).notifyModal({param1 : value1, param2 : value2, ...});</i></p>
 
 <h5>Parameters</h5>
-<code>html</code> - static html, dinamic html or string (object, string) - <b>required</b><br>
-Use: <code>el.append(html)</code>, <code>$(el).html()</code> or <code>'text'</code><br>
-<br>
 <code>duration</code> - duration for show notification in ms (integer)<br>
 Use: <code>2500</code> - default, <code>-1</code> for infinity<br>
 <br>
@@ -119,19 +121,16 @@ To change position, add additional class <code>class="hintModal_center"</code> o
 
 
 <h3>dialogModal</h3>
-<p><i>$(el).dialogModal({param1 : value1, param2 : value2, ...});</i></p>
+<p><i>$(content).dialogModal({param1 : value1, param2 : value2, ...});</i></p>
 
 <h5>Parameters</h5>
-<code>html</code> - static html, dinamic html, string, array (object, string, array). Use array if you want show collection of content, like pages in one modal dialog.<br>
-Use: <code>el.append(html)</code>, <code>$(el).html()</code>, <code>'text'</code> or <code>[ $(el1).html(), $(el2).html() ]</code><br>
-<br>
-<code>okFun</code> - code execution by clicking on OK button, contained in dialog (function).<br>
+<code>onOkBut</code> - code execution by clicking on OK button, contained in dialog (function).<br>
 Use: <code>function(){}</code>.<br>
-For work you need put an attribute to element - <code>data-dialogmodal="ok"</code>. <i>Dialog will close automatically</i><br>
+For work you need put an attribute to element - <code>data-dialogModalBut="ok"</code>. <i>Dialog will close automatically</i><br>
 <br>
-<code>cancelFun</code> - code execution by clicking on Cancel button, contained in dialog (function).<br>
+<code>onCancelBut</code> - code execution by clicking on Cancel button, contained in dialog (function).<br>
 Use: <code>function(){}</code>.<br>
-For work you need put an attribute to element - <code>data-dialogmodal="cancel"</code>. <i>Dialog will close automatically</i><br>
+For work you need put an attribute to element - <code>data-dialogModalBut="cancel"</code>. <i>Dialog will close automatically</i><br>
 <br>
 <code>onLoad</code> - code execution before dialog shows (function).<br>
 Use: <code>function(){}</code><br>
@@ -149,18 +148,19 @@ Use: <code>$('html').dialogModal("hide");</code><br>
 You may use external click function for element
 <pre>
 $(el).click(function(){
-  $(el).dialogModal({param1 : value1, param2 : value2, ...});
+  $(content).dialogModal({param1 : value1, param2 : value2, ...});
 });
 </pre>
 or use
 <pre>
-$(el).dialogModal({param1 : value1, param2 : value2, ...});
+$(content).dialogModal({param1 : value1, param2 : value2, ...});
 </pre>
 
 <i>Dialog is dynamically created. When you create the second dialog, the first will be deleted!</i><br>
 <i>You need to create div elements with classes <code>class="dialogModal_header"</code> - for show header,
 <code>class="dialogModal_content"</code> - for show content, and <code>class="dialogModal_footer"</code> - for show footer.</i><br>
-<i>You can use attribute for element <code>data-dialogmodal="close"</code> for close dialog, also you can press ESC.</i>
+<i>You can use attribute for element <code>data-dialogModalBut="close"</code> for close dialog, also you can press ESC.</i>
+<i>To show collection of content, like pages in one modal dialog, use class for this dialogs.</i>
 <i>If you want to use collection of content, you can change content by clicking to arrows, or press left/right arrow on keayboard.</i>
 
 
@@ -174,8 +174,8 @@ $(el).popModal({
   placement : 'bottomLeft',
   showCloseBut : true,
   overflowContent : true,
-  okFun : function(){},
-  cancelFun : function(){},
+  onOkBut : function(){},
+  onCancelBut : function(){},
   onLoad : function(){},
   onClose : function(){}
 });
@@ -193,8 +193,7 @@ $(el).popModal({
 
 <h3>notifyModal</h3>
 <pre>
-notifyModal({
-  html : $(el).html(),
+$(content).notifyModal({
   duration : 2500,
   placement : 'center',
   onTop : true
@@ -215,15 +214,5 @@ notifyModal({
 
 <h3>dialogModal</h3>
 <pre>
-$(el).dialogModal({
-  html : $(content).html()
-});
-</pre>
-<pre>
-$(el).dialogModal({
-  html : [
-    $(content1).html(),
-    $(content2).html()
-  ]
-});
+$(content).dialogModal({});
 </pre>
