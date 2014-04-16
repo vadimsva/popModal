@@ -235,7 +235,6 @@
 			animClassOld = elemObj.attr('class'),
 			animClassNew = animClassOld.replace('fadeIn', 'fadeOut');
 			elemObj.removeClass(animClassOld).addClass(animClassNew);
-			console.log(animTime)
 			setTimeout(function () {
 				elemObj.remove();
 				$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
