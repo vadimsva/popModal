@@ -21,9 +21,9 @@ body {background:#fafafa}
 .exampleContainer .exampleLive > button {padding:6px 12px;cursor:pointer;background:#4081BE;border:0;color:#fff;border-radius:3px;text-transform:uppercase;font-weight:bold;font-size:13px}
 .exampleContainer .exampleLive > button:hover {background:#3772A8}
 .exampleContainer .exampleCode {background:#2b2f3b;padding:20px}
-.exampleContainer .exampleCode code {white-space:initial}
+.exampleContainer .exampleCode code {white-space:pre-line}
 .exampleContainer .exampleCode code * {font-family:consolas;font-size:13px}
-.exampleContainer .exampleCode code > p {line-height:20px;color:#7993ad}
+.exampleContainer .exampleCode code > p {line-height:20px;color:#7993ad;display:inline-block}
 .exampleContainer .exampleCode code .tab {padding-left:15px}
 .exampleContainer .exampleCode code .tab2 {padding-left:30px}
 .exampleContainer .exampleCode code .tab3 {padding-left:45px}
@@ -41,7 +41,7 @@ body {background:#fafafa}
 <div id="page">
 
 <div id="copyrightBlock">
-	<div id="version" title="Current version/date">15.04.14</div>
+	<div id="version" title="Current version/date">28.04.14</div>
 	<a href="https://github.com/vadimsva/popModal" id="gitHubLink">GitHub Repo</a>
 </div>
 
@@ -57,7 +57,6 @@ body {background:#fafafa}
 			<p class="tab"><span class="key">html</span> : <span class="val">$('#content').html()</span>,</p>
 			<p class="tab"><span class="key">placement</span> : <span class="val">'bottomLeft'</span>,</p>
 			<p class="tab"><span class="key">showCloseBut</span> : <span class="val">true</span>,</p>
-			<p class="tab"><span class="key">overflowContent</span> : <span class="val">true</span>,</p>
 			<p class="tab"><span class="key">onDocumentClickClose</span> : <span class="val">true</span>,</p>
 			<p class="tab"><span class="key">onOkBut</span> : <span class="val">function(){ }</span>,</p>
 			<p class="tab"><span class="key">onCancelBut</span> : <span class="val">function(){ }</span>,</p>
@@ -89,12 +88,7 @@ body {background:#fafafa}
 			<button id="popModal_ex3" data-popModalBind="#content">Example</button>
 		</div>
 		<div class="exampleCode"><pre><code>
-			<p>&lt;<span class="tag">button</span> <span class="key">id</span>=<span class="val">"elem"</span>
-			<span class="key">data-popModalBind</span>=<span class="val">"#content"</span>
-			<span class="key">data-placement</span>=<span class="val">"bottomLeft"</span>
-			<span class="key">data-showCloseBut</span>=<span class="val">"true"</span>
-			<span class="key">data-overflowContent</span>=<span class="val">"true"</span>
-			<span class="key">data-onDocumentClickClose</span>=<span class="val">"true"</span>&gt;<span class="text">example</span>&lt;/<span class="tag">button</span>&gt;</p>
+			<p>&lt;<span class="tag">button</span> <span class="key">id</span>=<span class="val">"elem"</span> <span class="key">data-popModalBind</span>=<span class="val">"#content"</span> <span class="key">data-placement</span>=<span class="val">"bottomLeft"</span> <span class="key">data-showCloseBut</span>=<span class="val">"true"</span> <span class="key">data-overflowContent</span>=<span class="val">"true"</span> <span class="key">data-onDocumentClickClose</span>=<span class="val">"true"</span>&gt;<span class="text">example</span>&lt;/<span class="tag">button</span>&gt;</p>
 		</code></pre></div>
 	</div>
 
@@ -164,6 +158,19 @@ body {background:#fafafa}
 		</code></pre></div>
 	</div>
 
+	<br><br>
+	<h2>titleModal</h2>
+	
+	<div class="exampleContainer">
+		<div class="exampleLive">
+			<div class="exampleLiveTitle">default params</div>
+			<button id="titleModal_ex1" title="Title" data-titleModal="init">Example</button>
+		</div>
+		<div class="exampleCode"><pre><code>
+			<p>&lt;<span class="tag">button</span> <span class="key">title</span>=<span class="val">"Title"</span> <span class="key">data-titleModal</span>=<span class="val">"init"</span> <span class="key">data-placement</span>=<span class="val">"bottom"</span>&gt;<span class="text">Example</span>&lt;/<span class="tag">button</span>&gt;</p>
+		</code></pre></div>
+	</div>
+	
 
 <div id="content" style="display:none">
 	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
@@ -208,7 +215,6 @@ $(function(){
 		html : $('#content').html(),
 		placement : 'bottomLeft',
 		showCloseBut : true,
-		overflowContent : true,
 		onDocumentClickClose : true,
 		okFun : function(){},
 		cancelFun : function(){},
@@ -217,7 +223,7 @@ $(function(){
 	});
 	
 	$('#popModal_ex2').popModal({
-		html : function(callback) {
+		html : function(callback, success) {
 			$.ajax({url:'ajax.html'}).done(function(content){
 				callback(content);
 			});
