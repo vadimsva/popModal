@@ -1,11 +1,12 @@
 popModal
 ========
 
-This library includes 4 components:<br>
+This library includes 5 components:<br>
 <b>popModal</b> - popup window, displayed near the parent element. Invoked by clicking on an element<br>
 <b>notifyModal</b> - notification popup, displayed on top of all elements. Invoked by event and hide after a certain time<br>
 <b>hintModal</b> - tooltip, displayed near the parent element. Invoked on mouse hover on an element and hide after element lost focus<br>
 <b>dialogModal</b> - modal dialog, displayed on top of all elements. Invoked by clicking on an element<br>
+<b>titleModal</b> - tooltip, displayed near the parent element, replace native title. Invoked on mouse hover on an element and hide after element lost focus<br>
 
 <i>For work required only jQuery, other libraries are not required.</i>
 <br>
@@ -14,10 +15,10 @@ This library includes 4 components:<br>
 
 
 <h4>Direct links to libs</h4>
-<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [18.2Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [10Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [10Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [9Kb]
+<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [22.9Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [11.2Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [12.6Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [11.4Kb]
 
 
 Documentation
@@ -34,9 +35,6 @@ Use: <code>el.append(html)</code>, <code>$(el).html()</code>, <code>'text'</code
 Use: <code>'bottomLeft'</code> - default, <code>'bottomCenter'</code>, <code>'bottomRight'</code>, <code>'leftTop'</code>, <code>'leftCenter'</code>, <code>'rightTop'</code>, <code>'rightCenter'</code><br>
 <br>
 <code>showCloseBut</code> - show/hide close button on popup (boolean).<br>
-Use: <code>true</code> - default, <code>false</code><br>
-<br>
-<code>overflowContent</code> - limit/no limit height of the content (boolean).<br>
 Use: <code>true</code> - default, <code>false</code><br>
 <br>
 <code>onDocumentClickClose</code> - close popup when click on any place (boolean).<br>
@@ -164,6 +162,20 @@ $(content).dialogModal({param1 : value1, param2 : value2, ...});
 <i>If you want to use collection of content, you can change content by clicking to arrows, or press left/right arrow on keayboard.</i>
 
 
+<br><br>
+
+
+<h3>titleModal</h3>
+
+Use: You need to put attribute title and <code>data-titleModal="title"</code>.<br>
+titleModal will show by default at the bottom, to change position, put attribute <code>data-placement="top"</code>. You can use <code>top</code>, <code>left</code> or <code>right</code>.
+
+<h5>Notes</h5>
+<i>titleModal will be called automatically if document have elements with the attribute title and  "data-titleModal='init'".</i>
+
+
+
+
 Examples
 ========
 
@@ -215,4 +227,10 @@ $(content).notifyModal({
 <h3>dialogModal</h3>
 <pre>
 $(content).dialogModal({});
+</pre>
+
+
+<h3>titleModal</h3>
+<pre>
+&lt;div title="Title text" data-titleModal="init" data-placement="top"&gt;Text&lt;/div&gt;
 </pre>
