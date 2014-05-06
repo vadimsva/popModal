@@ -15,8 +15,8 @@ This library includes 5 components:<br>
 
 
 <h4>Direct links to libs</h4>
-<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [22.9Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [11.2Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [27Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [12.2Kb]<br>
 <a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [12.6Kb]<br>
 <a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [11.4Kb]
 
@@ -106,7 +106,7 @@ With <code>placement : 'center'</code>, <code>onTop</code> will work as <code>tr
 
 
 <h3>hintModal</h3>
-<p><i>hintModal();</i></p>
+<p><i>$('.hintModal').hintModal();</i></p>
 
 Use: You need to create html with <code>class="hintModal"</code> as parent element and put in this element div with <code>class="hintModal_container"</code>, put here html, to be displayed.<br>
 To change position, add additional class <code>class="hintModal_center"</code> or <code>class="hintModal_right"</code> to parent element.<br>
