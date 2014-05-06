@@ -1,4 +1,4 @@
-/* popModal - 28.04.14 */
+/* popModal - 06.05.14 */
 /* popModal */
 (function($) {
 	$.fn.popModal = function(method) {
@@ -12,13 +12,20 @@
 		_options,
 		animTime,
 		effectIn = 'fadeIn',
-		effectOut = 'fadeOut';
+		effectOut = 'fadeOut',
+		bl = 'bottomLeft',
+		bc = 'bottomCenter',
+		br = 'bottomRight',
+		lt = 'leftTop',
+		lc = 'leftCenter',
+		rt = 'rightTop',
+		rc = 'rightCenter';
 	
 		var methods = {
 			init : function(params) {
 				var _defaults = {
 					html: '',
-					placement: 'bottomLeft',
+					placement: bl,
 					showCloseBut: true,
 					onDocumentClickClose : true,
 					onOkBut: function() {return true;},
@@ -27,7 +34,7 @@
 					onClose: function() {}
 				};
 				_options = $.extend(_defaults, params);
-
+				
 				if (isClick) {
 					_init();
 				} else {
@@ -53,7 +60,7 @@
 						if (elem.css('position') == 'fixed') {
 							isFixed = 'position:fixed;';
 						}
-						var tooltipContainer = $('<div class="' + elemClass + ' ' + _options.placement + ' animated" style="' + isFixed + '"></div>');
+						var tooltipContainer = $('<div class="' + elemClass + ' animated" style="' + isFixed + '"></div>');
 						var tooltipContent = $('<div class="' + elemClass + '_content ' + elemClass + '_contentOverflow"></div>');
 						tooltipContainer.append(closeBut, tooltipContent);
 						
@@ -63,12 +70,11 @@
 							_options.html(function(loadedContent) {
 								tooltipContent.empty().append(loadedContent);
 								elemObj = $('.' + elemClass);
+								expandView = true;
 								if (tooltipContent[0].innerHTML.search(/<form/) != -1) {
 									elemObj.find('.' + elemClass + '_content').removeClass(elemClass + '_contentOverflow');
-									expandView = true;
 								} else {
 									elemObj.find('.' + elemClass + '_content').addClass(elemClass + '_contentOverflow');
-									getView();
 								}
 								getPlacement();
 							});
@@ -80,8 +86,15 @@
 						elemObj = $('.' + elemClass);
 						elemObj.append(elemObj.find('.' + elemClass + '_content .' + elemClass + '_footer'));
 						
-						if (!$.isFunction(_options.html) && _options.html.search(/<form/) != -1) {
-							elemObj.find('.' + elemClass + '_content').removeClass(elemClass + '_contentOverflow');
+						if (!$.isFunction(_options.html)) {
+							if ($.type(_options.html) == 'string') {
+								var htmlStr = _options.html;
+							} else {
+								var htmlStr = _options.html.parent().html();
+							}
+							if (htmlStr.search(/<form/) != -1 || elemObj.find('.' + elemClass + '_content').outerHeight() < 200) {
+								elemObj.find('.' + elemClass + '_content').removeClass(elemClass + '_contentOverflow');
+							}
 						}
 
 						if (_options.onLoad && $.isFunction(_options.onLoad)) {
@@ -172,10 +185,8 @@
 		
 		function getView() {
 			expandView = true;
-			if (elem.parent().css('position') == 'absolute' || elem.parent().css('position') == 'fixed') {
-			
-			} else {
-				if (elemObj.find('.' + elemClass + '_content').width() < 270) {
+			if (elem.parent().css('position') != 'absolute' || elem.parent().css('position') != 'fixed') {
+				if (elemObj.find('.' + elemClass + '_content').width() < 270 && elemObj.find('.' + elemClass + '_content').height() < 60) {
 					expandView = false;
 				}
 			}
@@ -190,67 +201,127 @@
 			eMTop = parseInt(elem.css('marginTop')),
 			eHeight = elem.outerHeight(),
 			eWidth = elem.outerWidth(),
-			eClassMaxWidth = parseInt(elemObj.css('maxWidth')),
-			eClassMinWidth = parseInt(elemObj.css('minWidth')),
-			eClassWidth,
-			eClassHeight = elemObj.outerHeight(),
-			eClassMTop = parseInt(elemObj.css('marginTop'));
+			eObjMaxWidth = parseInt(elemObj.css('maxWidth')),
+			eObjMinWidth = parseInt(elemObj.css('minWidth')),
+			eObjWidth,
+			eObjHeight = elemObj.outerHeight();
 			
 			if (expandView) {
-				if (isNaN(eClassMaxWidth)) {
-					eClassMaxWidth = 300;
+				if (isNaN(eObjMaxWidth)) {
+					eObjMaxWidth = 300;
 				}
-				eClassWidth = eClassMaxWidth;
+				eObjWidth = eObjMaxWidth;
 			} else {
-				if (isNaN(eClassMinWidth)) {
-					eClassMinWidth = 180;
+				if (isNaN(eObjMinWidth)) {
+					eObjMinWidth = 180;
 				}
-				eClassWidth = eClassMinWidth;
+				eObjWidth = eObjMinWidth;
 			}
-			elemObj.css({width: eClassWidth + 'px'});
+			elemObj.css({width: eObjWidth + 'px'});
+			
+			var placement,
+			eOffsetLeft = elem.offset().left,
+			eOffsetRight = $(window).width() - elem.offset().left - eWidth,
+			eOffsetTop = elem.offset().top,
+			deltaL = eOffsetLeft - offset - eObjWidth,
+			deltaBL = eWidth + eOffsetLeft - eObjWidth,
+			deltaR = eOffsetRight - offset - eObjWidth,
+			deltaBR = eWidth + eOffsetRight - eObjWidth,
+			deltaCL = eWidth / 2 + eOffsetLeft - eObjWidth / 2,
+			deltaCR = eWidth / 2 + eOffsetRight - eObjWidth / 2,
+			deltaC = Math.min(deltaCR, deltaCL),
+			deltaCT = eOffsetTop - eObjHeight / 2;
 
-			switch (_options.placement){
-				case ('bottomLeft'):
+			function optimalPosition(current) {
+				var optimal;
+				var maxDelta = Math.max(deltaBL, deltaBR, deltaC);
+				if (isCurrentFits(current)) {
+				  optimal = current;
+				} else if (deltaBR > 0 && deltaBR == maxDelta) {
+					optimal = bl;
+				} else if (deltaBL > 0 && deltaBL == maxDelta) {
+					optimal = br;
+				} else if (deltaBC > 0 && deltaC == maxDelta) {
+					optimal = bc;
+				} else {
+					optimal = current;
+				}
+				return optimal;
+			}
+			
+			function isCurrentFits(current) {
+			  return current == bl ? deltaBR > 0 
+				: current == br ? deltaBL > 0 
+				: deltaC > 0;
+			}
+			
+			if ((/^bottom/).test(_options.placement)) {
+				placement = optimalPosition(_options.placement);
+			} else if ((/^left/).test(_options.placement)) {
+				if (deltaL > 0) {
+					if (_options.placement == lc && deltaCT > 0) {
+						placement = lc;
+					} else {
+						placement = lt;
+					}
+				} else {
+					placement = optimalPosition(bl);
+				}
+			} else if ((/^right/).test(_options.placement)) {
+				if (deltaR > 0) {
+					if (_options.placement == rc && deltaCT > 0) {
+						placement = rc;
+					} else {
+						placement = rt;
+					}
+				} else {
+					placement = optimalPosition(br);
+				}
+			}
+			
+			elemObj.removeAttr('class').addClass(elemClass + ' animated ' + placement);
+			switch (placement){
+				case (bl):
 					elemObj.css({
 						top: eTop + eMTop + eHeight + offset + 'px',
 						left: eLeft + eMLeft + 'px'
-					}).addClass('fadeInBottom');
+					}).addClass(effectIn + 'Bottom');
 				break;
-				case ('bottomRight'):
+				case (br):
 					elemObj.css({
 						top: eTop + eMTop + eHeight + offset + 'px',
-						left: eLeft + eMLeft + eWidth - eClassWidth + 'px'
-					}).addClass('fadeInBottom');
+						left: eLeft + eMLeft + eWidth - eObjWidth + 'px'
+					}).addClass(effectIn + 'Bottom');
 				break;
-				case ('bottomCenter'):
+				case (bc):
 					elemObj.css({
 						top: eTop + eMTop + eHeight + offset + 'px',
-						left: eLeft + eMLeft + (eWidth - eClassWidth) / 2 + 'px'
-					}).addClass('fadeInBottom');
+						left: eLeft + eMLeft + (eWidth - eObjWidth) / 2 + 'px'
+					}).addClass(effectIn + 'Bottom');
 				break;
-				case ('leftTop'):
+				case (lt):
 					elemObj.css({
 						top: eTop + eMTop + 'px',
-						left: eLeft + eMLeft - eClassWidth - offset + 'px'
-					}).addClass('fadeInLeft');
+						left: eLeft + eMLeft - eObjWidth - offset + 'px'
+					}).addClass(effectIn + 'Left');
 				break;
-				case ('rightTop'):
+				case (rt):
 					elemObj.css({
 						top: eTop + eMTop + 'px',
 						left: eLeft + eMLeft + eWidth + offset + 'px'
-					}).addClass('fadeInRight');
+					}).addClass(effectIn + 'Right');
 				break;
-				case ('leftCenter'):
+				case (lc):
 					elemObj.css({
-						top: eTop + eMTop + eHeight / 2 - eClassHeight / 2 + 'px',
-						left: eLeft + eMLeft - eClassWidth - offset + 'px'
-					}).addClass('fadeInLeft');
+						top: eTop + eMTop + eHeight / 2 - eObjHeight / 2 + 'px',
+						left: eLeft + eMLeft - eObjWidth - offset + 'px'
+					}).addClass(effectIn + 'Left');
 				break;
-				case ('rightCenter'):
+				case (rc):
 					elemObj.css({
-						top: eTop + eMTop + eHeight / 2 - eClassHeight / 2 + 'px',
+						top: eTop + eMTop + eHeight / 2 - eObjHeight / 2 + 'px',
 						left: eLeft + eMLeft + eWidth + offset + 'px'
-					}).addClass('fadeInRight');
+					}).addClass(effectIn + 'Right');
 				break;
 			}
 		}
@@ -338,7 +409,7 @@
 	$.fn.notifyModal = function(method) {
 		var elem = $(this),
 		elemObj,
-		notifyModal = 'notifyModal',
+		elemClass = 'notifyModal',
 		onTopClass,
 		_options,
 		animTime;
@@ -361,15 +432,20 @@
 					onTopClass = '';
 				}
 				
-				$('.' + notifyModal).remove();
-				var notifyContainer = $('<div class="' + notifyModal + ' ' + _options.placement + ' ' + onTopClass + '"></div>');
-				var notifyContent = $('<div class="' + notifyModal + '_content"></div>');
+				$('.' + elemClass).remove();
+				var notifyContainer = $('<div class="' + elemClass + ' ' + _options.placement + ' ' + onTopClass + '"></div>');
+				var notifyContent = $('<div class="' + elemClass + '_content"></div>');
 				var closeBut = $('<button type="button" class="close">&times;</button>');
-				notifyContent.append(closeBut, elem[0].innerHTML);
+				if (elem[0] == undefined) {
+					elem = elem['selector'];
+				} else {
+					elem = elem[0].innerHTML;
+				}
+				notifyContent.append(closeBut, elem);
 				notifyContainer.append(notifyContent);
 				$('body').append(notifyContainer);
 
-				elemObj = $('.' + notifyModal);
+				elemObj = $('.' + elemClass);
 				getAnimTime();
 				
 				setTimeout(function() {
@@ -390,7 +466,7 @@
 		};
 		
 		function notifyModalClose() {
-			var elemObj = $('.' + notifyModal);
+			var elemObj = $('.' + elemClass);
 			setTimeout(function() {
 				elemObj.removeClass('open');
 				setTimeout(function() {
@@ -449,19 +525,23 @@
 /* hintModal */
 (function($) {
 	$.fn.hintModal = function(method){
-		var hintModal = 'hintModal',
-		elem = $('.' + hintModal + '_container'),
-		elemObj = $('.' + hintModal),
+		var elemClass = 'hintModal',
+		elem = $('.' + elemClass + '_container'),
+		elemObj = $('.' + elemClass),
 		animTime,
 		effectIn = 'fadeIn',
-		effectOut = 'fadeOut';				
+		effectOut = 'fadeOut';
+		bl = 'bottomLeft',
+		bc = 'bottomCenter',
+		br = 'bottomRight',
 		elem.addClass('animated ' + effectIn +'Bottom');
 	
 		var methods = {
 			init : function(params) {
 
 				elemObj.mouseenter(function() {
-					var elemCur = $(this).find('.' + hintModal + '_container');
+					getPlacement();
+					var elemCur = $(this).find('.' + elemClass + '_container');
 					elem.css({display: 'none'});
 					var animClassOld = elemCur.attr('class');
 					var animClassNew = animClassOld.replace(effectOut, effectIn);
@@ -477,6 +557,60 @@
 						elem.css({display: 'none'});
 					}, animTime);
 				});
+			
+				function getPlacement() {
+					var placement,
+					placementDefault,
+					eObjWidth = elemObj.outerWidth(),
+					eWidth = elem.outerWidth(),
+					eOffsetLeft = elemObj.offset().left,
+					eOffsetRight = $(window).width() - elemObj.offset().left - eObjWidth,
+					deltaBL = eObjWidth + eOffsetLeft - eWidth,
+					deltaBR = eObjWidth + eOffsetRight - eWidth,
+					deltaCL = eObjWidth / 2 + eOffsetLeft - eWidth / 2,
+					deltaCR = eObjWidth / 2 + eOffsetRight - eWidth / 2,
+					deltaC = Math.min(deltaCR, deltaCL);
+					
+					if (elemObj.hasClass(bl)) {
+						placementDefault = bl;
+					} else if (elemObj.hasClass(bc)) {
+						placementDefault = bc;
+					} else if (elemObj.hasClass(br)) {
+						placementDefault = br;
+					} else {
+						placementDefault = bl;
+					}
+					
+					if (elemObj.data('placement') == undefined) {
+						elemObj.data('placement', placementDefault);
+					}
+
+					function optimalPosition(current) {
+						var optimal;
+						var maxDelta = Math.max(deltaBL, deltaBR, deltaC);
+						if (isCurrentFits(current)) {
+							optimal = current;
+						} else if (deltaBR > 0 && deltaBR == maxDelta) {
+							optimal = bl;
+						} else if (deltaBL > 0 && deltaBL == maxDelta) {
+							optimal = br;
+						} else if (deltaBC > 0 && deltaC == maxDelta) {
+							optimal = bc;
+						} else {
+							optimal = current;
+						}
+						return optimal;
+					}
+					
+					function isCurrentFits(current) {
+						return current == bl ? deltaBR > 0 
+						: current == br ? deltaBL > 0 
+						: deltaC > 0;
+					}
+					
+					placement = optimalPosition(elemObj.data('placement'));
+					elemObj.removeAttr('class').addClass(elemClass + ' ' + placement);
+				}
 			
 				function getAnimTime() {
 					if (!animTime) {
@@ -498,7 +632,8 @@
 			return methods.init.apply(this, arguments);
 		}
 		
-	}();
+	};
+	$('.hintModal').hintModal();
 })(jQuery);
 
 
@@ -509,6 +644,8 @@
 		elemObj,
 		elemContObj,
 		elemClass = 'dialogModal',
+		prevBut = 'dialogPrev',
+		nextBut = 'dialogNext',
 		_options,
 		animTime;
 	
@@ -525,7 +662,7 @@
 				_init();
 				function _init() {
 					$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
-					$('.dialogModal .dialogPrev, .dialogModal .dialogNext').off('click');
+					$('.' + elemClass + ' .' + prevBut + ', .' + elemClass + ' .' + nextBut).off('click');
 					$('.' + elemClass).remove();
 
 					var currentDialog = 0,
@@ -539,7 +676,7 @@
 					dialogBody.append(elem[currentDialog].innerHTML);
 					
 					if (maxDialog > 0) {
-						dialogContainer.prepend($('<div class="dialogPrev notactive"></div><div class="dialogNext"></div>'));
+						dialogContainer.prepend($('<div class="' + prevBut + ' notactive"></div><div class="' + nextBut + '"></div>'));
 					}
 					$('body').append(dialogMain);
 					elemObj = $('.' + elemClass);
@@ -607,28 +744,28 @@
 						});
 					}
 
-					elemObj.find('.dialogPrev').bind('click', function() {
+					elemObj.find('.' + prevBut).bind('click', function() {
 						if (currentDialog > 0) {
 							--currentDialog;
 							if (currentDialog < maxDialog) {
-								elemObj.find('.dialogNext').removeClass('notactive');
+								elemObj.find('.' + nextBut).removeClass('notactive');
 							}
 							if (currentDialog == 0) {
-								elemObj.find('.dialogPrev').addClass('notactive');
+								elemObj.find('.' + prevBut).addClass('notactive');
 							}
 							dialogBody.empty().append(elem[currentDialog].innerHTML);
 							centerDialog();
 						}
 					});
 					
-					elemObj.find('.dialogNext').bind('click', function() {
+					elemObj.find('.' + nextBut).bind('click', function() {
 						if (currentDialog < maxDialog) {
 							++currentDialog;
 							if (currentDialog > 0) {
-								elemObj.find('.dialogPrev').removeClass('notactive');
+								elemObj.find('.' + prevBut).removeClass('notactive');
 							}
 							if (currentDialog == maxDialog) {
-								elemObj.find('.dialogNext').addClass('notactive');
+								elemObj.find('.' + nextBut).addClass('notactive');
 							}
 							dialogBody.empty().append(elem[currentDialog].innerHTML);
 							centerDialog();
@@ -643,9 +780,9 @@
 						if (event.keyCode == 27) {
 							dialogModalClose();
 						} else if (event.keyCode == 37) {
-							elemObj.find('.dialogPrev').click();
+							elemObj.find('.' + prevBut).click();
 						} else if (event.keyCode == 39) {
-							elemObj.find('.dialogNext').click();
+							elemObj.find('.' + nextBut).click();
 						}
 					});
 					
@@ -665,8 +802,8 @@
 					elemObj.remove();
 					$('body').removeClass(elemClass + 'Open');
 					$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
-					elemObj.find('.dialogPrev').off('click');
-					elemObj.find('.dialogNext').off('click');
+					elemObj.find('.' + prevBut).off('click');
+					elemObj.find('.' + nextBut).off('click');
 				}, animTime);
 			}, animTime);
 		}
@@ -725,9 +862,10 @@
 	$.fn.titleModal = function(method) {
 		var methods = {
 			init : function(params) {
-				var getElem = $('*[data-titleModal]'),
-				elem,
+				var elem,
 				elemObj,
+				elemClass = 'titleModal',
+				getElem = $('*[data-' + elemClass + ']'),
 				animTime,
 				effectIn = 'fadeIn',
 				effectOut = 'fadeOut';
@@ -737,8 +875,8 @@
 					titleAttr =	elem.attr('title');
 					elem.removeAttr('title');
 					elem.attr('data-title', titleAttr);
-					titleModal = $('<div class="titleModal animated"></div>');
-					elemObj = $('.titleModal');
+					titleModal = $('<div class="' + elemClass + ' animated"></div>');
+					elemObj = $('.' + elemClass);
 					placement = elem.attr('data-placement');
 					if (placement == undefined) {
 						placement = 'bottom';
@@ -763,7 +901,7 @@
 				});
 				
 				function getPlacement() {
-					elemObj = $('.titleModal');
+					elemObj = $('.' + elemClass);
 					var eLeft = elem.position().left,
 					eTop = elem.position().top,
 					eMLeft = elem.css('marginLeft'),
@@ -771,31 +909,31 @@
 					eMBottom = elem.css('marginBottom'),
 					eHeight = elem.outerHeight(),
 					eWidth = elem.outerWidth(),
-					eClassMTop = elemObj.css('marginTop'),
-					eClassWidth = elemObj.outerWidth(),
-					eClassHeight = elemObj.outerHeight();
+					eObjMTop = elemObj.css('marginTop'),
+					eObjWidth = elemObj.outerWidth(),
+					eObjHeight = elemObj.outerHeight();
 					switch (placement) {
 						case 'bottom':
 							elemObj.css({
-								marginTop: parseInt(eClassMTop) - parseInt(eMBottom) + 'px',
-								left: eLeft + parseInt(eMLeft) + (eWidth - eClassWidth) / 2 + 'px'
+								marginTop: parseInt(eObjMTop) - parseInt(eMBottom) + 'px',
+								left: eLeft + parseInt(eMLeft) + (eWidth - eObjWidth) / 2 + 'px'
 							}).addClass(effectIn + 'Bottom');	
 						break;
 						case 'top':
 							elemObj.css({
-								top: eTop + parseInt(eMTop) - eClassHeight + 'px',
-								left: eLeft + parseInt(eMLeft) + (eWidth - eClassWidth) / 2 + 'px'
+								top: eTop + parseInt(eMTop) - eObjHeight + 'px',
+								left: eLeft + parseInt(eMLeft) + (eWidth - eObjWidth) / 2 + 'px'
 							}).addClass('top ' + effectIn + 'Top');	
 						break;
 						case 'left':
 							elemObj.css({
-								top: eTop + parseInt(eMTop) + eHeight / 2 - eClassHeight / 2 + 'px',
-								left: eLeft + parseInt(eMLeft) - eClassWidth - 10 + 'px'
+								top: eTop + parseInt(eMTop) + eHeight / 2 - eObjHeight / 2 + 'px',
+								left: eLeft + parseInt(eMLeft) - eObjWidth - 10 + 'px'
 							}).addClass('left ' + effectIn + 'Left');	
 						break;
 						case 'right':
 							elemObj.css({
-								top: eTop + parseInt(eMTop) + eHeight / 2 - eClassHeight / 2 + 'px',
+								top: eTop + parseInt(eMTop) + eHeight / 2 - eObjHeight / 2 + 'px',
 								left: eLeft + parseInt(eMLeft) + eWidth + 10 + 'px'
 							}).addClass('right ' + effectIn + 'Right');	
 						break;
