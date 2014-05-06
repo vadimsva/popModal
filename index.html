@@ -41,7 +41,7 @@ body {background:#fafafa}
 <div id="page">
 
 <div id="copyrightBlock">
-	<div id="version" title="Current version/date">28.04.14</div>
+	<div id="version" title="Current version/date">06.05.14</div>
 	<a href="https://github.com/vadimsva/popModal" id="gitHubLink">GitHub Repo</a>
 </div>
 
@@ -206,7 +206,7 @@ body {background:#fafafa}
 	</div>
 </div>
 
-<script src="http://cdn.jsdelivr.net/jquery/1.11.0/jquery.min.js"></script>
+<script src="http://cdn.jsdelivr.net/jquery/1.11.1/jquery.min.js"></script>
 <script src="popModal.js"></script>
 <script>
 $(function(){
@@ -216,8 +216,8 @@ $(function(){
 		placement : 'bottomLeft',
 		showCloseBut : true,
 		onDocumentClickClose : true,
-		okFun : function(){},
-		cancelFun : function(){},
+		onOkBut : function(){},
+		onCancelBut : function(){},
 		onLoad : function(){},
 		onClose : function(){}
 	});
