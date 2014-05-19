@@ -1,4 +1,4 @@
-/* popModal - 06.05.14 */
+/* popModal - 19.05.14 */
 /* popModal */
 .popModal {position:absolute;background:#fff;padding:15px;border:1px solid #aaa;box-shadow:0 2px 6px rgba(0, 0, 0, 0.3);text-align:left;max-width:300px;min-width:180px;z-index:9997;box-sizing:border-box;-moz-box-sizing:border-box}
 .popModal .close {line-height:12px;font-size:25px;font-weight:bold;font-family:serif;position:absolute;right:8px;top:8px;color:#000;opacity:0.2;padding:0;cursor:pointer;background:transparent;border:0;outline:0}
@@ -6,7 +6,7 @@
 .popModal .popModal_content {margin:15px auto;word-wrap:break-word;font-family:sans-serif;font-size:14px;font-weight:initial;font-style:initial;color:initial;text-decoration:initial;text-transform:initial;padding:initial}
 .popModal .popModal_content.popModal_contentOverflow {max-height:200px;overflow-y:auto;overflow-x:hidden;margin:15px -8px;padding:0 7px}
 .popModal .popModal_content:before {content:'';position:absolute;left:0;right:0;height:20px;bottom:-20px}
-.popModal .popModal_footer {background:#fafafa;padding:15px;margin:25px -15px -15px;border-top:1px solid #ddd;text-align:right}
+.popModal .popModal_footer {background:#fafafa;padding:15px;border-top:1px solid #ddd;text-align:right;position:absolute;bottom:0;left:0;right:0}
 .popModal .popModal_footer button {margin:0 0 0 5px}
 .popModal:before,
 .popModal:after {content:'';position:absolute;border:10px solid transparent}
