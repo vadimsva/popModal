@@ -15,8 +15,8 @@ This library includes 5 components:<br>
 
 
 <h4>Direct links to libs</h4>
-<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [27Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [12.2Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [26Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [12.1Kb]<br>
 <a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [12.6Kb]<br>
 <a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [11.4Kb]
 
@@ -67,7 +67,7 @@ $(el).click(function(){
   $(el).popModal({param1 : value1, param2 : value2, ...});
 });
 </pre>
-or use
+Use this, for immediately run popModal
 <pre>
 $(el).popModal({param1 : value1, param2 : value2, ...});
 </pre>
