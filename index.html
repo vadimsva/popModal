@@ -41,7 +41,7 @@ body {background:#fafafa}
 <div id="page">
 
 <div id="copyrightBlock">
-	<div id="version" title="Current version/date">06.05.14</div>
+	<div id="version" title="Current version/date">19.05.14</div>
 	<a href="https://github.com/vadimsva/popModal" id="gitHubLink">GitHub Repo</a>
 </div>
 
@@ -171,14 +171,21 @@ body {background:#fafafa}
 		</code></pre></div>
 	</div>
 	
-
-<div id="content" style="display:none">
+<div style="display:none">
+<div id="content" >
 	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 	<div class="popModal_footer">
 		<button type="button" data-popModalBut="ok">ok</button>
 		<button type="button" data-popModalBut="cancel">cancel</button>
 	</div>
 </div>
+<div id="content2dasf" >
+	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+	<div class="popModal_footer">
+		<button type="button" data-popModalBut="ok">ok</button>
+		<button type="button" data-popModalBut="cancel">cancel</button>
+	</div>
+</div></div>
 
 <div id="content2" style="display:none">
 	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
@@ -211,23 +218,27 @@ body {background:#fafafa}
 <script>
 $(function(){
 
-	$('#popModal_ex1').popModal({
-		html : $('#content').html(),
-		placement : 'bottomLeft',
-		showCloseBut : true,
-		onDocumentClickClose : true,
-		onOkBut : function(){},
-		onCancelBut : function(){},
-		onLoad : function(){},
-		onClose : function(){}
+	$('#popModal_ex1').click(function(){
+		$('#popModal_ex1').popModal({
+			html : $('#content'),
+			placement : 'bottomLeft',
+			showCloseBut : true,
+			onDocumentClickClose : true,
+			onOkBut : function(){},
+			onCancelBut : function(){},
+			onLoad : function(){},
+			onClose : function(){}
+		});
 	});
 	
-	$('#popModal_ex2').popModal({
-		html : function(callback, success) {
-			$.ajax({url:'ajax.html'}).done(function(content){
-				callback(content);
-			});
-		}
+	$('#popModal_ex2').click(function(){
+		$('#popModal_ex2').popModal({
+			html : function(callback) {
+				$.ajax({url:'ajax.html'}).done(function(content){
+					callback(content);
+				});
+			}
+		});
 	});
 	
 	$('#notifyModal_ex1').click(function(){
