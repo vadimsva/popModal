@@ -1,13 +1,12 @@
-/* popModal - 06.05.14 */
+/* popModal - 19.05.14 */
 /* popModal */
 (function($) {
 	$.fn.popModal = function(method) {
 		var elem = $(this),
 		elemObj,
-		isClick = checkEvent(elem, 'click'),
 		isFixed = '',
 		expandView = true,
-		closeBut,
+		closeBut = '',
 		elemClass = 'popModal',
 		_options,
 		animTime,
@@ -35,146 +34,136 @@
 				};
 				_options = $.extend(_defaults, params);
 				
-				if (isClick) {
-					_init();
+				if (elem.next('div').hasClass(elemClass)) {
+					popModalClose();
 				} else {
-					elem.on('click', function() {
-						_init();
-					});
-				}
-				
-				function _init() {
-				
-					if (elem.next('div').hasClass(elemClass)) {
-						popModalClose();
-					} else {
-						$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
-						$('.' + elemClass).remove();
+					$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
+					$('.' + elemClass).remove();
 
-						if (_options.showCloseBut) {
-							closeBut = $('<button type="button" class="close">&times;</button>');
-						} else {
-							closeBut = '';
-						}
-
-						if (elem.css('position') == 'fixed') {
-							isFixed = 'position:fixed;';
-						}
-						var tooltipContainer = $('<div class="' + elemClass + ' animated" style="' + isFixed + '"></div>');
-						var tooltipContent = $('<div class="' + elemClass + '_content ' + elemClass + '_contentOverflow"></div>');
-						tooltipContainer.append(closeBut, tooltipContent);
-						
-						if ($.isFunction(_options.html)) {
-							var beforeLoadingContent = 'Please, waiting...';
-							tooltipContent.append(beforeLoadingContent);
-							_options.html(function(loadedContent) {
-								tooltipContent.empty().append(loadedContent);
-								elemObj = $('.' + elemClass);
-								expandView = true;
-								if (tooltipContent[0].innerHTML.search(/<form/) != -1) {
-									elemObj.find('.' + elemClass + '_content').removeClass(elemClass + '_contentOverflow');
-								} else {
-									elemObj.find('.' + elemClass + '_content').addClass(elemClass + '_contentOverflow');
-								}
-								getPlacement();
-							});
-						} else {
-							tooltipContent.append(_options.html);
-						}
-						elem.after(tooltipContainer);
-
-						elemObj = $('.' + elemClass);
-						elemObj.append(elemObj.find('.' + elemClass + '_content .' + elemClass + '_footer'));
-						
-						if (!$.isFunction(_options.html)) {
-							if ($.type(_options.html) == 'string') {
-								var htmlStr = _options.html;
-							} else {
-								var htmlStr = _options.html.parent().html();
-							}
-							if (htmlStr.search(/<form/) != -1 || elemObj.find('.' + elemClass + '_content').outerHeight() < 200) {
+					if (_options.showCloseBut) {
+						closeBut = $('<button type="button" class="close">&times;</button>');
+					}
+					if (elem.css('position') == 'fixed') {
+						isFixed = 'position:fixed;';
+					}
+					var tooltipContainer = $('<div class="' + elemClass + ' animated" style="' + isFixed + '"></div>');
+					var tooltipContent = $('<div class="' + elemClass + '_content ' + elemClass + '_contentOverflow"></div>');
+					tooltipContainer.append(closeBut, tooltipContent);
+					
+					if ($.isFunction(_options.html)) {
+						var beforeLoadingContent = 'Please, waiting...';
+						tooltipContent.append(beforeLoadingContent);
+						_options.html(function(loadedContent) {
+							tooltipContent.empty().append(loadedContent);
+							elemObj = $('.' + elemClass);
+							expandView = true;
+							if (tooltipContent[0].innerHTML.search(/<form/) != -1) {
 								elemObj.find('.' + elemClass + '_content').removeClass(elemClass + '_contentOverflow');
+							} else {
+								elemObj.find('.' + elemClass + '_content').addClass(elemClass + '_contentOverflow');
 							}
-						}
-
-						if (_options.onLoad && $.isFunction(_options.onLoad)) {
-							_options.onLoad();
-						}
-
-						elemObj.on('destroyed', function() {
-							if (_options.onClose && $.isFunction(_options.onClose)) {
-								_options.onClose();
-							}
-						});
-
-						getView();
-						getPlacement();
-
-						if (_options.onDocumentClickClose) {
-							$('html').on('click.' + elemClass + 'Event', function(event) {
-								$(this).addClass(elemClass + 'Open');
-								if (elemObj.is(':hidden')) {
-									popModalClose();
-								}
-								var target = $(event.target);
-								if (!target.parents().andSelf().is('.' + elemClass) && !target.parents().andSelf().is(elem)) {
-								  var zIndex = parseInt(target.parents().filter(function() {
-										return $(this).css('zIndex') !== 'auto';
-									}).first().css('zIndex'));
-									if (isNaN(zIndex)) {
-										zIndex = 0;
-									}
-									var target_zIndex = target.css('zIndex');
-									if (target_zIndex == 'auto') {
-										target_zIndex = 0;
-									}
-									if (zIndex < target_zIndex) {
-										zIndex = target_zIndex;
-									}
-									if (zIndex <= elemObj.css('zIndex')) {
-										popModalClose();
-									}
-								}
-							});
-						}
-						
-						$(window).resize(function() {
 							getPlacement();
 						});
-						
-						elemObj.find('.close').bind('click', function() {
-							popModalClose();
-						});
-						
-						elemObj.find('[data-popModalBut="close"]').bind('click', function() {
-							popModalClose();
-						});
+					} else {
+						if ($.type(_options.html) == 'object') {
+							_options.html = _options.html.html();
+						}
+						tooltipContent.append(_options.html);
+					}
+					elem.after(tooltipContainer);
 
-						elemObj.find('[data-popModalBut="ok"]').bind('click', function(event) {
-							var ok;
-							if (_options.onOkBut && $.isFunction(_options.onOkBut)) {
-								ok = _options.onOkBut(event);
-							}
-							if (ok !== false) {
-								popModalClose();
-							}
-						});
-
-						elemObj.find('[data-popModalBut="cancel"]').bind('click', function() {
-							if (_options.onCancelBut && $.isFunction(_options.onCancelBut)) {
-								_options.onCancelBut();
-							}
-							popModalClose();
-						});
-
-						$('html').on('keydown.' + elemClass + 'Event', function(event) {
-							if (event.keyCode == 27) {
-								popModalClose();
-							}
-						});
-
+					elemObj = $('.' + elemClass);
+					if (elemObj.find('.' + elemClass + '_footer')) {
+						elemObj.find('.' + elemClass + '_content').css({marginBottom: elemObj.find('.' + elemClass + '_footer').outerHeight() + 'px'});
 					}
 					
+					if (!$.isFunction(_options.html)) {
+						if ($.type(_options.html) == 'string') {
+							var htmlStr = _options.html;
+						} else {
+							var htmlStr = _options.html[0].outerHTML;
+						}
+						if (htmlStr.search(/<form/) != -1 || elemObj.find('.' + elemClass + '_content').outerHeight() < 200) {
+							elemObj.find('.' + elemClass + '_content').removeClass(elemClass + '_contentOverflow');
+						}
+					}
+
+					if (_options.onLoad && $.isFunction(_options.onLoad)) {
+						_options.onLoad();
+					}
+
+					elemObj.on('destroyed', function() {
+						if (_options.onClose && $.isFunction(_options.onClose)) {
+							_options.onClose();
+						}
+					});
+
+					getView();
+					getPlacement();
+
+					if (_options.onDocumentClickClose) {
+						$('html').on('click.' + elemClass + 'Event', function(event) {
+							$(this).addClass(elemClass + 'Open');
+							if (elemObj.is(':hidden')) {
+								popModalClose();
+							}
+							var target = $(event.target);
+							if (!target.parents().andSelf().is('.' + elemClass) && !target.parents().andSelf().is(elem)) {
+								var zIndex = parseInt(target.parents().filter(function() {
+									return $(this).css('zIndex') !== 'auto';
+								}).first().css('zIndex'));
+								if (isNaN(zIndex)) {
+									zIndex = 0;
+								}
+								var target_zIndex = target.css('zIndex');
+								if (target_zIndex == 'auto') {
+									target_zIndex = 0;
+								}
+								if (zIndex < target_zIndex) {
+									zIndex = target_zIndex;
+								}
+								if (zIndex <= elemObj.css('zIndex')) {
+									popModalClose();
+								}
+							}
+						});
+					}
+					
+					$(window).resize(function() {
+						getPlacement();
+					});
+					
+					elemObj.find('.close').bind('click', function() {
+						popModalClose();
+					});
+					
+					elemObj.find('[data-popModalBut="close"]').bind('click', function() {
+						popModalClose();
+					});
+
+					elemObj.find('[data-popModalBut="ok"]').bind('click', function(event) {
+						var ok;
+						if (_options.onOkBut && $.isFunction(_options.onOkBut)) {
+							ok = _options.onOkBut(event);
+						}
+						if (ok !== false) {
+							popModalClose();
+						}
+					});
+
+					elemObj.find('[data-popModalBut="cancel"]').bind('click', function() {
+						if (_options.onCancelBut && $.isFunction(_options.onCancelBut)) {
+							_options.onCancelBut();
+						}
+						popModalClose();
+					});
+
+					$('html').on('keydown.' + elemClass + 'Event', function(event) {
+						if (event.keyCode == 27) {
+							popModalClose();
+						}
+					});
+
 				}
 				
 			},
@@ -352,22 +341,7 @@
 			animClassNew = animClassOld.replace(effectIn, effectOut);
 			elemObj.removeClass(animClassOld).addClass(animClassNew);
 		}
-		
-		function checkEvent(element, eventname) {
-			var events,
-			ret = false;
-			events = $._data(element[0], 'events');
-			if (events) {
-				$.each(events, function(evName, e) {
-					if (evName == eventname) {
-						ret = true;
-					}
-				});
-			}
 
-			return ret;
-		}
-		
 		if (methods[method]) {
 			return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
 		} else if (typeof method === 'object' || ! method) {
@@ -410,7 +384,7 @@
 		var elem = $(this),
 		elemObj,
 		elemClass = 'notifyModal',
-		onTopClass,
+		onTopClass = '',
 		_options,
 		animTime;
 		
@@ -428,8 +402,6 @@
 				}
 				if (_options.onTop) {
 					onTopClass = 'onTop';
-				} else {
-					onTopClass = '';
 				}
 				
 				$('.' + elemClass).remove();
@@ -659,134 +631,130 @@
 				};
 				_options = $.extend(_defaults, params);
 
-				_init();
-				function _init() {
-					$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
-					$('.' + elemClass + ' .' + prevBut + ', .' + elemClass + ' .' + nextBut).off('click');
-					$('.' + elemClass).remove();
+				$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
+				$('.' + elemClass + ' .' + prevBut + ', .' + elemClass + ' .' + nextBut).off('click');
+				$('.' + elemClass).remove();
 
-					var currentDialog = 0,
-					maxDialog = elem.length - 1,
-					dialogMain = $('<div class="' + elemClass + '"></div>'),
-					dialogContainer = $('<div class="' + elemClass + '_container"></div>'),
-					dialogCloseBut = $('<button type="button" class="close">&times;</button>'),
-					dialogBody = $('<div class="' + elemClass + '_body"></div>');
-					dialogMain.append(dialogContainer);
-					dialogContainer.append(dialogCloseBut, dialogBody);
-					dialogBody.append(elem[currentDialog].innerHTML);
-					
-					if (maxDialog > 0) {
-						dialogContainer.prepend($('<div class="' + prevBut + ' notactive"></div><div class="' + nextBut + '"></div>'));
+				var currentDialog = 0,
+				maxDialog = elem.length - 1,
+				dialogMain = $('<div class="' + elemClass + '"></div>'),
+				dialogContainer = $('<div class="' + elemClass + '_container"></div>'),
+				dialogCloseBut = $('<button type="button" class="close">&times;</button>'),
+				dialogBody = $('<div class="' + elemClass + '_body"></div>');
+				dialogMain.append(dialogContainer);
+				dialogContainer.append(dialogCloseBut, dialogBody);
+				dialogBody.append(elem[currentDialog].innerHTML);
+				
+				if (maxDialog > 0) {
+					dialogContainer.prepend($('<div class="' + prevBut + ' notactive"></div><div class="' + nextBut + '"></div>'));
+				}
+				$('body').append(dialogMain);
+				elemObj = $('.' + elemClass);
+				elemContObj = $('.' + elemClass + '_container');
+				getAnimTime();
+
+				if (_options.onLoad && $.isFunction(_options.onLoad)) {
+					_options.onLoad();
+				}
+
+				elemObj.on('destroyed', function() {
+					if (_options.onClose && $.isFunction(_options.onClose)) {
+						_options.onClose();
 					}
-					$('body').append(dialogMain);
-					elemObj = $('.' + elemClass);
-					elemContObj = $('.' + elemClass + '_container');
-					getAnimTime();
-
-					if (_options.onLoad && $.isFunction(_options.onLoad)) {
-						_options.onLoad();
+				});
+				
+				centerDialog();
+				
+				function centerDialog() {
+					var dialogHeight = elemContObj.outerHeight(),
+					windowHeight = $(window).height();
+					if (windowHeight > dialogHeight + 80) {
+						elemContObj.css({
+							marginTop: ($(window).height() - dialogHeight) / 2 + 'px'
+						});	
+					} else {
+						elemContObj.css({
+							marginTop: '60px'
+						});						
 					}
+					
+					$('body').addClass(elemClass + 'Open');
+					elemObj.addClass('open');
 
-					elemObj.on('destroyed', function() {
-						if (_options.onClose && $.isFunction(_options.onClose)) {
-							_options.onClose();
-						}
-					});
-					
-					centerDialog();
-					
-					function centerDialog() {
-						var dialogHeight = elemContObj.outerHeight(),
-						windowHeight = $(window).height();
-						if (windowHeight > dialogHeight + 80) {
-							elemContObj.css({
-								marginTop: ($(window).height() - dialogHeight) / 2 + 'px'
-							});	
-						} else {
-							elemContObj.css({
-								marginTop: '60px'
-							});						
-						}
-						
-						$('body').addClass(elemClass + 'Open');
+					setTimeout(function() {
 						elemObj.addClass('open');
-
-						setTimeout(function() {
-							elemObj.addClass('open');
-							elemContObj.css({
-								marginTop: parseInt(elemContObj.css('marginTop')) - 20 + 'px'
-							});	
-						}, animTime);
-						
-						bindFooterButtons();
-					}
+						elemContObj.css({
+							marginTop: parseInt(elemContObj.css('marginTop')) - 20 + 'px'
+						});	
+					}, animTime);
 					
-					function bindFooterButtons() {
-						elemObj.find('[data-dialogModalBut="close"]').bind('click', function() {
-							dialogModalClose();
-						});
-
-						elemObj.find('[data-dialogModalBut="ok"]').bind('click', function(event) {
-							var ok;
-							if (_options.onOkBut && $.isFunction(_options.onOkBut)) {
-								ok = _options.onOkBut(event);
-							}
-							if (ok !== false) {
-								dialogModalClose();
-							}
-						});
-
-						elemObj.find('[data-dialogModalBut="cancel"]').bind('click', function() {
-							if (_options.onCancelBut && $.isFunction(_options.onCancelBut)) {
-								_options.onCancelBut();
-							}
-							dialogModalClose();
-						});
-					}
-
-					elemObj.find('.' + prevBut).bind('click', function() {
-						if (currentDialog > 0) {
-							--currentDialog;
-							if (currentDialog < maxDialog) {
-								elemObj.find('.' + nextBut).removeClass('notactive');
-							}
-							if (currentDialog == 0) {
-								elemObj.find('.' + prevBut).addClass('notactive');
-							}
-							dialogBody.empty().append(elem[currentDialog].innerHTML);
-							centerDialog();
-						}
-					});
-					
-					elemObj.find('.' + nextBut).bind('click', function() {
-						if (currentDialog < maxDialog) {
-							++currentDialog;
-							if (currentDialog > 0) {
-								elemObj.find('.' + prevBut).removeClass('notactive');
-							}
-							if (currentDialog == maxDialog) {
-								elemObj.find('.' + nextBut).addClass('notactive');
-							}
-							dialogBody.empty().append(elem[currentDialog].innerHTML);
-							centerDialog();
-						}
-					});
-
-					elemObj.find('.close').bind('click', function() {
+					bindFooterButtons();
+				}
+				
+				function bindFooterButtons() {
+					elemObj.find('[data-dialogModalBut="close"]').bind('click', function() {
 						dialogModalClose();
 					});
-					
-					$('html').on('keydown.' + elemClass + 'Event', function(event) {
-						if (event.keyCode == 27) {
+
+					elemObj.find('[data-dialogModalBut="ok"]').bind('click', function(event) {
+						var ok;
+						if (_options.onOkBut && $.isFunction(_options.onOkBut)) {
+							ok = _options.onOkBut(event);
+						}
+						if (ok !== false) {
 							dialogModalClose();
-						} else if (event.keyCode == 37) {
-							elemObj.find('.' + prevBut).click();
-						} else if (event.keyCode == 39) {
-							elemObj.find('.' + nextBut).click();
 						}
 					});
-					
+
+					elemObj.find('[data-dialogModalBut="cancel"]').bind('click', function() {
+						if (_options.onCancelBut && $.isFunction(_options.onCancelBut)) {
+							_options.onCancelBut();
+						}
+						dialogModalClose();
+					});
 				}
+
+				elemObj.find('.' + prevBut).bind('click', function() {
+					if (currentDialog > 0) {
+						--currentDialog;
+						if (currentDialog < maxDialog) {
+							elemObj.find('.' + nextBut).removeClass('notactive');
+						}
+						if (currentDialog == 0) {
+							elemObj.find('.' + prevBut).addClass('notactive');
+						}
+						dialogBody.empty().append(elem[currentDialog].innerHTML);
+						centerDialog();
+					}
+				});
+				
+				elemObj.find('.' + nextBut).bind('click', function() {
+					if (currentDialog < maxDialog) {
+						++currentDialog;
+						if (currentDialog > 0) {
+							elemObj.find('.' + prevBut).removeClass('notactive');
+						}
+						if (currentDialog == maxDialog) {
+							elemObj.find('.' + nextBut).addClass('notactive');
+						}
+						dialogBody.empty().append(elem[currentDialog].innerHTML);
+						centerDialog();
+					}
+				});
+
+				elemObj.find('.close').bind('click', function() {
+					dialogModalClose();
+				});
+				
+				$('html').on('keydown.' + elemClass + 'Event', function(event) {
+					if (event.keyCode == 27) {
+						dialogModalClose();
+					} else if (event.keyCode == 37) {
+						elemObj.find('.' + prevBut).click();
+					} else if (event.keyCode == 39) {
+						elemObj.find('.' + nextBut).click();
+					}
+				});
 					
 			},
 			hide : function() {
@@ -818,22 +786,7 @@
 				}
 			}
 		}
-		
-		function checkEvent(element, eventname) {
-			var events,
-			ret = false;
-			events = $._data(element[0], 'events');
-			if (events) {
-				$.each(events, function(evName, e) {
-					if (evName == eventname) {
-						ret = true;
-					}
-				});
-			}
 
-			return ret;
-		}
-		
 		if (methods[method]) {
 			return methods[method].apply( this, Array.prototype.slice.call(arguments, 1));
 		} else if (typeof method === 'object' || ! method) {
