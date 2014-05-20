@@ -65,9 +65,6 @@
 							getPlacement();
 						});
 					} else {
-						if ($.type(_options.html) == 'object') {
-							_options.html = _options.html.html();
-						}
 						tooltipContent.append(_options.html);
 					}
 					elem.after(tooltipContainer);
