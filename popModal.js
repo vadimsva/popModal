@@ -1,4 +1,4 @@
-/* popModal - 19.05.14 */
+/* popModal - 23.05.14 */
 /* popModal */
 (function($) {
 	$.fn.popModal = function(method) {
@@ -38,6 +38,7 @@
 					popModalClose();
 				} else {
 					$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
+					$('.' + elemClass + '_source').replaceWith($('.' + elemClass + '_content').children());
 					$('.' + elemClass).remove();
 
 					if (_options.showCloseBut) {
@@ -65,6 +66,9 @@
 							getPlacement();
 						});
 					} else {
+						if ($.type(_options.html) == 'object') {
+							_options.html.after($('<div class="popModal_source"></div>'));
+						}
 						tooltipContent.append(_options.html);
 					}
 					elem.after(tooltipContainer);
@@ -84,6 +88,7 @@
 							elemObj.find('.' + elemClass + '_content').removeClass(elemClass + '_contentOverflow');
 						}
 					}
+					
 
 					if (_options.onLoad && $.isFunction(_options.onLoad)) {
 						_options.onLoad();
@@ -317,6 +322,7 @@
 			reverseEffect();
 			getAnimTime();
 			setTimeout(function () {
+				$('.' + elemClass + '_source').replaceWith($('.' + elemClass + '_content').children());
 				elemObj.remove();
 				$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
 			}, animTime);
@@ -349,7 +355,7 @@
 
 	$('* [data-popModalBind]').bind('click', function() {
 		var elemBind = $(this).attr('data-popModalBind');
-		var params = {html: $(elemBind).html()};
+		var params = {html: $(elemBind)};
 		if ($(this).attr('data-placement') != undefined) {
 			params['placement'] = $(this).attr('data-placement');
 		}
@@ -368,7 +374,7 @@
   $.event.special.destroyed = {
     remove: function(o) {
       if (o.handler) {
-        o.handler()
+        o.handler();
       }
     }
   }
@@ -390,15 +396,12 @@
 				var _defaults = {
 					duration: 2500,
 					placement: 'center',
-					onTop : true
+					overlay : true
 				};
 				_options = $.extend(_defaults, params);
 				
-				if (_options.placement == '') {
-					_options.placement = 'center';
-				}
-				if (_options.onTop) {
-					onTopClass = 'onTop';
+				if (_options.overlay) {
+					onTopClass = 'overlay';
 				}
 				
 				$('.' + elemClass).remove();
@@ -633,7 +636,8 @@
 				$('.' + elemClass).remove();
 
 				var currentDialog = 0,
-				maxDialog = elem.length - 1,
+				maxDialog = elem.length - 1;
+
 				dialogMain = $('<div class="' + elemClass + '"></div>'),
 				dialogContainer = $('<div class="' + elemClass + '_container"></div>'),
 				dialogCloseBut = $('<button type="button" class="close">&times;</button>'),
@@ -800,7 +804,7 @@
   $.event.special.destroyed = {
     remove: function(o) {
       if (o.handler) {
-        o.handler()
+        o.handler();
       }
     }
   }
