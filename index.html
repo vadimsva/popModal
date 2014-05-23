@@ -41,7 +41,7 @@ body {background:#fafafa}
 <div id="page">
 
 <div id="copyrightBlock">
-	<div id="version" title="Current version/date">19.05.14</div>
+	<div id="version" title="Current version/date">23.05.14</div>
 	<a href="https://github.com/vadimsva/popModal" id="gitHubLink">GitHub Repo</a>
 </div>
 
@@ -104,7 +104,7 @@ body {background:#fafafa}
 			<p><span class="text">$('</span><span class="tag">#content</span><span class="text">').notifyModal(</span>{</p>
 			<p class="tab"><span class="key">duration</span> : <span class="val">2500</span>,</p>
 			<p class="tab"><span class="key">placement</span> : <span class="val">'center'</span>,</p>
-			<p class="tab"><span class="key">onTop</span> : <span class="val">true</span>,</p>
+			<p class="tab"><span class="key">overlay</span> : <span class="val">true</span>,</p>
 			<p>}<span class="text">)</span>;</p>
 		</code></pre></div>
 	</div>
@@ -245,7 +245,7 @@ $(function(){
 		$('#content2').notifyModal({
 			duration : 2500,
 			placement : 'center',
-			onTop : true
+			overlay : true
 		});
 	});
 	
