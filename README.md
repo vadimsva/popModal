@@ -15,10 +15,10 @@ This library includes 5 components:<br>
 
 
 <h4>Direct links to libs</h4>
-<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [26Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [12.1Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [12.6Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [11.4Kb]
+<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [26.2Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [12.3Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [12.4Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [11.2Kb]
 
 
 Documentation
@@ -94,9 +94,8 @@ Use: <code>2500</code> - default, <code>-1</code> for infinity<br>
 <code>placement</code> - position (string).<br>
 Use: <code>'center'</code> - default, <code>'leftTop'</code>, <code>'centerTop'</code>, <code>'rightTop'</code>, <code>'leftBottom'</code>, <code>'centerBottom'</code>, <code>'rightBottom'</code><br>
 <br>
-<code>onTop</code> - show notification popup on top of the content (boolean).<br>
+<code>overlay</code> - show notification popup on top of the content (boolean).<br>
 Use: <code>true</code> - default, <code>false</code><br>
-With <code>placement : 'center'</code>, <code>onTop</code> will work as <code>true</code>.
 
 <h5>Notes</h5>
 <i>You can close this notification popup, by clicking on any place, close button or press ESC.</i><br>
@@ -208,7 +207,7 @@ $(el).popModal({
 $(content).notifyModal({
   duration : 2500,
   placement : 'center',
-  onTop : true
+  overlay : true
 });
 </pre>
 
@@ -234,3 +233,10 @@ $(content).dialogModal({});
 <pre>
 &lt;div title="Title text" data-titleModal="init" data-placement="top"&gt;Text&lt;/div&gt;
 </pre>
+
+
+
+License
+=======
+
+The MIT License (MIT)
