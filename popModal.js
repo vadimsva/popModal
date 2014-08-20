@@ -1,4 +1,8 @@
-/* popModal - 23.05.14 */
+/*
+popModal - 1.06 [20.08.14]
+Author: vadimsva
+Github: https://github.com/vadimsva/popModal
+*/
 /* popModal */
 (function($) {
 	$.fn.popModal = function(method) {
@@ -19,6 +23,8 @@
 		lc = 'leftCenter',
 		rt = 'rightTop',
 		rc = 'rightCenter';
+		
+		var currentID;
 	
 		var methods = {
 			init : function(params) {
@@ -27,6 +33,7 @@
 					placement: bl,
 					showCloseBut: true,
 					onDocumentClickClose : true,
+					inline : true,
 					onOkBut: function() {return true;},
 					onCancelBut: function() {},
 					onLoad: function() {},
@@ -34,7 +41,7 @@
 				};
 				_options = $.extend(_defaults, params);
 				
-				if (elem.next('div').hasClass(elemClass)) {
+				if ( $('body').find('.' + elemClass).length != 0 && $('body').find('.' + elemClass).attr('data-popModal_ID') == elem.attr('data-popModal_ID') ) {
 					popModalClose();
 				} else {
 					$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
@@ -47,7 +54,13 @@
 					if (elem.css('position') == 'fixed') {
 						isFixed = 'position:fixed;';
 					}
-					var tooltipContainer = $('<div class="' + elemClass + ' animated" style="' + isFixed + '"></div>');
+					
+					
+					currentID = new Date().getMilliseconds();
+					elem.attr('data-popModal_ID', currentID);
+
+					
+					var tooltipContainer = $('<div class="' + elemClass + ' animated" style="' + isFixed + '" data-popModal_ID="' + currentID + '"></div>');
 					var tooltipContent = $('<div class="' + elemClass + '_content ' + elemClass + '_contentOverflow"></div>');
 					tooltipContainer.append(closeBut, tooltipContent);
 					
@@ -71,8 +84,12 @@
 						}
 						tooltipContent.append(_options.html);
 					}
-					elem.after(tooltipContainer);
-
+					if (_options.inline) {
+						elem.after(tooltipContainer);
+					} else {
+						$('body').append(tooltipContainer);
+					}
+					
 					elemObj = $('.' + elemClass);
 					if (elemObj.find('.' + elemClass + '_footer')) {
 						elemObj.find('.' + elemClass + '_content').css({marginBottom: elemObj.find('.' + elemClass + '_footer').outerHeight() + 'px'});
@@ -184,9 +201,14 @@
 		}
 		
 		function getPlacement() {
+			if (_options.inline) {
+				var eLeft = elem.position().left;
+				var eTop = elem.position().top;
+			} else {
+				var eLeft = elem.offset().left;
+				var eTop = elem.offset().top;
+			}
 			var offset = 10,
-			eLeft = elem.position().left,
-			eTop = elem.position().top,
 			eMLeft = parseInt(elem.css('marginLeft')),
 			ePLeft = parseInt(elem.css('paddingLeft')),
 			eMTop = parseInt(elem.css('marginTop')),
@@ -232,7 +254,7 @@
 					optimal = bl;
 				} else if (deltaBL > 0 && deltaBL == maxDelta) {
 					optimal = br;
-				} else if (deltaBC > 0 && deltaC == maxDelta) {
+				} else if (deltaC > 0 && deltaC == maxDelta) {
 					optimal = bc;
 				} else {
 					optimal = current;
@@ -319,13 +341,15 @@
 		
 		function popModalClose() {
 			elemObj = $('.' + elemClass);
-			reverseEffect();
-			getAnimTime();
-			setTimeout(function () {
-				$('.' + elemClass + '_source').replaceWith($('.' + elemClass + '_content').children());
-				elemObj.remove();
-				$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
-			}, animTime);
+			if (elemObj.length) {
+				reverseEffect();
+				getAnimTime();
+				setTimeout(function () {
+					$('.' + elemClass + '_source').replaceWith($('.' + elemClass + '_content').children());
+					elemObj.remove();
+					$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
+				}, animTime);
+			}
 		}
 		
 		function getAnimTime() {
@@ -396,6 +420,7 @@
 				var _defaults = {
 					duration: 2500,
 					placement: 'center',
+					type: 'notify',
 					overlay : true
 				};
 				_options = $.extend(_defaults, params);
@@ -405,7 +430,7 @@
 				}
 				
 				$('.' + elemClass).remove();
-				var notifyContainer = $('<div class="' + elemClass + ' ' + _options.placement + ' ' + onTopClass + '"></div>');
+				var notifyContainer = $('<div class="' + elemClass + ' ' + _options.placement + ' ' + onTopClass + ' ' + _options.type + '"></div>');
 				var notifyContent = $('<div class="' + elemClass + '_content"></div>');
 				var closeBut = $('<button type="button" class="close">&times;</button>');
 				if (elem[0] == undefined) {
@@ -497,40 +522,22 @@
 /* hintModal */
 (function($) {
 	$.fn.hintModal = function(method){
-		var elemClass = 'hintModal',
-		elem = $('.' + elemClass + '_container'),
-		elemObj = $('.' + elemClass),
-		animTime,
-		effectIn = 'fadeIn',
-		effectOut = 'fadeOut';
-		bl = 'bottomLeft',
-		bc = 'bottomCenter',
-		br = 'bottomRight',
-		elem.addClass('animated ' + effectIn +'Bottom');
 	
 		var methods = {
 			init : function(params) {
 
-				elemObj.mouseenter(function() {
-					getPlacement();
-					var elemCur = $(this).find('.' + elemClass + '_container');
-					elem.css({display: 'none'});
-					var animClassOld = elemCur.attr('class');
-					var animClassNew = animClassOld.replace(effectOut, effectIn);
-					elemCur.removeClass(animClassOld).addClass(animClassNew).css({display: 'block'});
+				$(this).mouseenter(function() {
+					var elem = $(this).find('> .hintModal_container');
+					elem.addClass('animated fadeInBottom');
+					getPlacement($(this), elem);
+				});
+				
+				$(this).mouseleave(function() {
+					var elem = $(this).find('> .hintModal_container');
+					elem.removeClass('animated fadeInBottom');
 				});
 
-				elemObj.mouseleave(function() {
-					var animClassOld = elem.attr('class');
-					var animClassNew = animClassOld.replace(effectIn, effectOut);
-					elem.removeClass(animClassOld).addClass(animClassNew);
-					getAnimTime();
-					setTimeout(function() {
-						elem.css({display: 'none'});
-					}, animTime);
-				});
-			
-				function getPlacement() {
+				function getPlacement(elemObj, elem) {
 					var placement,
 					placementDefault,
 					eObjWidth = elemObj.outerWidth(),
@@ -541,7 +548,10 @@
 					deltaBR = eObjWidth + eOffsetRight - eWidth,
 					deltaCL = eObjWidth / 2 + eOffsetLeft - eWidth / 2,
 					deltaCR = eObjWidth / 2 + eOffsetRight - eWidth / 2,
-					deltaC = Math.min(deltaCR, deltaCL);
+					deltaC = Math.min(deltaCR, deltaCL),
+					bl = 'bottomLeft',
+					bc = 'bottomCenter',
+					br = 'bottomRight';
 					
 					if (elemObj.hasClass(bl)) {
 						placementDefault = bl;
@@ -566,7 +576,7 @@
 							optimal = bl;
 						} else if (deltaBL > 0 && deltaBL == maxDelta) {
 							optimal = br;
-						} else if (deltaBC > 0 && deltaC == maxDelta) {
+						} else if (deltaC > 0 && deltaC == maxDelta) {
 							optimal = bc;
 						} else {
 							optimal = current;
@@ -581,18 +591,7 @@
 					}
 					
 					placement = optimalPosition(elemObj.data('placement'));
-					elemObj.removeAttr('class').addClass(elemClass + ' ' + placement);
-				}
-			
-				function getAnimTime() {
-					if (!animTime) {
-						animTime = elem.css('animationDuration');
-						if (animTime != undefined) {
-							animTime = animTime.replace('s', '') * 1000;
-						} else {
-							animTime = 0;
-						}
-					}
+					elemObj.removeAttr('class').addClass('hintModal ' + placement);
 				}
 			
 			}
@@ -680,13 +679,9 @@
 					}
 					
 					$('body').addClass(elemClass + 'Open');
-					elemObj.addClass('open');
 
 					setTimeout(function() {
 						elemObj.addClass('open');
-						elemContObj.css({
-							marginTop: parseInt(elemContObj.css('marginTop')) - 20 + 'px'
-						});	
 					}, animTime);
 					
 					bindFooterButtons();
