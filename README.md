@@ -15,10 +15,10 @@ This library includes 5 components:<br>
 
 
 <h4>Direct links to libs</h4>
-<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [26.2Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [25.9Kb]<br>
 <a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [12.3Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [12.4Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [11.2Kb]
+<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [12.5Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [12.1Kb]
 
 
 Documentation
@@ -38,6 +38,9 @@ Use: <code>'bottomLeft'</code> - default, <code>'bottomCenter'</code>, <code>'bo
 Use: <code>true</code> - default, <code>false</code><br>
 <br>
 <code>onDocumentClickClose</code> - close popup when click on any place (boolean).<br>
+Use: <code>true</code> - default, <code>false</code><br>
+<br>
+<code>inline</code> - create popup relative element (boolean).<br>
 Use: <code>true</code> - default, <code>false</code><br>
 <br>
 <code>onOkBut</code> - code execution by clicking on OK button, contained in popup (function).<br>
@@ -93,6 +96,9 @@ Use: <code>2500</code> - default, <code>-1</code> for infinity<br>
 <br>
 <code>placement</code> - position (string).<br>
 Use: <code>'center'</code> - default, <code>'leftTop'</code>, <code>'centerTop'</code>, <code>'rightTop'</code>, <code>'leftBottom'</code>, <code>'centerBottom'</code>, <code>'rightBottom'</code><br>
+<br>
+<code>type</code> - visual style (string).<br>
+Use: <code>'notify'</code> - default, <code>'alert'</code>, <code>'simple'</code>, <code>'dark'</code><br>
 <br>
 <code>overlay</code> - show notification popup on top of the content (boolean).<br>
 Use: <code>true</code> - default, <code>false</code><br>
@@ -185,6 +191,7 @@ $(el).popModal({
   placement : 'bottomLeft',
   showCloseBut : true,
   overflowContent : true,
+  inline : true,
   onOkBut : function(){},
   onCancelBut : function(){},
   onLoad : function(){},
@@ -207,6 +214,7 @@ $(el).popModal({
 $(content).notifyModal({
   duration : 2500,
   placement : 'center',
+  type : 'notify',
   overlay : true
 });
 </pre>
