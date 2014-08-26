@@ -15,7 +15,7 @@ This library includes 5 components:<br>
 
 
 <h4>Direct links to libs</h4>
-<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [25.9Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [25.7Kb]<br>
 <a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [12.3Kb]<br>
 <a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [12.5Kb]<br>
 <a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [12.1Kb]
@@ -42,6 +42,9 @@ Use: <code>true</code> - default, <code>false</code><br>
 <br>
 <code>inline</code> - create popup relative element (boolean).<br>
 Use: <code>true</code> - default, <code>false</code><br>
+<br>
+<code>overflowContent</code> - overflow content (boolean).<br>
+Use: <code>false</code> - default, <code>true</code><br>
 <br>
 <code>onOkBut</code> - code execution by clicking on OK button, contained in popup (function).<br>
 Use: <code>function(){}</code>.<br>
@@ -77,7 +80,7 @@ $(el).popModal({param1 : value1, param2 : value2, ...});
 
 Also you may use inline bind
 <pre>
-&lt;button id="elem" data-popModalBind="#content" data-placement="bottomLeft" data-showCloseBut="true" data-overflowContent="true" data-onDocumentClickClose="true"&gt;example&lt;/button&gt;
+&lt;button id="elem" data-popModalBind="#content" data-placement="bottomLeft" data-showCloseBut="true" data-inline="true" data-overflowContent="false" data-onDocumentClickClose="true"&gt;example&lt;/button&gt;
 </pre>
 
 <i>Popup is dynamically created. When you create the second popup, the first will be deleted!</i><br>
