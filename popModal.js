@@ -1,5 +1,5 @@
 /*
-popModal - 1.06 [20.08.14]
+popModal - 1.07 [10.09.14]
 Author: vadimsva
 Github: https://github.com/vadimsva/popModal
 */
@@ -34,6 +34,7 @@ Github: https://github.com/vadimsva/popModal
 					placement: bl,
 					showCloseBut: true,
 					onDocumentClickClose : true,
+          onDocumentClickClosePrevent : '',
 					overflowContent : false,
 					inline : true,
 					onOkBut: function() {return true;},
@@ -124,7 +125,7 @@ Github: https://github.com/vadimsva/popModal
 							if (elemObj.is(':hidden')) {
 								popModalClose();
 							}
-							var target = $(event.target);
+              var target = $(event.target);
 							if (!target.parents().andSelf().is('.' + elemClass) && !target.parents().andSelf().is(elem)) {
 								var zIndex = parseInt(target.parents().filter(function() {
 									return $(this).css('zIndex') !== 'auto';
@@ -132,6 +133,9 @@ Github: https://github.com/vadimsva/popModal
 								if (isNaN(zIndex)) {
 									zIndex = 0;
 								}
+                if (_options.onDocumentClickClosePrevent != '' && target.is(_options.onDocumentClickClosePrevent)) {
+                  zIndex = 9999;
+                }
 								var target_zIndex = target.css('zIndex');
 								if (target_zIndex == 'auto') {
 									target_zIndex = 0;
@@ -192,7 +196,7 @@ Github: https://github.com/vadimsva/popModal
 		function getView() {
 			expandView = true;
 			if (elem.parent().css('position') != 'absolute' || elem.parent().css('position') != 'fixed') {
-				if (elemObj.find('.' + elemClass + '_content').width() < 270 && elemObj.find('.' + elemClass + '_content').height() < 60) {
+				if (elemObj.find('.' + elemClass + '_content').width() < 270 && elemObj.find('.' + elemClass + '_content').height() <= 20 && elemObj.find('.' + elemClass + '_footer').length == 0) {
 					expandView = false;
 				}
 			}
@@ -392,6 +396,9 @@ Github: https://github.com/vadimsva/popModal
 		}
 		if ($(this).attr('data-onDocumentClickClose') != undefined) {
 			params['onDocumentClickClose'] = (/^true$/i).test($(this).attr('data-onDocumentClickClose'));
+		}
+		if ($(this).attr('data-onDocumentClickClosePrevent') != undefined) {
+			params['onDocumentClickClosePrevent'] = $(this).attr('data-onDocumentClickClosePrevent');
 		}
 		$(this).popModal(params);
 	});
