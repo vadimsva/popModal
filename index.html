@@ -43,7 +43,7 @@ body {background:#fafafa}
 <div id="page">
 
 	<div id="copyrightBlock">
-		<div id="version" title="Current version/date">1.06<span>[20.08.14]</span></div>
+		<div id="version" title="Current version/date">1.07<span>[10.09.14]</span></div>
 		<a href="https://github.com/vadimsva/popModal" id="gitHubLink">GitHub Repo</a>
 	</div>
 
@@ -60,6 +60,7 @@ body {background:#fafafa}
 			<p class="tab"><span class="key">placement</span> : <span class="val">'bottomLeft'</span>,</p>
 			<p class="tab"><span class="key">showCloseBut</span> : <span class="val">true</span>,</p>
 			<p class="tab"><span class="key">onDocumentClickClose</span> : <span class="val">true</span>,</p>
+			<p class="tab"><span class="key">onDocumentClickClosePrevent</span> : <span class="val">''</span>,</p>
 			<p class="tab"><span class="key">inline</span> : <span class="val">true</span>,</p>
 			<p class="tab"><span class="key">overflowContent</span> : <span class="val">false</span>,</p>
 			<p class="tab"><span class="key">onOkBut</span> : <span class="val">function(){ }</span>,</p>
@@ -92,7 +93,7 @@ body {background:#fafafa}
 			<button id="popModal_ex3" data-popModalBind="#content">Example</button>
 		</div>
 		<div class="exampleCode"><pre><code>
-			<p>&lt;<span class="tag">button</span> <span class="key">id</span>=<span class="val">"elem"</span> <span class="key">data-popModalBind</span>=<span class="val">"#content"</span> <span class="key">data-placement</span>=<span class="val">"bottomLeft"</span> <span class="key">data-showCloseBut</span>=<span class="val">"true"</span> <span class="key">data-overflowContent</span>=<span class="val">"true"</span> <span class="key">data-onDocumentClickClose</span>=<span class="val">"true"</span>&gt;<span class="text">example</span>&lt;/<span class="tag">button</span>&gt;</p>
+			<p>&lt;<span class="tag">button</span> <span class="key">id</span>=<span class="val">"elem"</span> <span class="key">data-popModalBind</span>=<span class="val">"#content"</span> <span class="key">data-placement</span>=<span class="val">"bottomLeft"</span> <span class="key">data-showCloseBut</span>=<span class="val">"true"</span> <span class="key">data-overflowContent</span>=<span class="val">"true"</span> <span class="key">data-onDocumentClickClose</span>=<span class="val">"true"</span> <span class="key">data-onDocumentClickClosePrevent</span>=<span class="val">""</span>&gt;<span class="text">example</span>&lt;/<span class="tag">button</span>&gt;</p>
 		</code></pre></div>
 	</div>
 
@@ -109,6 +110,7 @@ body {background:#fafafa}
 			<p class="tab"><span class="key">duration</span> : <span class="val">2500</span>,</p>
 			<p class="tab"><span class="key">placement</span> : <span class="val">'center'</span>,</p>
 			<p class="tab"><span class="key">overlay</span> : <span class="val">true</span>,</p>
+			<p class="tab"><span class="key">type</span> : <span class="val">'notify'</span></p>
 			<p>}<span class="text">)</span>;</p>
 		</code></pre></div>
 	</div>
@@ -223,6 +225,7 @@ $(function(){
 			placement : 'bottomLeft',
 			showCloseBut : true,
 			onDocumentClickClose : true,
+			onDocumentClickClosePrevent : '',
 			inline : true,
 			overflowContent : false,
 			onOkBut : function(){},
@@ -246,8 +249,8 @@ $(function(){
 		$('#content2').notifyModal({
 			duration : 2500,
 			placement : 'center',
-			type : 'notify',
-			overlay : true
+			overlay : true,
+			type : 'notify'
 		});
 	});
 	
