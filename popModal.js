@@ -1,5 +1,5 @@
 /*
-popModal - 1.07 [10.09.14]
+popModal - 1.08 [23.09.14]
 Author: vadimsva
 Github: https://github.com/vadimsva/popModal
 */
@@ -37,6 +37,7 @@ Github: https://github.com/vadimsva/popModal
           onDocumentClickClosePrevent : '',
 					overflowContent : false,
 					inline : true,
+					beforeLoadingContent : 'Please, waiting...',
 					onOkBut: function() {return true;},
 					onCancelBut: function() {},
 					onLoad: function() {},
@@ -44,7 +45,7 @@ Github: https://github.com/vadimsva/popModal
 				};
 				_options = $.extend(_defaults, params);
 				
-				if ( $('body').find('.' + elemClass).length != 0 && $('body').find('.' + elemClass).attr('data-popModal_ID') == elem.attr('data-popModal_ID') ) {
+				if ( $('body').find('.' + elemClass).length != 0 && $('body').find('.' + elemClass).attr('data-popmodal_id') == elem.attr('data-popmodal_id') ) {
 					popModalClose();
 				} else {
 					$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
@@ -64,15 +65,15 @@ Github: https://github.com/vadimsva/popModal
 					}
 					
 					currentID = new Date().getMilliseconds();
-					elem.attr('data-popModal_ID', currentID);
+					elem.attr('data-popmodal_id', currentID);
 
 					
-					var tooltipContainer = $('<div class="' + elemClass + ' animated" style="' + isFixed + '" data-popModal_ID="' + currentID + '"></div>');
+					var tooltipContainer = $('<div class="' + elemClass + ' animated" style="' + isFixed + '" data-popmodal_id="' + currentID + '"></div>');
 					var tooltipContent = $('<div class="' + elemClass + '_content ' + overflowContentClass + '"></div>');
 					tooltipContainer.append(closeBut, tooltipContent);
 					
 					if ($.isFunction(_options.html)) {
-						var beforeLoadingContent = 'Please, waiting...';
+						var beforeLoadingContent = _options.beforeLoadingContent;
 						tooltipContent.append(beforeLoadingContent);
 						_options.html(function(loadedContent) {
 							tooltipContent.empty().append(loadedContent);
@@ -158,11 +159,11 @@ Github: https://github.com/vadimsva/popModal
 						popModalClose();
 					});
 					
-					elemObj.find('[data-popModalBut="close"]').bind('click', function() {
+					elemObj.find('[data-popmodal-but="close"]').bind('click', function() {
 						popModalClose();
 					});
 
-					elemObj.find('[data-popModalBut="ok"]').bind('click', function(event) {
+					elemObj.find('[data-popmodal-but="ok"]').bind('click', function(event) {
 						var ok;
 						if (_options.onOkBut && $.isFunction(_options.onOkBut)) {
 							ok = _options.onOkBut(event);
@@ -172,7 +173,7 @@ Github: https://github.com/vadimsva/popModal
 						}
 					});
 
-					elemObj.find('[data-popModalBut="cancel"]').bind('click', function() {
+					elemObj.find('[data-popmodal-but="cancel"]').bind('click', function() {
 						if (_options.onCancelBut && $.isFunction(_options.onCancelBut)) {
 							_options.onCancelBut();
 						}
@@ -379,26 +380,29 @@ Github: https://github.com/vadimsva/popModal
 
 	}
 
-	$('* [data-popModalBind]').bind('click', function() {
-		var elemBind = $(this).attr('data-popModalBind');
+	$('* [data-popmodal-bind]').bind('click', function() {
+		var elemBind = $(this).attr('data-popmodal-bind');
 		var params = {html: $(elemBind)};
 		if ($(this).attr('data-placement') != undefined) {
 			params['placement'] = $(this).attr('data-placement');
 		}
-		if ($(this).attr('data-showCloseBut') != undefined) {
-			params['showCloseBut'] = (/^true$/i).test($(this).attr('data-showCloseBut'));
+		if ($(this).attr('data-showclose-but') != undefined) {
+			params['showCloseBut'] = (/^true$/i).test($(this).attr('data-showclose-but'));
+		}
+		if ($(this).attr('data-overflowcontent') != undefined) {
+			params['overflowContent'] = (/^false$/i).test($(this).attr('data-overflowcontent'));
+		}
+		if ($(this).attr('data-ondocumentclick-close') != undefined) {
+			params['onDocumentClickClose'] = (/^true$/i).test($(this).attr('data-ondocumentclick-close'));
+		}
+		if ($(this).attr('data-ondocumentclick-close-prevent') != undefined) {
+			params['onDocumentClickClosePrevent'] = $(this).attr('data-ondocumentclick-close-prevent');
 		}
 		if ($(this).attr('data-inline') != undefined) {
 			params['inline'] = (/^true$/i).test($(this).attr('data-inline'));
 		}
-		if ($(this).attr('data-overflowContent') != undefined) {
-			params['overflowContent'] = (/^false$/i).test($(this).attr('data-overflowContent'));
-		}
-		if ($(this).attr('data-onDocumentClickClose') != undefined) {
-			params['onDocumentClickClose'] = (/^true$/i).test($(this).attr('data-onDocumentClickClose'));
-		}
-		if ($(this).attr('data-onDocumentClickClosePrevent') != undefined) {
-			params['onDocumentClickClosePrevent'] = $(this).attr('data-onDocumentClickClosePrevent');
+		if ($(this).attr('data-beforeloading-content') != undefined) {
+			params['beforeLoadingContent'] = $(this).attr('data-beforeloading-content');
 		}
 		$(this).popModal(params);
 	});
@@ -509,8 +513,8 @@ Github: https://github.com/vadimsva/popModal
 
 	}
 	
-	$('* [data-notifyModalBind]').bind('click', function() {
-		var elemBind = $(this).attr('data-notifyModalBind');
+	$('* [data-notifymodal-bind]').bind('click', function() {
+		var elemBind = $(this).attr('data-notifymodal-bind');
 		var params = {};
 		if ($(this).attr('data-duration') != undefined) {
 			params['duration'] = parseInt($(this).attr('data-duration'));
@@ -518,8 +522,8 @@ Github: https://github.com/vadimsva/popModal
 		if ($(this).attr('data-placement') != undefined) {
 			params['placement'] = $(this).attr('data-placement');
 		}
-		if ($(this).attr('data-onTop') != undefined) {
-			params['onTop'] = (/^true$/i).test($(this).attr('data-onTop'));
+		if ($(this).attr('data-ontop') != undefined) {
+			params['onTop'] = (/^true$/i).test($(this).attr('data-ontop'));
 		}
 		$(elemBind).notifyModal(params);
 	});
@@ -671,6 +675,9 @@ Github: https://github.com/vadimsva/popModal
 					}
 				});
 				
+				var getScrollBarWidth = window.innerWidth - $(window).outerWidth();
+				$('body').css({paddingRight: getScrollBarWidth + 'px'}).addClass(elemClass + 'Open');
+				
 				centerDialog();
 				
 				function centerDialog() {
@@ -678,15 +685,13 @@ Github: https://github.com/vadimsva/popModal
 					windowHeight = $(window).height();
 					if (windowHeight > dialogHeight + 80) {
 						elemContObj.css({
-							marginTop: ($(window).height() - dialogHeight) / 2 + 'px'
+							marginTop: ($(window).height() - dialogHeight) / 2 - 100 + 'px'
 						});	
 					} else {
 						elemContObj.css({
 							marginTop: '60px'
 						});						
 					}
-					
-					$('body').addClass(elemClass + 'Open');
 
 					setTimeout(function() {
 						elemObj.addClass('open');
@@ -696,11 +701,11 @@ Github: https://github.com/vadimsva/popModal
 				}
 				
 				function bindFooterButtons() {
-					elemObj.find('[data-dialogModalBut="close"]').bind('click', function() {
+					elemObj.find('[data-dialogmodal-but="close"]').bind('click', function() {
 						dialogModalClose();
 					});
 
-					elemObj.find('[data-dialogModalBut="ok"]').bind('click', function(event) {
+					elemObj.find('[data-dialogmodal-but="ok"]').bind('click', function(event) {
 						var ok;
 						if (_options.onOkBut && $.isFunction(_options.onOkBut)) {
 							ok = _options.onOkBut(event);
@@ -710,7 +715,7 @@ Github: https://github.com/vadimsva/popModal
 						}
 					});
 
-					elemObj.find('[data-dialogModalBut="cancel"]').bind('click', function() {
+					elemObj.find('[data-dialogmodal-but="cancel"]').bind('click', function() {
 						if (_options.onCancelBut && $.isFunction(_options.onCancelBut)) {
 							_options.onCancelBut();
 						}
@@ -772,7 +777,7 @@ Github: https://github.com/vadimsva/popModal
 				elemObj.removeClass('open');
 				setTimeout(function() {
 					elemObj.remove();
-					$('body').removeClass(elemClass + 'Open');
+					$('body').removeClass(elemClass + 'Open').css({paddingRight:''});
 					$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
 					elemObj.find('.' + prevBut).off('click');
 					elemObj.find('.' + nextBut).off('click');
@@ -799,8 +804,8 @@ Github: https://github.com/vadimsva/popModal
 
 	}
 	
-	$('* [data-dialogModalBind]').bind('click', function() {
-		var elemBind = $(this).attr('data-dialogModalBind');
+	$('* [data-dialogmodal-bind]').bind('click', function() {
+		var elemBind = $(this).attr('data-dialogmodal-bind');
 		$(elemBind).dialogModal();
 	});
 
@@ -822,7 +827,7 @@ Github: https://github.com/vadimsva/popModal
 				var elem,
 				elemObj,
 				elemClass = 'titleModal',
-				getElem = $('*[data-' + elemClass + ']'),
+				getElem = $('*[data-titlemodal]'),
 				animTime,
 				effectIn = 'fadeIn',
 				effectOut = 'fadeOut';
