@@ -1,5 +1,5 @@
 /*
-popModal - 1.08 [23.09.14]
+popModal - 1.09 [06.10.14]
 Author: vadimsva
 Github: https://github.com/vadimsva/popModal
 */
@@ -155,15 +155,17 @@ Github: https://github.com/vadimsva/popModal
 						getPlacement();
 					});
 					
-					elemObj.find('.close').bind('click', function() {
+					elemObj.find('.close').on('click', function() {
 						popModalClose();
+						$(this).off('click');
 					});
 					
-					elemObj.find('[data-popmodal-but="close"]').bind('click', function() {
+					elemObj.find('[data-popmodal-but="close"]').on('click', function() {
 						popModalClose();
+						$(this).off('click');
 					});
 
-					elemObj.find('[data-popmodal-but="ok"]').bind('click', function(event) {
+					elemObj.find('[data-popmodal-but="ok"]').on('click', function(event) {
 						var ok;
 						if (_options.onOkBut && $.isFunction(_options.onOkBut)) {
 							ok = _options.onOkBut(event);
@@ -171,13 +173,15 @@ Github: https://github.com/vadimsva/popModal
 						if (ok !== false) {
 							popModalClose();
 						}
+						$(this).off('click');
 					});
 
-					elemObj.find('[data-popmodal-but="cancel"]').bind('click', function() {
+					elemObj.find('[data-popmodal-but="cancel"]').on('click', function() {
 						if (_options.onCancelBut && $.isFunction(_options.onCancelBut)) {
 							_options.onCancelBut();
 						}
 						popModalClose();
+						$(this).off('click');
 					});
 
 					$('html').on('keydown.' + elemClass + 'Event', function(event) {
@@ -701,11 +705,12 @@ Github: https://github.com/vadimsva/popModal
 				}
 				
 				function bindFooterButtons() {
-					elemObj.find('[data-dialogmodal-but="close"]').bind('click', function() {
+					elemObj.find('[data-dialogmodal-but="close"]').on('click', function() {
 						dialogModalClose();
+						$(this).off('click');
 					});
 
-					elemObj.find('[data-dialogmodal-but="ok"]').bind('click', function(event) {
+					elemObj.find('[data-dialogmodal-but="ok"]').on('click', function(event) {
 						var ok;
 						if (_options.onOkBut && $.isFunction(_options.onOkBut)) {
 							ok = _options.onOkBut(event);
@@ -713,17 +718,19 @@ Github: https://github.com/vadimsva/popModal
 						if (ok !== false) {
 							dialogModalClose();
 						}
+						$(this).off('click');
 					});
 
-					elemObj.find('[data-dialogmodal-but="cancel"]').bind('click', function() {
+					elemObj.find('[data-dialogmodal-but="cancel"]').on('click', function() {
 						if (_options.onCancelBut && $.isFunction(_options.onCancelBut)) {
 							_options.onCancelBut();
 						}
 						dialogModalClose();
+						$(this).off('click');
 					});
 				}
 
-				elemObj.find('.' + prevBut).bind('click', function() {
+				elemObj.find('.' + prevBut).on('click', function() {
 					if (currentDialog > 0) {
 						--currentDialog;
 						if (currentDialog < maxDialog) {
@@ -737,7 +744,7 @@ Github: https://github.com/vadimsva/popModal
 					}
 				});
 				
-				elemObj.find('.' + nextBut).bind('click', function() {
+				elemObj.find('.' + nextBut).on('click', function() {
 					if (currentDialog < maxDialog) {
 						++currentDialog;
 						if (currentDialog > 0) {
@@ -751,8 +758,9 @@ Github: https://github.com/vadimsva/popModal
 					}
 				});
 
-				elemObj.find('.close').bind('click', function() {
+				elemObj.find('.close').on('click', function() {
 					dialogModalClose();
+					$(this).off('click');
 				});
 				
 				$('html').on('keydown.' + elemClass + 'Event', function(event) {
