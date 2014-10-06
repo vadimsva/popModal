@@ -8,7 +8,7 @@
 <style>
 * {margin:0;font-family:sans-serif;outline:0}
 body {background:#fafafa}
-#page {background:#fff;border:1px solid #ccc;box-shadow:0 0 0 3px #eee;margin:40px auto;width:40%;min-width:800px;min-height:500px;border-radius:3px;padding:0 0 30px;position:relative}
+#page {background:#fff;border:1px solid #ccc;box-shadow:0 0 0 3px #eee;margin:40px auto;width:40%;min-width:800px;min-height:500px;border-radius:3px;position:relative}
 #page h2 {margin:20px;color:#444;margin-top:120px}
 #page #copyrightBlock + h2 {margin-top:20px}
 #copyrightBlock {position:absolute;top:10px;right:10px}
@@ -19,10 +19,11 @@ body {background:#fafafa}
 
 .exampleContainer {border:1px solid #ddd;border-left:0;border-right:0}
 .exampleContainer .exampleLive {padding:20px;background:#fafafa}
-.exampleContainer .exampleLive .exampleLiveTitle {color:#666;font-size:13px;padding-bottom:10px;margin-right:10%}
+.exampleContainer .exampleLive .exampleLiveTitle {color:#666;font-size:13px;padding-bottom:10px}
 .exampleContainer .exampleLive > button {padding:6px 12px;cursor:pointer;background:#4081BE;border:0;color:#fff;border-radius:3px;text-transform:uppercase;font-weight:bold;font-size:13px}
 .exampleContainer .exampleLive > button:hover {background:#3772A8}
 .exampleContainer .exampleCode {background:#2b2f3b;padding:20px}
+.exampleContainer .exampleCode pre {line-height:0}
 .exampleContainer .exampleCode code {white-space:pre-line}
 .exampleContainer .exampleCode code * {font-family:consolas;font-size:13px}
 .exampleContainer .exampleCode code > p {line-height:20px;color:#7993ad;display:inline-block}
@@ -43,7 +44,7 @@ body {background:#fafafa}
 <div id="page">
 
 	<div id="copyrightBlock">
-		<div id="version" title="Current version/date">1.08<span>[23.09.14]</span></div>
+		<div id="version" title="Current version/date">1.09<span>[06.10.14]</span></div>
 		<a href="https://github.com/vadimsva/popModal" id="gitHubLink">GitHub Repo</a>
 	</div>
 
@@ -230,10 +231,10 @@ $(function(){
 			overflowContent : false,
 			inline : true,
 			beforeLoadingContent : 'Please, waiting...',
-			onOkBut : function(){},
-			onCancelBut : function(){},
-			onLoad : function(){},
-			onClose : function(){}
+			onOkBut : function() {},
+			onCancelBut : function() {},
+			onLoad : function() {},
+			onClose : function() {}
 		});
 	});
 		
