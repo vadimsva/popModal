@@ -44,7 +44,7 @@ body {background:#fafafa}
 <div id="page">
 
 	<div id="copyrightBlock">
-		<div id="version" title="Current version/date">1.09<span>[06.10.14]</span></div>
+		<div id="version" title="Current version/date">1.10<span>[07.10.14]</span></div>
 		<a href="https://github.com/vadimsva/popModal" id="gitHubLink">GitHub Repo</a>
 	</div>
 
@@ -112,7 +112,8 @@ body {background:#fafafa}
 			<p class="tab"><span class="key">duration</span> : <span class="val">2500</span>,</p>
 			<p class="tab"><span class="key">placement</span> : <span class="val">'center'</span>,</p>
 			<p class="tab"><span class="key">overlay</span> : <span class="val">true</span>,</p>
-			<p class="tab"><span class="key">type</span> : <span class="val">'notify'</span></p>
+			<p class="tab"><span class="key">type</span> : <span class="val">'notify'</span>,</p>
+			<p class="tab"><span class="key">onClose</span> : <span class="val">function(){ }</span></p>
 			<p>}<span class="text">)</span>;</p>
 		</code></pre></div>
 	</div>
@@ -253,7 +254,8 @@ $(function(){
 			duration : 2500,
 			placement : 'center',
 			overlay : true,
-			type : 'notify'
+			type : 'notify',
+			onClose : function() {}
 		});
 	});
 	
