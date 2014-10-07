@@ -1,5 +1,5 @@
 /*
-popModal - 1.09 [06.10.14]
+popModal - 1.10 [07.10.14]
 Author: vadimsva
 Github: https://github.com/vadimsva/popModal
 */
@@ -437,7 +437,8 @@ Github: https://github.com/vadimsva/popModal
 					duration: 2500,
 					placement: 'center',
 					type: 'notify',
-					overlay : true
+					overlay : true,
+					onClose: function() {}
 				};
 				_options = $.extend(_defaults, params);
 				
@@ -486,6 +487,9 @@ Github: https://github.com/vadimsva/popModal
 					elemObj.remove();
 					if (_options.duration != -1) {
 						clearTimeout(notifDur);
+					}
+					if (_options.onClose && $.isFunction(_options.onClose)) {
+						_options.onClose();
 					}
 				}, animTime);
 			}, animTime);
