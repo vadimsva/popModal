@@ -1,5 +1,5 @@
 /*
-popModal - 1.10 [07.10.14]
+popModal - 1.11 [28.11.14]
 Author: vadimsva
 Github: https://github.com/vadimsva/popModal
 */
@@ -191,7 +191,7 @@ Github: https://github.com/vadimsva/popModal
 					});
 
 				}
-				
+				return elemObj;
 			},
 			hide : function() {
 				popModalClose();
