@@ -16,9 +16,9 @@ This library includes 5 components:<br>
 
 <h4>Direct links to libs</h4>
 <a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [26.9Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [13.6Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [13.7Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [12.3Kb]
+<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [13.7Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [14.9Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [13.6Kb]
 
 
 Documentation
@@ -183,12 +183,15 @@ $(content).dialogModal({param1 : value1, param2 : value2, ...});
 
 
 <h3>titleModal</h3>
+<p><i>$('.titleModal').titleModal();</i></p>
 
-Use: You need to put attribute title and <code>data-titlemodal="title"</code>.<br>
+Use: You need to put attribute title and <code>class="titleModal"</code>.<br>
 titleModal will show by default at the bottom, to change position, put attribute <code>data-placement="top"</code>. You can use <code>top</code>, <code>left</code> or <code>right</code>.
 
 <h5>Notes</h5>
-<i>titleModal will be called automatically if document have elements with the attribute title and  "data-titlemodal='init'".</i>
+<i>titleModal will be called automatically if document have elements with the attribute title and  "class='titleModal'".<br>
+You can use another style for titleModal, add <code>class="light"</code> to element.</i>
+
 
 
 
@@ -254,7 +257,7 @@ $(content).dialogModal({});
 
 <h3>titleModal</h3>
 <pre>
-&lt;div title="Title text" data-titlemodal="init" data-placement="top"&gt;Text&lt;/div&gt;
+&lt;div title="Title text" class="titleModal light" data-placement="bottom"&gt;Text&lt;/div&gt;
 </pre>
 
 
