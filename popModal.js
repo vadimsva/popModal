@@ -1,5 +1,5 @@
 /*
-popModal - 1.11 [28.11.14]
+popModal - 1.12 [19.12.14]
 Author: vadimsva
 Github: https://github.com/vadimsva/popModal
 */
@@ -542,19 +542,24 @@ Github: https://github.com/vadimsva/popModal
 /* hintModal */
 (function($) {
 	$.fn.hintModal = function(method){
+		$('.hintModal').off();
 	
 		var methods = {
 			init : function(params) {
 
-				$(this).mouseenter(function() {
+				$(this).on('mouseenter', function() {
 					var elem = $(this).find('> .hintModal_container');
-					elem.addClass('animated fadeInBottom');
-					getPlacement($(this), elem);
+					if(elem[0].innerText.length > 1){
+						elem.addClass('animated fadeInBottom');
+						getPlacement($(this), elem);
+					}
 				});
 				
-				$(this).mouseleave(function() {
+				$(this).on('mouseleave', function() {
 					var elem = $(this).find('> .hintModal_container');
-					elem.removeClass('animated fadeInBottom');
+					if(elem[0].innerText.length > 1){
+						elem.removeClass('animated fadeInBottom');
+					}
 				});
 
 				function getPlacement(elemObj, elem) {
@@ -834,48 +839,51 @@ Github: https://github.com/vadimsva/popModal
 /* titleModal */
 (function($) {
 	$.fn.titleModal = function(method) {
+	$('.titleModal').off();
+	
 		var methods = {
 			init : function(params) {
 				var elem,
 				elemObj,
 				elemClass = 'titleModal',
-				getElem = $('*[data-titlemodal]'),
+				getElem = $('.' + elemClass),
 				animTime,
 				effectIn = 'fadeIn',
 				effectOut = 'fadeOut';
-				
-				getElem.mouseenter(function() {
+
+				getElem.on('mouseenter', function() {
 					elem = $(this);
-					titleAttr =	elem.attr('title');
-					elem.removeAttr('title');
-					elem.attr('data-title', titleAttr);
-					titleModal = $('<div class="' + elemClass + ' animated"></div>');
-					elemObj = $('.' + elemClass);
-					placement = elem.attr('data-placement');
-					if (placement == undefined) {
-						placement = 'bottom';
+					if(elem.attr('title') != undefined) {
+						titleAttr =	elem.attr('title');
+						elem.removeAttr('title');
+						elem.attr('data-title', titleAttr);
+						titleModal = $('<div class="' + elemClass + '_container animated"></div>');
+						elemObj = $('.' + elemClass + '_container');
+						placement = elem.attr('data-placement');
+						if (placement == undefined) {
+							placement = 'bottom';
+						}
+						if (elemObj) {
+							elemObj.remove();
+						}
+						elem.append(titleModal.append(titleAttr));
+						getPlacement();
 					}
-					if (elemObj) {
-						elemObj.remove();
-					}
-					elem.after(titleModal.append(titleAttr));
-					getPlacement();
 				});
 
-				getElem.mouseleave(function() {
+				getElem.on('mouseleave', function() {
 					elem = $(this);
-					titleAttr =	elem.attr('data-title');
-					elem.removeAttr('data-title');
-					elem.attr('title', titleAttr);
-					reverseEffect();
-					getAnimTime();
-					setTimeout(function() {
+					if(elem.attr('data-title') != undefined){
+						titleAttr =	elem.attr('data-title');
+						elem.removeAttr('data-title');
+						elem.attr('title', titleAttr);
+						reverseEffect();
 						elemObj.remove();
-					},animTime);
+					}
 				});
 				
 				function getPlacement() {
-					elemObj = $('.' + elemClass);
+					elemObj = $('.' + elemClass + '_container');
 					var eLeft = elem.position().left,
 					eTop = elem.position().top,
 					eMLeft = elem.css('marginLeft'),
@@ -915,17 +923,6 @@ Github: https://github.com/vadimsva/popModal
 					}
 				}
 				
-				function getAnimTime() {
-					if (!animTime) {
-						animTime = elemObj.css('animationDuration');
-						if (animTime != undefined) {
-							animTime = animTime.replace('s', '') * 1000;
-						} else {
-							animTime = 0;
-						}
-					}
-				}
-				
 				function reverseEffect() {
 					var animClassOld = elemObj.attr('class'),
 					animClassNew = animClassOld.replace(effectIn, effectOut);
@@ -941,5 +938,6 @@ Github: https://github.com/vadimsva/popModal
 			return methods.init.apply( this, arguments );
 		}
 		
-	}();
+	};
+	$('.titleModal').titleModal();
 })(jQuery);
