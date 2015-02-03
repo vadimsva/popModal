@@ -7,20 +7,20 @@
 <title>popModal</title>
 <style>
 * {margin:0;font-family:sans-serif;outline:0}
-body {background:#fafafa}
-#page {background:#fff;border:1px solid #ccc;box-shadow:0 0 0 3px #eee;margin:40px auto;width:40%;min-width:800px;min-height:500px;border-radius:3px;position:relative}
+body {background:#f1f1f1}
+#page {background:#fff;border:1px solid #ccc;margin:60px auto;width:40%;min-width:800px;min-height:500px;border-radius:3px;position:relative;box-sizing:border-box}
 #page h2 {margin:20px;color:#444;margin-top:120px}
 #page #copyrightBlock + h2 {margin-top:20px}
-#copyrightBlock {position:absolute;top:10px;right:10px}
-#version, #gitHubLink {color:#fff;background:#4081BE;display:inline-block;padding:0 6px;border-radius:3px;text-decoration:none;font-size:12px;line-height:20px;margin-left:1px}
+#copyrightBlock {position:absolute;top:-40px;right:0}
+#version, #gitHubLink {color:#fff;background:#4081BE;display:inline-block;padding:0 10px;border-radius:3px;text-decoration:none;font-size:12px;line-height:24px;margin-left:1px}
 #gitHubLink:hover {background:#3772A8}
-#version {background:#777}
-#version span {margin-left:10px;color:#ccc}
+#version {background:transparent;color:#555;font-weight:bold}
+#version span {margin-left:10px;color:#999}
 
-.exampleContainer {border:1px solid #ddd;border-left:0;border-right:0}
-.exampleContainer .exampleLive {padding:20px;background:#fafafa}
+.exampleContainer {border-left:5px solid #4081BE;margin-bottom:30px}
+.exampleContainer .exampleLive {border-top:1px solid #ddd;padding:20px;background:#fafafa}
 .exampleContainer .exampleLive .exampleLiveTitle {color:#666;font-size:13px;padding-bottom:10px}
-.exampleContainer .exampleLive > button {padding:6px 12px;cursor:pointer;background:#4081BE;border:0;color:#fff;border-radius:3px;text-transform:uppercase;font-weight:bold;font-size:13px}
+.exampleContainer .exampleLive > button {padding:6px 12px;cursor:pointer;background:#4081BE;border:0;color:#fff;border-radius:3px;text-transform:uppercase;font-weight:bold;font-size:13px;line-height:20px}
 .exampleContainer .exampleLive > button:hover {background:#3772A8}
 .exampleContainer .exampleCode {background:#2b2f3b;padding:20px}
 .exampleContainer .exampleCode pre {line-height:0}
@@ -36,6 +36,19 @@ body {background:#fafafa}
 .exampleContainer .exampleCode code .val {color:#fadf8c}
 .exampleContainer .exampleCode code .var {color:#aae997}
 .exampleContainer .exampleCode code .var2 {color:#b297e9}
+
+.btn {padding:6px 15px;cursor:pointer;background:#fff;border:1px solid #ccc;display:inline-block;color:#000;line-height:20px}
+.btn:hover {background:#eee;border-color:#bbb}
+.btn:focus {background:#ddd;border-color:#aaa}
+.btn.btn-primary {background:#4081BE;color:#fff;border-color:#1E5589}
+.btn.btn-primary:hover {box-shadow:inset 0 0 0 20px rgba(0,0,0,0.2);border-color:#1E5589}
+.btn.btn-primary:focus {box-shadow:inset 0 0 0 20px rgba(0,0,0,0.3);border-color:#1E5589}
+
+.btn.btn-left {float:left;margin:0 5px 0 0!important}
+
+@media (max-width: 800px){
+#page {width:auto;min-width:0}
+}
 </style>
 <link type="text/css" rel="stylesheet" href="popModal.css">
 </head>
@@ -44,7 +57,7 @@ body {background:#fafafa}
 <div id="page">
 
 	<div id="copyrightBlock">
-		<div id="version" title="Current version/date">1.12<span>[19.12.14]</span></div>
+		<div id="version" title="Current version/date">1.13<span>[03.02.15]</span></div>
 		<a href="https://github.com/vadimsva/popModal" id="gitHubLink">GitHub Repo</a>
 	</div>
 
@@ -149,6 +162,7 @@ body {background:#fafafa}
 		</div>
 		<div class="exampleCode"><pre><code>
 			<p><span class="text">$('</span><span class="tag">#content</span><span class="text">').dialogModal(</span>{</p>
+			<p class="tab"><span class="key">topOffset</span> : <span class="val">0</span>,</p>
 			<p class="tab"><span class="key">onOkBut</span> : <span class="val">function(){ }</span>,</p>
 			<p class="tab"><span class="key">onCancelBut</span> : <span class="val">function(){ }</span>,</p>
 			<p class="tab"><span class="key">onLoad</span> : <span class="val">function(){ }</span>,</p>
@@ -160,10 +174,10 @@ body {background:#fafafa}
 	<div class="exampleContainer">
 		<div class="exampleLive">
 			<div class="exampleLiveTitle">inline bind</div>
-			<button id="dialogModal_ex2" data-dialogmodal-bind=".dialog_content">Example</button>
+			<button id="dialogModal_ex2" data-dialogmodal-bind=".dialog_content" data-topoffset="0">Example</button>
 		</div>
 		<div class="exampleCode"><pre><code>
-			<p>&lt;<span class="tag">button</span> <span class="key">data-dialogmodal-bind</span>=<span class="val">"#content"</span>&gt;<span class="text">example</span>&lt;/<span class="tag">button</span>&gt;</p>
+			<p>&lt;<span class="tag">button</span> <span class="key">data-dialogmodal-bind</span>=<span class="val">"#content"</span> <span class="key">data-topoffset</span>=<span class="val">"0"</span>&gt;<span class="text">example</span>&lt;/<span class="tag">button</span>&gt;</p>
 		</code></pre></div>
 	</div>
 
@@ -186,8 +200,8 @@ body {background:#fafafa}
 <div id="content">
 	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 	<div class="popModal_footer">
-		<button type="button" data-popmodal-but="ok">ok</button>
-		<button type="button" data-popmodal-but="cancel">cancel</button>
+		<button type="button" class="btn btn-primary" data-popmodal-but="ok">ok</button>
+		<button type="button" class="btn"data-popmodal-but="cancel">cancel</button>
 	</div>
 </div>
 </div>
@@ -199,11 +213,18 @@ body {background:#fafafa}
 <div id="dialog_content" class="dialog_content" style="display:none">
 	<div class="dialogModal_header">Dialog header 1</div>
 	<div class="dialogModal_content">
+	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.<br><br>
+	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.<br><br>
+	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.<br><br>
+	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.<br><br>
+	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.<br><br>
+	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.<br><br>
+	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.<br><br>
 	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 	</div>
 	<div class="dialogModal_footer">
-		<button type="button" data-dialogmodal-but="ok">ok</button>
-		<button type="button" data-dialogmodal-but="cancel">cancel</button>
+		<button type="button" class="btn btn-primary" data-dialogmodal-but="next">Next</button>
+		<button type="button" class="btn"data-dialogmodal-but="cancel">Cancel</button>
 	</div>
 </div>
 
@@ -213,12 +234,13 @@ body {background:#fafafa}
 	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 	</div>
 	<div class="dialogModal_footer">
-		<button type="button" data-dialogmodal-but="ok">ok</button>
-		<button type="button" data-dialogmodal-but="cancel">cancel</button>
+		<button type="button" class="btn btn-left" data-dialogmodal-but="prev">Back</button>
+		<button type="button" class="btn btn-primary" data-dialogmodal-but="ok">Ok</button>
+		<button type="button" class="btn"data-dialogmodal-but="cancel">Cancel</button>
 	</div>
 </div>
 
-<script src="http://cdn.jsdelivr.net/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
 <script src="popModal.js"></script>
 <script>
 $(function(){
@@ -261,6 +283,7 @@ $(function(){
 	
 	$('#dialogModal_ex1').click(function(){
 		$('.dialog_content').dialogModal({
+			topOffset: 0,
 			onOkBut: function() {},
 			onCancelBut: function() {},
 			onLoad: function() {},
