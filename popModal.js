@@ -1,5 +1,5 @@
 /*
-popModal - 1.12 [19.12.14]
+popModal - 1.13 [03.02.15]
 Author: vadimsva
 Github: https://github.com/vadimsva/popModal
 */
@@ -87,6 +87,10 @@ Github: https://github.com/vadimsva/popModal
 						}
 						tooltipContent.append(_options.html);
 					}
+					if($(window).width() <= 500) {
+						_options.inline = true;
+					}
+					
 					if (_options.inline) {
 						elem.after(tooltipContainer);
 					} else {
@@ -638,7 +642,6 @@ Github: https://github.com/vadimsva/popModal
 	$.fn.dialogModal = function(method) {
 		var elem = $(this),
 		elemObj,
-		elemContObj,
 		elemClass = 'dialogModal',
 		prevBut = 'dialogPrev',
 		nextBut = 'dialogNext',
@@ -648,6 +651,7 @@ Github: https://github.com/vadimsva/popModal
 		var methods = {
 			init : function(params) {
 				var _defaults = {
+					topOffset: 0,
 					onOkBut: function() {return true;},
 					onCancelBut: function() {},
 					onLoad: function() {},
@@ -660,22 +664,28 @@ Github: https://github.com/vadimsva/popModal
 				$('.' + elemClass).remove();
 
 				var currentDialog = 0,
-				maxDialog = elem.length - 1;
-
-				dialogMain = $('<div class="' + elemClass + '"></div>'),
-				dialogContainer = $('<div class="' + elemClass + '_container"></div>'),
-				dialogCloseBut = $('<button type="button" class="close">&times;</button>'),
-				dialogBody = $('<div class="' + elemClass + '_body"></div>');
-				dialogMain.append(dialogContainer);
-				dialogContainer.append(dialogCloseBut, dialogBody);
+				maxDialog = elem.length - 1,
+				dialogMain = $('<div class="' + elemClass + '" style="top:' + _options.topOffset + 'px"></div>'),
+				dialogTop = $('<div class="' + elemClass + '_top animated"></div>'),
+				dialogHeader = $('<div class="' + elemClass + '_header"></div>'),
+				dialogBody = $('<div class="' + elemClass + '_body animated"></div>'),
+				dialogCloseBut = $('<button type="button" class="close">&times;</button>');
+				dialogMain.append(dialogTop, dialogBody);
+				dialogTop.append(dialogHeader);
+				dialogHeader.append(dialogCloseBut);
 				dialogBody.append(elem[currentDialog].innerHTML);
-				
+
 				if (maxDialog > 0) {
-					dialogContainer.prepend($('<div class="' + prevBut + ' notactive"></div><div class="' + nextBut + '"></div>'));
+					dialogHeader.append($('<div class="' + nextBut + '">&rsaquo;</div><div class="' + prevBut + ' notactive">&lsaquo;</div>'));
 				}
-				$('body').append(dialogMain);
+				dialogHeader.append('<span>' + elem.find('.' + elemClass + '_header')[currentDialog].innerHTML + '</span>');
+				
+				$('body').append(dialogMain).css({paddingRight: getScrollBarWidth + 'px'}).addClass(elemClass + 'Open');
+				
+				var getScrollBarWidth = dialogMain.outerWidth() - dialogMain[0].scrollWidth;
+				dialogTop.css({right:getScrollBarWidth + 'px'});
+				
 				elemObj = $('.' + elemClass);
-				elemContObj = $('.' + elemClass + '_container');
 				getAnimTime();
 
 				if (_options.onLoad && $.isFunction(_options.onLoad)) {
@@ -688,30 +698,14 @@ Github: https://github.com/vadimsva/popModal
 					}
 				});
 				
-				var getScrollBarWidth = window.innerWidth - $(window).outerWidth();
-				$('body').css({paddingRight: getScrollBarWidth + 'px'}).addClass(elemClass + 'Open');
-				
-				centerDialog();
-				
-				function centerDialog() {
-					var dialogHeight = elemContObj.outerHeight(),
-					windowHeight = $(window).height();
-					if (windowHeight > dialogHeight + 80) {
-						elemContObj.css({
-							marginTop: ($(window).height() - dialogHeight) / 2 - 100 + 'px'
-						});	
-					} else {
-						elemContObj.css({
-							marginTop: '60px'
-						});						
-					}
-
+				setTimeout(function() {
+					elemObj.addClass('open');
 					setTimeout(function() {
-						elemObj.addClass('open');
-					}, animTime);
-					
-					bindFooterButtons();
-				}
+						dialogTop.addClass('fadeInTopBig');
+						dialogBody.addClass('fadeInTopBig');
+					}, animTime * 2);
+				}, animTime);
+				bindFooterButtons();
 				
 				function bindFooterButtons() {
 					elemObj.find('[data-dialogmodal-but="close"]').on('click', function() {
@@ -737,6 +731,14 @@ Github: https://github.com/vadimsva/popModal
 						dialogModalClose();
 						$(this).off('click');
 					});
+					
+					elemObj.find('[data-dialogmodal-but="prev"]').on('click', function() {
+						elemObj.find('.' + prevBut).click();
+					});
+					
+					elemObj.find('[data-dialogmodal-but="next"]').on('click', function() {
+						elemObj.find('.' + nextBut).click();
+					});
 				}
 
 				elemObj.find('.' + prevBut).on('click', function() {
@@ -748,8 +750,7 @@ Github: https://github.com/vadimsva/popModal
 						if (currentDialog == 0) {
 							elemObj.find('.' + prevBut).addClass('notactive');
 						}
-						dialogBody.empty().append(elem[currentDialog].innerHTML);
-						centerDialog();
+						changeDialogConntent();
 					}
 				});
 				
@@ -762,10 +763,15 @@ Github: https://github.com/vadimsva/popModal
 						if (currentDialog == maxDialog) {
 							elemObj.find('.' + nextBut).addClass('notactive');
 						}
-						dialogBody.empty().append(elem[currentDialog].innerHTML);
-						centerDialog();
+						changeDialogConntent();
 					}
 				});
+				
+				function changeDialogConntent() {
+					dialogBody.empty().append(elem[currentDialog].innerHTML);
+					dialogHeader.find('span').html(elem.find('.' + elemClass + '_header')[currentDialog].innerHTML);
+					bindFooterButtons();
+				}
 
 				elemObj.find('.close').on('click', function() {
 					dialogModalClose();
@@ -823,7 +829,11 @@ Github: https://github.com/vadimsva/popModal
 	
 	$('* [data-dialogmodal-bind]').bind('click', function() {
 		var elemBind = $(this).attr('data-dialogmodal-bind');
-		$(elemBind).dialogModal();
+		var params = {};
+		if ($(this).attr('data-topoffset') != undefined) {
+			params['topOffset'] = $(this).attr('data-topoffset');
+		}
+		$(elemBind).dialogModal(params);
 	});
 
   $.event.special.destroyed = {
