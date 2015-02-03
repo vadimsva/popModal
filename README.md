@@ -15,10 +15,10 @@ This library includes 5 components:<br>
 
 
 <h4>Direct links to libs</h4>
-<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [26.9Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [13.7Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [14.9Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [13.6Kb]
+<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [27.6Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [14Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [15.1Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [13.8Kb]
 
 
 Documentation
@@ -139,6 +139,8 @@ To change position, add additional class <code>class="hintModal_center"</code> o
 <p><i>$(content).dialogModal({param1 : value1, param2 : value2, ...});</i></p>
 
 <h5>Parameters</h5>
+<code>topOffset</code> - top offset in px for dialog, useful if some elements on page have position: fixed (integer).<br>
+Use: <code>0</code>.<br>
 <code>onOkBut</code> - code execution by clicking on OK button, contained in dialog (function).<br>
 Use: <code>function(){}</code>.<br>
 For work you need put an attribute to element - <code>data-dialogmodal-but="ok"</code>. <i>Dialog will close automatically</i><br>
@@ -176,7 +178,7 @@ $(content).dialogModal({param1 : value1, param2 : value2, ...});
 <code>class="dialogModal_content"</code> - for show content, and <code>class="dialogModal_footer"</code> - for show footer.</i><br>
 <i>You can use attribute for element <code>data-dialogmodal-but="close"</code> for close dialog, also you can press ESC.</i>
 <i>To show collection of content, like pages in one modal dialog, use class for this dialogs.</i>
-<i>If you want to use collection of content, you can change content by clicking to arrows, or press left/right arrow on keayboard.</i>
+<i>If you want to use collection of content, you can change content by clicking to arrows, or press left/right arrow on keayboard, or use attributes <code>data-dialogmodal-but="prev"</code> and <code>data-dialogmodal-but="prev"</code>.</i>
 
 
 <br><br>
