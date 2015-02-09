@@ -1,5 +1,5 @@
 /*
-popModal - 1.13 [03.02.15]
+popModal - 1.14 [09.02.15]
 Author: vadimsva
 Github: https://github.com/vadimsva/popModal
 */
@@ -139,6 +139,20 @@ body.dialogModalOpen {overflow:hidden}
 .titleModal.light .titleModal_container.right:after {border:6px solid transparent;border-left-width:0;border-right-color:#fff}
 .titleModal.light .titleModal_container.right:before {border:7px solid transparent;border-left-width:0;border-right-color:#ccc;top:50%;left:0;margin-top:-7px}
 
+
+
+/* confirmModal */
+.confirmModal {position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:888888;overflow:auto;opacity:0;transition:all 200ms ease}
+.confirmModal.open {opacity:1}
+.confirmModal * {box-sizing:border-box}
+.confirmModal .confirmModal_body {position:relative;width:400px;left:0;right:0;margin:0 auto 40px;background:#fff;font-family:sans-serif;font-size:14px;font-weight:initial;font-style:initial;color:initial;text-decoration:initial;text-transform:initial;opacity:0}
+.confirmModal .confirmModal_content {padding:25px;line-height:20px}
+.confirmModal .confirmModal_footer {background:#fafafa;padding:15px 25px;border-top:1px solid #ddd;text-align:right}
+.confirmModal .confirmModal_footer button {margin:0 0 0 5px}
+body.confirmModalOpen {overflow:hidden}
+@media (max-width: 430px){
+.confirmModal .confirmModal_body {width:100%}
+}
 
 
 /* animation */
