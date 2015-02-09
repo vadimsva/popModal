@@ -57,7 +57,7 @@ body {background:#f1f1f1}
 <div id="page">
 
 	<div id="copyrightBlock">
-		<div id="version" title="Current version/date">1.13<span>[03.02.15]</span></div>
+		<div id="version" title="Current version/date">1.14<span>[09.02.15]</span></div>
 		<a href="https://github.com/vadimsva/popModal" id="gitHubLink">GitHub Repo</a>
 	</div>
 
@@ -194,6 +194,35 @@ body {background:#f1f1f1}
 		</code></pre></div>
 	</div>
 
+	
+	<h2>confirmModal</h2>
+	
+	<div class="exampleContainer">
+		<div class="exampleLive">
+			<div class="exampleLiveTitle">default params</div>
+			<button id="confirmModal_ex1">Example</button>
+		</div>
+		<div class="exampleCode"><pre><code>
+			<p><span class="text">$('</span><span class="tag">#content</span><span class="text">').confirmModal(</span>{</p>
+			<p class="tab"><span class="key">topOffset</span> : <span class="val">0</span>,</p>
+			<p class="tab"><span class="key">onOkBut</span> : <span class="val">function(){ }</span>,</p>
+			<p class="tab"><span class="key">onCancelBut</span> : <span class="val">function(){ }</span>,</p>
+			<p class="tab"><span class="key">onLoad</span> : <span class="val">function(){ }</span>,</p>
+			<p class="tab"><span class="key">onClose</span> : <span class="val">function(){ }</span>,</p>
+			<p>}<span class="text">)</span>;</p>
+		</code></pre></div>
+	</div>
+	
+	<div class="exampleContainer">
+		<div class="exampleLive">
+			<div class="exampleLiveTitle">inline bind</div>
+			<button id="confirmModal_ex2" data-confirmmodal-bind="#confirm_content" data-topoffset="0">Example</button>
+		</div>
+		<div class="exampleCode"><pre><code>
+			<p>&lt;<span class="tag">button</span> <span class="key">data-confirmmodal-bind</span>=<span class="val">"#content"</span> <span class="key">data-topoffset</span>=<span class="val">"0"</span>&gt;<span class="text">example</span>&lt;/<span class="tag">button</span>&gt;</p>
+		</code></pre></div>
+	</div>
+	
 </div>
 	
 <div style="display:none">
@@ -240,6 +269,16 @@ body {background:#f1f1f1}
 	</div>
 </div>
 
+<div id="confirm_content" style="display:none">
+	<div class="confirmModal_content">
+	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+	</div>
+	<div class="confirmModal_footer">
+		<button type="button" class="btn btn-primary" data-confirmmodal-but="ok">Ok</button>
+		<button type="button" class="btn"data-confirmmodal-but="cancel">Cancel</button>
+	</div>
+</div>
+
 <script src="http://cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
 <script src="popModal.js"></script>
 <script>
@@ -283,6 +322,16 @@ $(function(){
 	
 	$('#dialogModal_ex1').click(function(){
 		$('.dialog_content').dialogModal({
+			topOffset: 0,
+			onOkBut: function() {},
+			onCancelBut: function() {},
+			onLoad: function() {},
+			onClose: function() {},
+		});
+	});
+	
+	$('#confirmModal_ex1').click(function(){
+		$('#confirm_content').confirmModal({
 			topOffset: 0,
 			onOkBut: function() {},
 			onCancelBut: function() {},
