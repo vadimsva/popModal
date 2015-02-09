@@ -1,12 +1,13 @@
 popModal
 ========
 
-This library includes 5 components:<br>
+This library includes 6 components:<br>
 <b>popModal</b> - popup window, displayed near the parent element. Invoked by clicking on an element<br>
 <b>notifyModal</b> - notification popup, displayed on top of all elements. Invoked by event and hide after a certain time<br>
 <b>hintModal</b> - tooltip, displayed near the parent element. Invoked on mouse hover on an element and hide after element lost focus<br>
-<b>dialogModal</b> - modal dialog, displayed on top of all elements. Invoked by clicking on an element<br>
+<b>dialogModal</b> - modal dialog for big content or collection of content, displayed on top of all elements. Invoked by clicking on an element<br>
 <b>titleModal</b> - tooltip, displayed near the parent element, replace native title. Invoked on mouse hover on an element and hide after element lost focus<br>
+<b>confirmModal</b> - modal dialog for alert or confirm content, displayed on top of all elements. Invoked by clicking on an element<br>
 
 <i>For work required only jQuery, other libraries are not required.</i>
 <br>
@@ -15,10 +16,10 @@ This library includes 5 components:<br>
 
 
 <h4>Direct links to libs</h4>
-<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [27.6Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [14Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [15.1Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [13.8Kb]
+<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [31Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [16Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [16Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [14.6Kb]
 
 
 Documentation
@@ -196,6 +197,51 @@ You can use another style for titleModal, add <code>class="light"</code> to elem
 
 
 
+<br><br>
+
+
+<h3>confirmModal</h3>
+<p><i>$(content).confirmModal({param1 : value1, param2 : value2, ...});</i></p>
+
+<h5>Parameters</h5>
+<code>topOffset</code> - top offset in px for dialog, useful if some elements on page have position: fixed (integer).<br>
+Use: <code>0</code>.<br>
+<code>onOkBut</code> - code execution by clicking on OK button, contained in dialog (function).<br>
+Use: <code>function(){}</code>.<br>
+For work you need put an attribute to element - <code>data-confirmmodal-but="ok"</code>. <i>Dialog will close automatically</i><br>
+<br>
+<code>onCancelBut</code> - code execution by clicking on Cancel button, contained in dialog (function).<br>
+Use: <code>function(){}</code>.<br>
+For work you need put an attribute to element - <code>data-confirmmodal-but="cancel"</code>. <i>Dialog will close automatically</i><br>
+<br>
+<code>onLoad</code> - code execution before dialog shows (function).<br>
+Use: <code>function(){}</code><br>
+<br>
+<code>onClose</code> - code execution after dialog closed (function).<br>
+Use: <code>function(){}</code><br>
+<br>
+
+<h5>Methods</h5>
+<code>hide</code> - for close confirmModal.<br>
+Use: <code>$('html').confirmModal("hide");</code><br>
+<br>
+
+<h5>Notes</h5>
+You may use external click function for element
+<pre>
+$(el).click(function(){
+  $(content).confirmModal({param1 : value1, param2 : value2, ...});
+});
+</pre>
+or use
+<pre>
+$(content).confirmModal({param1 : value1, param2 : value2, ...});
+</pre>
+
+<i>Dialog is dynamically created. When you create the second dialog, the first will be deleted!</i><br>
+<i>You need to create div elements with classes <code>class="confirmModal_content"</code> - for show content, and <code>class="confirmModal_footer"</code> - for show footer.</i><br>
+<i>You can use attribute for element <code>data-confirmmodal-but="close"</code> for close dialog.</i>
+
 
 
 Examples
@@ -262,6 +308,11 @@ $(content).dialogModal({});
 &lt;div title="Title text" class="titleModal light" data-placement="bottom"&gt;Text&lt;/div&gt;
 </pre>
 
+
+<h3>confirmModal</h3>
+<pre>
+$(content).confirmModal({});
+</pre>
 
 
 License
