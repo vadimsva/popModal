@@ -1,5 +1,5 @@
 /*
-popModal - 1.13 [03.02.15]
+popModal - 1.14 [09.02.15]
 Author: vadimsva
 Github: https://github.com/vadimsva/popModal
 */
@@ -680,8 +680,7 @@ Github: https://github.com/vadimsva/popModal
 				}
 				dialogHeader.append('<span>' + elem.find('.' + elemClass + '_header')[currentDialog].innerHTML + '</span>');
 				
-				$('body').append(dialogMain).css({paddingRight: getScrollBarWidth + 'px'}).addClass(elemClass + 'Open');
-				
+				$('body').append(dialogMain).addClass(elemClass + 'Open');
 				var getScrollBarWidth = dialogMain.outerWidth() - dialogMain[0].scrollWidth;
 				dialogTop.css({right:getScrollBarWidth + 'px'});
 				
@@ -750,7 +749,7 @@ Github: https://github.com/vadimsva/popModal
 						if (currentDialog == 0) {
 							elemObj.find('.' + prevBut).addClass('notactive');
 						}
-						changeDialogConntent();
+						changeDialogContent();
 					}
 				});
 				
@@ -763,11 +762,11 @@ Github: https://github.com/vadimsva/popModal
 						if (currentDialog == maxDialog) {
 							elemObj.find('.' + nextBut).addClass('notactive');
 						}
-						changeDialogConntent();
+						changeDialogContent();
 					}
 				});
 				
-				function changeDialogConntent() {
+				function changeDialogContent() {
 					dialogBody.empty().append(elem[currentDialog].innerHTML);
 					dialogHeader.find('span').html(elem.find('.' + elemClass + '_header')[currentDialog].innerHTML);
 					bindFooterButtons();
@@ -950,4 +949,137 @@ Github: https://github.com/vadimsva/popModal
 		
 	};
 	$('.titleModal').titleModal();
+})(jQuery);
+
+
+/* confirmModal */
+(function($) {
+	$.fn.confirmModal = function(method) {
+		var elem = $(this),
+		elemObj,
+		elemClass = 'confirmModal',
+		_options,
+		animTime;
+	
+		var methods = {
+			init : function(params) {
+				var _defaults = {
+					topOffset: 0,
+					onOkBut: function() {return true;},
+					onCancelBut: function() {},
+					onLoad: function() {},
+					onClose: function() {}
+				};
+				_options = $.extend(_defaults, params);
+
+				$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
+				$('.' + elemClass).remove();
+
+				var	dialogMain = $('<div class="' + elemClass + '" style="top:' + _options.topOffset + 'px"></div>'),
+				dialogBody = $('<div class="' + elemClass + '_body animated"></div>');
+				dialogMain.append(dialogBody);
+				dialogBody.append(elem[0].innerHTML);
+				
+				$('body').append(dialogMain).addClass(elemClass + 'Open');
+				
+				elemObj = $('.' + elemClass);
+				getAnimTime();
+
+				if (_options.onLoad && $.isFunction(_options.onLoad)) {
+					_options.onLoad();
+				}
+
+				elemObj.on('destroyed', function() {
+					if (_options.onClose && $.isFunction(_options.onClose)) {
+						_options.onClose();
+					}
+				});
+				
+				setTimeout(function() {
+					elemObj.addClass('open');
+					setTimeout(function() {
+						dialogBody.addClass('fadeInTopBig');
+					}, animTime * 2);
+				}, animTime);
+				bindFooterButtons();
+				
+				function bindFooterButtons() {
+					elemObj.find('[data-confirmmodal-but="close"]').on('click', function() {
+						confirmModalClose();
+						$(this).off('click');
+					});
+
+					elemObj.find('[data-confirmmodal-but="ok"]').on('click', function(event) {
+						var ok;
+						if (_options.onOkBut && $.isFunction(_options.onOkBut)) {
+							ok = _options.onOkBut(event);
+						}
+						if (ok !== false) {
+							confirmModalClose();
+						}
+						$(this).off('click');
+					});
+
+					elemObj.find('[data-confirmmodal-but="cancel"]').on('click', function() {
+						if (_options.onCancelBut && $.isFunction(_options.onCancelBut)) {
+							_options.onCancelBut();
+						}
+						confirmModalClose();
+						$(this).off('click');
+					});
+				}
+				
+			},
+			hide : function() {
+				confirmModalClose();
+			}
+		};
+		
+		function confirmModalClose() {
+		var elemObj = $('.' + elemClass);
+			setTimeout(function() {
+				elemObj.removeClass('open');
+				setTimeout(function() {
+					elemObj.remove();
+					$('body').removeClass(elemClass + 'Open').css({paddingRight:''});
+					$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
+				}, animTime);
+			}, animTime);
+		}
+		
+		function getAnimTime() {
+			if (!animTime) {
+				animTime = elemObj.css('transitionDuration');
+				if (animTime != undefined) {
+					animTime = animTime.replace('s', '') * 1000;
+				} else {
+					animTime = 0;
+				}
+			}
+		}
+
+		if (methods[method]) {
+			return methods[method].apply( this, Array.prototype.slice.call(arguments, 1));
+		} else if (typeof method === 'object' || ! method) {
+			return methods.init.apply( this, arguments );
+		}
+
+	}
+	
+	$('* [data-confirmmodal-bind]').bind('click', function() {
+		var elemBind = $(this).attr('data-confirmmodal-bind');
+		var params = {};
+		if ($(this).attr('data-topoffset') != undefined) {
+			params['topOffset'] = $(this).attr('data-topoffset');
+		}
+		$(elemBind).confirmModal(params);
+	});
+
+  $.event.special.destroyed = {
+    remove: function(o) {
+      if (o.handler) {
+        o.handler();
+      }
+    }
+  }
 })(jQuery);
