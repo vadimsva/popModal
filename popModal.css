@@ -1,10 +1,10 @@
 /*
-popModal - 1.14 [09.02.15]
+popModal - 1.15 [24.02.15]
 Author: vadimsva
 Github: https://github.com/vadimsva/popModal
 */
 /* popModal */
-.popModal {position:absolute;background:#fff;padding:15px;border:1px solid #aaa;box-shadow:0 2px 6px rgba(0, 0, 0, 0.3);text-align:left;max-width:300px;min-width:180px;z-index:9997;box-sizing:border-box}
+.popModal {position:absolute;background:#fff;padding:15px;border:1px solid #aaa;box-shadow:0 2px 6px rgba(0, 0, 0, 0.3);text-align:left;max-width:300px;min-width:180px;z-index:9997;box-sizing:border-box;transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden}
 .popModal .close {line-height:12px;font-size:25px;font-weight:bold;font-family:serif;position:absolute;right:8px;top:8px;color:#000;opacity:0.2;padding:0;cursor:pointer;background:transparent;border:0;outline:0}
 .popModal .close:hover {opacity:1}
 .popModal .popModal_content {margin:15px auto;word-wrap:break-word;font-family:sans-serif;font-size:14px;font-weight:initial;font-style:initial;color:initial;text-decoration:initial;text-transform:initial;padding:initial}
@@ -44,7 +44,7 @@ Github: https://github.com/vadimsva/popModal
 
 
 /* notifyModal */
-.notifyModal {position:fixed;z-index:999999;background:rgba(255,255,255,0.5);opacity:0;cursor:pointer;transition:all 200ms ease}
+.notifyModal {position:fixed;z-index:999999;background:rgba(255,255,255,0.5);opacity:0;cursor:pointer;transition:all 200ms ease;transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden}
 .notifyModal.overlay {top:0;bottom:0;left:0;right:0}
 .notifyModal.overlay.center {top:0;bottom:0}
 .notifyModal.open {opacity:1}
@@ -77,8 +77,8 @@ Github: https://github.com/vadimsva/popModal
 
 
 /* hintModal */
-.hintModal {position:relative;overflow:visible}
-.hintModal .hintModal_container {display:none;left:0;margin:0;font:initial;text-transform:none;position:absolute;background:#F8F4E1;padding:10px;border:1px solid #B4A984;box-shadow:0 2px 6px rgba(0, 0, 0, 0.3);display:none;opacity:0;text-align:left;max-width:260px;min-width:260px;z-index:1;font-size:12px;font-weight:normal;font-family:sans-serif;font-style:initial;margin-top:6px;color:#555;top:100%;box-sizing:border-box;color:initial;text-decoration:initial;text-transform:initial}
+.hintModal {position:relative;overflow:visible;transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.hintModal .hintModal_container {display:none;left:0;margin:0;font:initial;text-transform:none;position:absolute;background:#F8F4E1;padding:10px;border:1px solid #B4A984;box-shadow:0 2px 6px rgba(0, 0, 0, 0.3);display:none;opacity:0;text-align:left;max-width:260px;min-width:260px;z-index:1;line-height:16px;font-size:12px;font-weight:normal;font-family:sans-serif;font-style:initial;margin-top:6px;color:#555;top:100%;box-sizing:border-box;color:initial;text-decoration:initial;text-transform:initial}
 .hintModal .hintModal_container:before,
 .hintModal .hintModal_container:after {content:'';position:absolute;border:6px solid transparent;border-top-width:0;border-bottom-color:#B4A984;top:-6px;left:6px}
 .hintModal .hintModal_container:before {border-bottom-color:#B4A984;top:-6px}
@@ -93,10 +93,10 @@ Github: https://github.com/vadimsva/popModal
 
 
 /* dialogModal */
-.dialogModal {position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:888888;overflow-y:scroll;opacity:0;transition:all 200ms ease;backface-visibility:hidden}
+.dialogModal {position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:888888;overflow-y:scroll;opacity:0;transition:all 200ms ease;-webkit-backface-visibility:hidden;backface-visibility:hidden}
 .dialogModal.open {opacity:1}
 .dialogModal * {box-sizing:border-box}
-.dialogModal .dialogModal_top {position:fixed;left:0;right:0;z-index:2;opacity:0}
+.dialogModal .dialogModal_top {position:fixed;left:0;right:0;z-index:2;opacity:0;transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden}
 .dialogModal .dialogModal_top .dialogModal_header {padding:15px 25px;line-height:30px;height:60px;font-size:120%;margin:auto;width:650px;background:#fff;border-bottom:1px solid #f5f5f5;position:relative}
 .dialogModal .dialogModal_top .dialogModal_header .close {line-height:30px;font-size:40px;font-family:serif;color:#000;opacity:0.2;padding:0;cursor:pointer;background:transparent;border:0;outline:0;float:right}
 .dialogModal .dialogModal_top .dialogModal_header .close:hover {opacity:1}
@@ -108,7 +108,7 @@ Github: https://github.com/vadimsva/popModal
 .dialogModal .dialogModal_top .dialogModal_header .dialogNext:hover {opacity:1} 
 .dialogModal .dialogModal_top .dialogModal_header span {display:inline-block;overflow:hidden;white-space:nowrap;width:calc(100% - 90px);text-overflow:ellipsis}
 .dialogModal .dialogModal_top .dialogModal_header:after {content:'';position:absolute;bottom:-11px;left:0;right:0;background:rgba(255,255,255,0.5);height:10px}
-.dialogModal .dialogModal_body {position:relative;width:650px;left:0;right:0;margin:60px auto 40px;background:#fff;font-family:sans-serif;font-size:14px;font-weight:initial;font-style:initial;color:initial;text-decoration:initial;text-transform:initial;opacity:0}
+.dialogModal .dialogModal_body {position:relative;width:650px;left:0;right:0;margin:60px auto 40px;background:#fff;font-family:sans-serif;font-size:14px;font-weight:initial;font-style:initial;color:initial;text-decoration:initial;text-transform:initial;opacity:0;transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden}
 .dialogModal .dialogModal_body .dialogModal_header {display:none}
 .dialogModal .dialogModal_content {padding:10px 25px 25px;line-height:20px}
 .dialogModal .dialogModal_footer {background:#fafafa;padding:15px 25px;border-top:1px solid #ddd;text-align:right}
@@ -121,7 +121,7 @@ body.dialogModalOpen {overflow:hidden}
 
 /* titleModal */
 .titleModal {}
-.titleModal_container {position:absolute;z-index:99999;background:#000;color:#fff;padding:4px 10px;margin-top:12px;border-radius:4px;font-size:12px;text-align:center;max-width:120px;opacity:0;font-family:sans-serif;font-weight:initial;font-style:initial;text-decoration:initial;text-transform:initial}
+.titleModal_container {position:absolute;z-index:99999;background:#000;color:#fff;padding:3px 10px;line-height:16px;margin-top:12px;border-radius:4px;font-size:12px;text-align:center;max-width:260px;opacity:0;white-space:normal;font-family:sans-serif;font-weight:initial;font-style:initial;text-decoration:initial;text-transform:initial;transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden}
 .titleModal_container:after {content:'';position:absolute;border:6px solid transparent;border-top-width:0;border-bottom-color:#000;top:-6px;left:50%;margin-left:-6px}
 .titleModal_container.top {margin-top:-6px}
 .titleModal_container.top:after {border:6px solid transparent;border-bottom-width:0;border-top-color:#000;top:auto;bottom:-6px;left:50%;margin-left:-6px}
@@ -145,7 +145,7 @@ body.dialogModalOpen {overflow:hidden}
 .confirmModal {position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:888888;overflow:auto;opacity:0;transition:all 200ms ease}
 .confirmModal.open {opacity:1}
 .confirmModal * {box-sizing:border-box}
-.confirmModal .confirmModal_body {position:relative;width:400px;left:0;right:0;margin:0 auto 40px;background:#fff;font-family:sans-serif;font-size:14px;font-weight:initial;font-style:initial;color:initial;text-decoration:initial;text-transform:initial;opacity:0}
+.confirmModal .confirmModal_body {position:relative;width:400px;left:0;right:0;margin:0 auto 40px;background:#fff;font-family:sans-serif;font-size:14px;font-weight:initial;font-style:initial;color:initial;text-decoration:initial;text-transform:initial;opacity:0;transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden}
 .confirmModal .confirmModal_content {padding:25px;line-height:20px}
 .confirmModal .confirmModal_footer {background:#fafafa;padding:15px 25px;border-top:1px solid #ddd;text-align:right}
 .confirmModal .confirmModal_footer button {margin:0 0 0 5px}
