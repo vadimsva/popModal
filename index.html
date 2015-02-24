@@ -57,7 +57,7 @@ body {background:#f1f1f1}
 <div id="page">
 
 	<div id="copyrightBlock">
-		<div id="version" title="Current version/date">1.14<span>[09.02.15]</span></div>
+		<div id="version" title="Current version/date">1.15<span>[24.02.15]</span></div>
 		<a href="https://github.com/vadimsva/popModal" id="gitHubLink">GitHub Repo</a>
 	</div>
 
@@ -187,10 +187,20 @@ body {background:#f1f1f1}
 	<div class="exampleContainer">
 		<div class="exampleLive">
 			<div class="exampleLiveTitle">default params</div>
-			<button id="titleModal_ex1" title="Title" class="titleModal">Example</button>
+			<button title="Title" class="titleModal">Example</button>
 		</div>
 		<div class="exampleCode"><pre><code>
 			<p>&lt;<span class="tag">button</span> <span class="key">title</span>=<span class="val">"Title"</span> <span class="key">class</span>=<span class="val">"titleModal"</span> <span class="key">data-placement</span>=<span class="val">"bottom"</span>&gt;<span class="text">Example</span>&lt;/<span class="tag">button</span>&gt;</p>
+		</code></pre></div>
+	</div>
+	
+	<div class="exampleContainer">
+		<div class="exampleLive">
+			<div class="exampleLiveTitle">with ellipsis text</div>
+			<div class="titleModal" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:200px">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</div>
+		</div>
+		<div class="exampleCode"><pre><code>
+			<p>&lt;<span class="tag">div</span> <span class="key">style</span>=<span class="val">"overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:200px"</span> <span class="key">class</span>=<span class="val">"titleModal"</span> <span class="key">data-placement</span>=<span class="val">"bottom"</span>&gt;<span class="text">Lorem Ipsum is simply dummy text</span>&lt;/<span class="tag">div</span>&gt;</p>
 		</code></pre></div>
 	</div>
 
