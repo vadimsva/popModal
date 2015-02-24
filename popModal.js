@@ -1,5 +1,5 @@
 /*
-popModal - 1.14 [09.02.15]
+popModal - 1.15 [24.02.15]
 Author: vadimsva
 Github: https://github.com/vadimsva/popModal
 */
@@ -862,8 +862,12 @@ Github: https://github.com/vadimsva/popModal
 
 				getElem.on('mouseenter', function() {
 					elem = $(this);
-					if(elem.attr('title') != undefined) {
-						titleAttr =	elem.attr('title');
+					if(elem.attr('title') != undefined || elem.css('textOverflow') == 'ellipsis' || elem.css('textOverflow') == 'clip') {
+						if(elem.attr('title') != undefined) {
+							titleAttr =	elem.attr('title');
+						} else {
+							titleAttr = elem.text();
+						}
 						elem.removeAttr('title');
 						elem.attr('data-title', titleAttr);
 						titleModal = $('<div class="' + elemClass + '_container animated"></div>');
