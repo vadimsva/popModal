@@ -1,5 +1,5 @@
 /*
-popModal - 1.15 [24.02.15]
+popModal - 1.16 [02.03.15]
 Author: vadimsva
 Github: https://github.com/vadimsva/popModal
 */
@@ -37,7 +37,7 @@ Github: https://github.com/vadimsva/popModal
           onDocumentClickClosePrevent : '',
 					overflowContent : false,
 					inline : true,
-					beforeLoadingContent : 'Please, waiting...',
+					beforeLoadingContent : 'Please, wait...',
 					onOkBut: function() {return true;},
 					onCancelBut: function() {},
 					onLoad: function() {},
@@ -567,8 +567,7 @@ Github: https://github.com/vadimsva/popModal
 				});
 
 				function getPlacement(elemObj, elem) {
-					var placement,
-					placementDefault,
+					var placementDefault,
 					eObjWidth = elemObj.outerWidth(),
 					eWidth = elem.outerWidth(),
 					eOffsetLeft = elemObj.offset().left,
@@ -619,8 +618,7 @@ Github: https://github.com/vadimsva/popModal
 						: deltaC > 0;
 					}
 					
-					placement = optimalPosition(elemObj.data('placement'));
-					elemObj.removeAttr('class').addClass('hintModal ' + placement);
+					elemObj.removeAttr('class').addClass('hintModal ' + optimalPosition(elemObj.data('placement')));
 				}
 			
 			}
@@ -655,7 +653,8 @@ Github: https://github.com/vadimsva/popModal
 					onOkBut: function() {return true;},
 					onCancelBut: function() {},
 					onLoad: function() {},
-					onClose: function() {}
+					onClose: function() {},
+					onChange: function() {}
 				};
 				_options = $.extend(_defaults, params);
 
@@ -688,7 +687,7 @@ Github: https://github.com/vadimsva/popModal
 				getAnimTime();
 
 				if (_options.onLoad && $.isFunction(_options.onLoad)) {
-					_options.onLoad();
+					_options.onLoad(elemObj, currentDialog + 1);
 				}
 
 				elemObj.on('destroyed', function() {
@@ -770,6 +769,9 @@ Github: https://github.com/vadimsva/popModal
 					dialogBody.empty().append(elem[currentDialog].innerHTML);
 					dialogHeader.find('span').html(elem.find('.' + elemClass + '_header')[currentDialog].innerHTML);
 					bindFooterButtons();
+					if (_options.onChange && $.isFunction(_options.onChange)) {
+						_options.onChange(elemObj, currentDialog + 1);
+					}
 				}
 
 				elemObj.find('.close').on('click', function() {
@@ -1003,7 +1005,7 @@ Github: https://github.com/vadimsva/popModal
 					elemObj.addClass('open');
 					setTimeout(function() {
 						dialogBody.addClass('fadeInTopBig');
-					}, animTime * 2);
+					}, animTime + 100);
 				}, animTime);
 				bindFooterButtons();
 				
