@@ -1,5 +1,5 @@
 /*
-popModal - 1.15 [24.02.15]
+popModal - 1.16 [02.03.15]
 Author: vadimsva
 Github: https://github.com/vadimsva/popModal
 */
@@ -110,7 +110,7 @@ Github: https://github.com/vadimsva/popModal
 .dialogModal .dialogModal_top .dialogModal_header:after {content:'';position:absolute;bottom:-11px;left:0;right:0;background:rgba(255,255,255,0.5);height:10px}
 .dialogModal .dialogModal_body {position:relative;width:650px;left:0;right:0;margin:60px auto 40px;background:#fff;font-family:sans-serif;font-size:14px;font-weight:initial;font-style:initial;color:initial;text-decoration:initial;text-transform:initial;opacity:0;transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden}
 .dialogModal .dialogModal_body .dialogModal_header {display:none}
-.dialogModal .dialogModal_content {padding:10px 25px 25px;line-height:20px}
+.dialogModal .dialogModal_content {padding:10px 25px 25px;line-height:20px;min-height:200px}
 .dialogModal .dialogModal_footer {background:#fafafa;padding:15px 25px;border-top:1px solid #ddd;text-align:right}
 .dialogModal .dialogModal_footer button {margin:0 0 0 5px}
 body.dialogModalOpen {overflow:hidden}
@@ -146,7 +146,7 @@ body.dialogModalOpen {overflow:hidden}
 .confirmModal.open {opacity:1}
 .confirmModal * {box-sizing:border-box}
 .confirmModal .confirmModal_body {position:relative;width:400px;left:0;right:0;margin:0 auto 40px;background:#fff;font-family:sans-serif;font-size:14px;font-weight:initial;font-style:initial;color:initial;text-decoration:initial;text-transform:initial;opacity:0;transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden}
-.confirmModal .confirmModal_content {padding:25px;line-height:20px}
+.confirmModal .confirmModal_content {padding:25px;line-height:20px;min-height:200px}
 .confirmModal .confirmModal_footer {background:#fafafa;padding:15px 25px;border-top:1px solid #ddd;text-align:right}
 .confirmModal .confirmModal_footer button {margin:0 0 0 5px}
 body.confirmModalOpen {overflow:hidden}
