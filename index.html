@@ -30,6 +30,7 @@ body {background:#f1f1f1}
 .exampleContainer .exampleCode code .tab {padding-left:15px}
 .exampleContainer .exampleCode code .tab2 {padding-left:30px}
 .exampleContainer .exampleCode code .tab3 {padding-left:45px}
+.exampleContainer .exampleCode code .tab4 {padding-left:60px}
 .exampleContainer .exampleCode code .tag {color:#97e0e9}
 .exampleContainer .exampleCode code .text {color:#fff}
 .exampleContainer .exampleCode code .key {color:#bf5c5b}
@@ -57,7 +58,7 @@ body {background:#f1f1f1}
 <div id="page">
 
 	<div id="copyrightBlock">
-		<div id="version" title="Current version/date">1.15<span>[24.02.15]</span></div>
+		<div id="version" title="Current version/date">1.16<span>[02.03.15]</span></div>
 		<a href="https://github.com/vadimsva/popModal" id="gitHubLink">GitHub Repo</a>
 	</div>
 
@@ -77,11 +78,11 @@ body {background:#f1f1f1}
 			<p class="tab"><span class="key">onDocumentClickClosePrevent</span> : <span class="val">''</span>,</p>
 			<p class="tab"><span class="key">overflowContent</span> : <span class="val">false</span>,</p>
 			<p class="tab"><span class="key">inline</span> : <span class="val">true</span>,</p>
-			<p class="tab"><span class="key">beforeLoadingContent</span> : <span class="val">'Please, waiting...'</span>,</p>
-			<p class="tab"><span class="key">onOkBut</span> : <span class="val">function(){ }</span>,</p>
-			<p class="tab"><span class="key">onCancelBut</span> : <span class="val">function(){ }</span>,</p>
-			<p class="tab"><span class="key">onLoad</span> : <span class="val">function(){ }</span>,</p>
-			<p class="tab"><span class="key">onClose</span> : <span class="val">function(){ }</span></p>
+			<p class="tab"><span class="key">beforeLoadingContent</span> : <span class="val">'Please, wait...'</span>,</p>
+			<p class="tab"><span class="key">onOkBut</span> : <span class="val">function() {}</span>,</p>
+			<p class="tab"><span class="key">onCancelBut</span> : <span class="val">function() {}</span>,</p>
+			<p class="tab"><span class="key">onLoad</span> : <span class="val">function() {}</span>,</p>
+			<p class="tab"><span class="key">onClose</span> : <span class="val">function() {}</span></p>
 			<p>}<span class="text">)</span>;</p>
 		</code></pre></div>
 	</div>
@@ -126,7 +127,7 @@ body {background:#f1f1f1}
 			<p class="tab"><span class="key">placement</span> : <span class="val">'center'</span>,</p>
 			<p class="tab"><span class="key">overlay</span> : <span class="val">true</span>,</p>
 			<p class="tab"><span class="key">type</span> : <span class="val">'notify'</span>,</p>
-			<p class="tab"><span class="key">onClose</span> : <span class="val">function(){ }</span></p>
+			<p class="tab"><span class="key">onClose</span> : <span class="val">function() {}</span></p>
 			<p>}<span class="text">)</span>;</p>
 		</code></pre></div>
 	</div>
@@ -163,10 +164,18 @@ body {background:#f1f1f1}
 		<div class="exampleCode"><pre><code>
 			<p><span class="text">$('</span><span class="tag">#content</span><span class="text">').dialogModal(</span>{</p>
 			<p class="tab"><span class="key">topOffset</span> : <span class="val">0</span>,</p>
-			<p class="tab"><span class="key">onOkBut</span> : <span class="val">function(){ }</span>,</p>
-			<p class="tab"><span class="key">onCancelBut</span> : <span class="val">function(){ }</span>,</p>
-			<p class="tab"><span class="key">onLoad</span> : <span class="val">function(){ }</span>,</p>
-			<p class="tab"><span class="key">onClose</span> : <span class="val">function(){ }</span>,</p>
+			<p class="tab"><span class="key">onOkBut</span> : <span class="val">function() {}</span>,</p>
+			<p class="tab"><span class="key">onCancelBut</span> : <span class="val">function() {}</span>,</p>
+			<p class="tab"><span class="key">onLoad</span> : <span class="val">function(<span class="var2">el</span>, <span class="var2">current</span>) {}</span>,</p>
+			<p class="tab"><span class="key">onClose</span> : <span class="val">function() {}</span>,</p>
+			<p class="tab"><span class="key">onChange</span> : <span class="val">function(<span class="var2">el</span>, <span class="var2">current</span>) {</span></p>
+			<p class="tab2"><span class="text">if(<span class="var2">current</span> == <span class="var">3</span>)</span>{</p>
+			<p class="tab3"><span class="var2">el</span><span class="text">.find(</span><span class="val">'.dialogModal_header span'</span><span class="text">).text(<span class="var">'Page 3'</span>)</span>;</p>
+			<p class="tab3"><span class="text">$.ajax(</span>{<span class="key">url</span> : <span class="val">'ajax.html'</span>}<span class="text">).done(</span><span class="val">function</span><span class="text">(</span><span class="var">content</span><span class="text">)</span>{</p>
+			<p class="tab4"><span class="var2">el</span><span class="text">.find(</span><span class="val">'.dialogModal_content'</span><span class="text">).html(<span class="var">content</span>)</span>;</p>
+			<p class="tab3">}<span class="text">)</span>;</p>
+			<p class="tab2">}</p>
+			<p class="tab"><span class="val">}</span></p>
 			<p>}<span class="text">)</span>;</p>
 		</code></pre></div>
 	</div>
@@ -215,10 +224,10 @@ body {background:#f1f1f1}
 		<div class="exampleCode"><pre><code>
 			<p><span class="text">$('</span><span class="tag">#content</span><span class="text">').confirmModal(</span>{</p>
 			<p class="tab"><span class="key">topOffset</span> : <span class="val">0</span>,</p>
-			<p class="tab"><span class="key">onOkBut</span> : <span class="val">function(){ }</span>,</p>
-			<p class="tab"><span class="key">onCancelBut</span> : <span class="val">function(){ }</span>,</p>
-			<p class="tab"><span class="key">onLoad</span> : <span class="val">function(){ }</span>,</p>
-			<p class="tab"><span class="key">onClose</span> : <span class="val">function(){ }</span>,</p>
+			<p class="tab"><span class="key">onOkBut</span> : <span class="val">function() {}</span>,</p>
+			<p class="tab"><span class="key">onCancelBut</span> : <span class="val">function() {}</span>,</p>
+			<p class="tab"><span class="key">onLoad</span> : <span class="val">function() {}</span>,</p>
+			<p class="tab"><span class="key">onClose</span> : <span class="val">function() {}</span></p>
 			<p>}<span class="text">)</span>;</p>
 		</code></pre></div>
 	</div>
@@ -270,6 +279,17 @@ body {background:#f1f1f1}
 <div id="dialog_content2" class="dialog_content" style="display:none">
 	<div class="dialogModal_header">Dialog header 2</div>
 	<div class="dialogModal_content">
+		Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+	</div>
+	<div class="dialogModal_footer">
+		<button type="button" class="btn btn-primary" data-dialogmodal-but="next">Next</button>
+		<button type="button" class="btn"data-dialogmodal-but="cancel">Cancel</button>
+	</div>
+</div>
+
+<div id="dialog_content3" class="dialog_content" style="display:none">
+	<div class="dialogModal_header">Dialog header 3</div>
+	<div class="dialogModal_content">
 	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 	</div>
 	<div class="dialogModal_footer">
@@ -302,7 +322,7 @@ $(function(){
 			onDocumentClickClosePrevent : '',
 			overflowContent : false,
 			inline : true,
-			beforeLoadingContent : 'Please, waiting...',
+			beforeLoadingContent : 'Please, wait...',
 			onOkBut : function() {},
 			onCancelBut : function() {},
 			onLoad : function() {},
@@ -335,8 +355,16 @@ $(function(){
 			topOffset: 0,
 			onOkBut: function() {},
 			onCancelBut: function() {},
-			onLoad: function() {},
+			onLoad: function(el, current) {},
 			onClose: function() {},
+			onChange: function(el, current) {
+				if(current == 3){
+					el.find('.dialogModal_header span').text('Page 3');
+					$.ajax({url:'ajax.html'}).done(function(content){
+						el.find('.dialogModal_content').html(content);
+					});
+				}
+			}
 		});
 	});
 	
@@ -346,7 +374,7 @@ $(function(){
 			onOkBut: function() {},
 			onCancelBut: function() {},
 			onLoad: function() {},
-			onClose: function() {},
+			onClose: function() {}
 		});
 	});
 	
