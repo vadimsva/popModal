@@ -1,5 +1,5 @@
 /*
-popModal - 1.16 [02.03.15]
+popModal - 1.17 [21.04.15]
 Author: vadimsva
 Github: https://github.com/vadimsva/popModal
 */
@@ -66,7 +66,6 @@ Github: https://github.com/vadimsva/popModal
 					
 					currentID = new Date().getMilliseconds();
 					elem.attr('data-popmodal_id', currentID);
-
 					
 					var tooltipContainer = $('<div class="' + elemClass + ' animated" style="' + isFixed + '" data-popmodal_id="' + currentID + '"></div>');
 					var tooltipContent = $('<div class="' + elemClass + '_content ' + overflowContentClass + '"></div>');
@@ -466,9 +465,7 @@ Github: https://github.com/vadimsva/popModal
 				elemObj = $('.' + elemClass);
 				getAnimTime();
 				
-				setTimeout(function() {
-					elemObj.addClass('open');
-				}, animTime);
+				elemObj.addClass('open');
 
 				elemObj.click(function() {
 					notifyModalClose();
@@ -485,19 +482,16 @@ Github: https://github.com/vadimsva/popModal
 		
 		function notifyModalClose() {
 			var elemObj = $('.' + elemClass);
+			elemObj.removeClass('open');
 			setTimeout(function() {
-				elemObj.removeClass('open');
-				setTimeout(function() {
-					elemObj.remove();
-					if (_options.duration != -1) {
-						clearTimeout(notifDur);
-					}
-					if (_options.onClose && $.isFunction(_options.onClose)) {
-						_options.onClose();
-					}
-				}, animTime);
+				elemObj.remove();
+				if (_options.duration != -1) {
+					clearTimeout(notifDur);
+				}
+				if (_options.onClose && $.isFunction(_options.onClose)) {
+					_options.onClose();
+				}
 			}, animTime);
-
 		}
 
 		function getAnimTime() {
@@ -568,6 +562,7 @@ Github: https://github.com/vadimsva/popModal
 
 				function getPlacement(elemObj, elem) {
 					var placementDefault,
+					classDefault = elemObj.attr('class'),
 					eObjWidth = elemObj.outerWidth(),
 					eWidth = elem.outerWidth(),
 					eOffsetLeft = elemObj.offset().left,
@@ -618,7 +613,7 @@ Github: https://github.com/vadimsva/popModal
 						: deltaC > 0;
 					}
 					
-					elemObj.removeAttr('class').addClass('hintModal ' + optimalPosition(elemObj.data('placement')));
+					elemObj.removeAttr('class').addClass(classDefault + ' ' + optimalPosition(elemObj.data('placement')));
 				}
 			
 			}
@@ -696,13 +691,12 @@ Github: https://github.com/vadimsva/popModal
 					}
 				});
 				
+				elemObj.addClass('open');
 				setTimeout(function() {
-					elemObj.addClass('open');
-					setTimeout(function() {
-						dialogTop.addClass('fadeInTopBig');
-						dialogBody.addClass('fadeInTopBig');
-					}, animTime * 2);
-				}, animTime);
+					dialogTop.addClass('fadeInTopBig');
+					dialogBody.addClass('fadeInTopBig');
+				}, animTime + 100);
+				
 				bindFooterButtons();
 				
 				function bindFooterButtons() {
@@ -797,15 +791,13 @@ Github: https://github.com/vadimsva/popModal
 		
 		function dialogModalClose() {
 		var elemObj = $('.' + elemClass);
+			elemObj.removeClass('open');
 			setTimeout(function() {
-				elemObj.removeClass('open');
-				setTimeout(function() {
-					elemObj.remove();
-					$('body').removeClass(elemClass + 'Open').css({paddingRight:''});
-					$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
-					elemObj.find('.' + prevBut).off('click');
-					elemObj.find('.' + nextBut).off('click');
-				}, animTime);
+				elemObj.remove();
+				$('body').removeClass(elemClass + 'Open').css({paddingRight:''});
+				$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
+				elemObj.find('.' + prevBut).off('click');
+				elemObj.find('.' + nextBut).off('click');
 			}, animTime);
 		}
 		
@@ -899,8 +891,7 @@ Github: https://github.com/vadimsva/popModal
 				
 				function getPlacement() {
 					elemObj = $('.' + elemClass + '_container');
-					var eLeft = elem.position().left,
-					eTop = elem.position().top,
+					var eLeft, eTop,
 					eMLeft = elem.css('marginLeft'),
 					eMTop = elem.css('marginTop'),
 					eMBottom = elem.css('marginBottom'),
@@ -909,11 +900,18 @@ Github: https://github.com/vadimsva/popModal
 					eObjMTop = elemObj.css('marginTop'),
 					eObjWidth = elemObj.outerWidth(),
 					eObjHeight = elemObj.outerHeight();
+					if (elem.css('position') == 'fixed' || elem.css('position') == 'absolute') {
+						eLeft = 0;
+						eTop = 0;
+					} else {
+						eLeft = elem.position().left;
+						eTop = elem.position().top;
+					}
 					switch (placement) {
 						case 'bottom':
 							elemObj.css({
 								marginTop: parseInt(eObjMTop) - parseInt(eMBottom) + 'px',
-								left: eLeft + parseInt(eMLeft) + (eWidth - eObjWidth) / 2 + 'px'
+								left: eLeft + parseInt(eMLeft) + (eWidth - eObjWidth) / 2  + 'px'
 							}).addClass(effectIn + 'Bottom');	
 						break;
 						case 'top':
@@ -934,7 +932,6 @@ Github: https://github.com/vadimsva/popModal
 								left: eLeft + parseInt(eMLeft) + eWidth + 10 + 'px'
 							}).addClass('right ' + effectIn + 'Right');	
 						break;
-					
 					}
 				}
 				
@@ -1001,12 +998,11 @@ Github: https://github.com/vadimsva/popModal
 					}
 				});
 				
+				elemObj.addClass('open');
 				setTimeout(function() {
-					elemObj.addClass('open');
-					setTimeout(function() {
-						dialogBody.addClass('fadeInTopBig');
-					}, animTime + 100);
-				}, animTime);
+					dialogBody.addClass('fadeInTopBig');
+				}, animTime + 100);
+				
 				bindFooterButtons();
 				
 				function bindFooterButtons() {
@@ -1043,13 +1039,11 @@ Github: https://github.com/vadimsva/popModal
 		
 		function confirmModalClose() {
 		var elemObj = $('.' + elemClass);
+			elemObj.removeClass('open');
 			setTimeout(function() {
-				elemObj.removeClass('open');
-				setTimeout(function() {
-					elemObj.remove();
-					$('body').removeClass(elemClass + 'Open').css({paddingRight:''});
-					$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
-				}, animTime);
+				elemObj.remove();
+				$('body').removeClass(elemClass + 'Open').css({paddingRight:''});
+				$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
 			}, animTime);
 		}
 		
