@@ -1,5 +1,5 @@
 /*
-popModal - 1.17 [21.04.15]
+popModal - 1.18 [05.08.15]
 Author: vadimsva
 Github: https://github.com/vadimsva/popModal
 */
@@ -45,7 +45,7 @@ Github: https://github.com/vadimsva/popModal
 				};
 				_options = $.extend(_defaults, params);
 				
-				if ( $('body').find('.' + elemClass).length != 0 && $('body').find('.' + elemClass).attr('data-popmodal_id') == elem.attr('data-popmodal_id') ) {
+				if ( $('body').find('.' + elemClass).length !== 0 && $('body').find('.' + elemClass).attr('data-popmodal_id') == elem.attr('data-popmodal_id') ) {
 					popModalClose();
 				} else {
 					$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
@@ -97,18 +97,19 @@ Github: https://github.com/vadimsva/popModal
 					}
 					
 					elemObj = $('.' + elemClass);
-					if (elemObj.find('.' + elemClass + '_footer')) {
-						elemObj.find('.' + elemClass + '_content').css({marginBottom: elemObj.find('.' + elemClass + '_footer').outerHeight() + 'px'});
+					var elemObjFooter = elemObj.find('.' + elemClass + '_footer');
+					if (elemObjFooter) {
+						elemObj.find('.' + elemClass + '_content').css({marginBottom: elemObjFooter.outerHeight() + 'px'});
 					}
 					
 					if (!$.isFunction(_options.html)) {
+            var htmlStr;
 						if ($.type(_options.html) == 'string') {
-							var htmlStr = _options.html;
+							htmlStr = _options.html;
 						} else {
-							var htmlStr = _options.html[0].outerHTML;
+							htmlStr = _options.html[0].outerHTML;
 						}
-					}
-					
+					}					
 
 					if (_options.onLoad && $.isFunction(_options.onLoad)) {
 						_options.onLoad();
@@ -137,7 +138,7 @@ Github: https://github.com/vadimsva/popModal
 								if (isNaN(zIndex)) {
 									zIndex = 0;
 								}
-                if (_options.onDocumentClickClosePrevent != '' && target.is(_options.onDocumentClickClosePrevent)) {
+                if (_options.onDocumentClickClosePrevent !== '' && target.is(_options.onDocumentClickClosePrevent)) {
                   zIndex = 9999;
                 }
 								var target_zIndex = target.css('zIndex');
@@ -203,8 +204,10 @@ Github: https://github.com/vadimsva/popModal
 		
 		function getView() {
 			expandView = true;
-			if (elem.parent().css('position') != 'absolute' || elem.parent().css('position') != 'fixed') {
-				if (elemObj.find('.' + elemClass + '_content').width() < 270 && elemObj.find('.' + elemClass + '_content').height() <= 20 && elemObj.find('.' + elemClass + '_footer').length == 0) {
+			var elemParentPos = elem.parent().css('position');
+			if (elemParentPos != 'absolute' || elemParentPos != 'fixed') {
+				var elemObjContent = elemObj.find('.' + elemClass + '_content');
+				if (elemObjContent.width() < 270 && elemObjContent.height() <= 20 && elemObj.find('.' + elemClass + '_footer').length === 0) {
 					expandView = false;
 				}
 			}
@@ -365,7 +368,7 @@ Github: https://github.com/vadimsva/popModal
 		function getAnimTime() {
 			if (!animTime) {
 				animTime = elemObj.css('animationDuration');
-				if (animTime != undefined) {
+				if (animTime !== undefined) {
 					animTime = animTime.replace('s', '') * 1000;
 				} else {
 					animTime = 0;
@@ -385,30 +388,30 @@ Github: https://github.com/vadimsva/popModal
 			return methods.init.apply(this, arguments);
 		}
 
-	}
+	};
 
 	$('* [data-popmodal-bind]').bind('click', function() {
 		var elemBind = $(this).attr('data-popmodal-bind');
 		var params = {html: $(elemBind)};
-		if ($(this).attr('data-placement') != undefined) {
+		if ($(this).attr('data-placement') !== undefined) {
 			params['placement'] = $(this).attr('data-placement');
 		}
-		if ($(this).attr('data-showclose-but') != undefined) {
+		if ($(this).attr('data-showclose-but') !== undefined) {
 			params['showCloseBut'] = (/^true$/i).test($(this).attr('data-showclose-but'));
 		}
-		if ($(this).attr('data-overflowcontent') != undefined) {
+		if ($(this).attr('data-overflowcontent') !== undefined) {
 			params['overflowContent'] = (/^false$/i).test($(this).attr('data-overflowcontent'));
 		}
-		if ($(this).attr('data-ondocumentclick-close') != undefined) {
+		if ($(this).attr('data-ondocumentclick-close') !== undefined) {
 			params['onDocumentClickClose'] = (/^true$/i).test($(this).attr('data-ondocumentclick-close'));
 		}
-		if ($(this).attr('data-ondocumentclick-close-prevent') != undefined) {
+		if ($(this).attr('data-ondocumentclick-close-prevent') !== undefined) {
 			params['onDocumentClickClosePrevent'] = $(this).attr('data-ondocumentclick-close-prevent');
 		}
-		if ($(this).attr('data-inline') != undefined) {
+		if ($(this).attr('data-inline') !== undefined) {
 			params['inline'] = (/^true$/i).test($(this).attr('data-inline'));
 		}
-		if ($(this).attr('data-beforeloading-content') != undefined) {
+		if ($(this).attr('data-beforeloading-content') !== undefined) {
 			params['beforeLoadingContent'] = $(this).attr('data-beforeloading-content');
 		}
 		$(this).popModal(params);
@@ -420,7 +423,7 @@ Github: https://github.com/vadimsva/popModal
         o.handler();
       }
     }
-  }
+  };
 })(jQuery);
 
 
@@ -453,7 +456,7 @@ Github: https://github.com/vadimsva/popModal
 				var notifyContainer = $('<div class="' + elemClass + ' ' + _options.placement + ' ' + onTopClass + ' ' + _options.type + '"></div>');
 				var notifyContent = $('<div class="' + elemClass + '_content"></div>');
 				var closeBut = $('<button type="button" class="close">&times;</button>');
-				if (elem[0] == undefined) {
+				if (elem[0] === undefined) {
 					elem = elem['selector'];
 				} else {
 					elem = elem[0].innerHTML;
@@ -466,7 +469,6 @@ Github: https://github.com/vadimsva/popModal
 				getAnimTime();
 				
 				elemObj.addClass('open');
-
 				elemObj.click(function() {
 					notifyModalClose();
 				});
@@ -497,7 +499,7 @@ Github: https://github.com/vadimsva/popModal
 		function getAnimTime() {
 			if (!animTime) {
 				animTime = elemObj.css('transitionDuration');
-				if (animTime != undefined) {
+				if (animTime !== undefined) {
 					animTime = animTime.replace('s', '') * 1000;
 				} else {
 					animTime = 0;
@@ -517,18 +519,18 @@ Github: https://github.com/vadimsva/popModal
 			return methods.init.apply(this, arguments);
 		}
 
-	}
+	};
 	
 	$('* [data-notifymodal-bind]').bind('click', function() {
 		var elemBind = $(this).attr('data-notifymodal-bind');
 		var params = {};
-		if ($(this).attr('data-duration') != undefined) {
+		if ($(this).attr('data-duration') !== undefined) {
 			params['duration'] = parseInt($(this).attr('data-duration'));
 		}
-		if ($(this).attr('data-placement') != undefined) {
+		if ($(this).attr('data-placement') !== undefined) {
 			params['placement'] = $(this).attr('data-placement');
 		}
-		if ($(this).attr('data-ontop') != undefined) {
+		if ($(this).attr('data-ontop') !== undefined) {
 			params['onTop'] = (/^true$/i).test($(this).attr('data-ontop'));
 		}
 		$(elemBind).notifyModal(params);
@@ -543,11 +545,11 @@ Github: https://github.com/vadimsva/popModal
 		$('.hintModal').off();
 	
 		var methods = {
-			init : function(params) {
+			init : function() {
 
 				$(this).on('mouseenter', function() {
 					var elem = $(this).find('> .hintModal_container');
-					if(elem[0].innerText.length > 1){
+					if(elem[0].textContent.length > 1){
 						elem.addClass('animated fadeInBottom');
 						getPlacement($(this), elem);
 					}
@@ -555,7 +557,7 @@ Github: https://github.com/vadimsva/popModal
 				
 				$(this).on('mouseleave', function() {
 					var elem = $(this).find('> .hintModal_container');
-					if(elem[0].innerText.length > 1){
+					if(elem[0].textContent.length > 1){
 						elem.removeClass('animated fadeInBottom');
 					}
 				});
@@ -586,7 +588,7 @@ Github: https://github.com/vadimsva/popModal
 						placementDefault = bl;
 					}
 					
-					if (elemObj.data('placement') == undefined) {
+					if (elemObj.data('placement') === undefined) {
 						elemObj.data('placement', placementDefault);
 					}
 
@@ -739,7 +741,7 @@ Github: https://github.com/vadimsva/popModal
 						if (currentDialog < maxDialog) {
 							elemObj.find('.' + nextBut).removeClass('notactive');
 						}
-						if (currentDialog == 0) {
+						if (currentDialog === 0) {
 							elemObj.find('.' + prevBut).addClass('notactive');
 						}
 						changeDialogContent();
@@ -804,7 +806,7 @@ Github: https://github.com/vadimsva/popModal
 		function getAnimTime() {
 			if (!animTime) {
 				animTime = elemObj.css('transitionDuration');
-				if (animTime != undefined) {
+				if (animTime !== undefined) {
 					animTime = animTime.replace('s', '') * 1000;
 				} else {
 					animTime = 0;
@@ -818,12 +820,12 @@ Github: https://github.com/vadimsva/popModal
 			return methods.init.apply( this, arguments );
 		}
 
-	}
+	};
 	
 	$('* [data-dialogmodal-bind]').bind('click', function() {
 		var elemBind = $(this).attr('data-dialogmodal-bind');
 		var params = {};
-		if ($(this).attr('data-topoffset') != undefined) {
+		if ($(this).attr('data-topoffset') !== undefined) {
 			params['topOffset'] = $(this).attr('data-topoffset');
 		}
 		$(elemBind).dialogModal(params);
@@ -835,7 +837,7 @@ Github: https://github.com/vadimsva/popModal
         o.handler();
       }
     }
-  }
+  };
 })(jQuery);
 
 
@@ -845,42 +847,43 @@ Github: https://github.com/vadimsva/popModal
 	$('.titleModal').off();
 	
 		var methods = {
-			init : function(params) {
+			init : function() {
 				var elem,
 				elemObj,
 				elemClass = 'titleModal',
 				getElem = $('.' + elemClass),
-				animTime,
 				effectIn = 'fadeIn',
 				effectOut = 'fadeOut';
 
 				getElem.on('mouseenter', function() {
 					elem = $(this);
-					if(elem.attr('title') != undefined || elem.css('textOverflow') == 'ellipsis' || elem.css('textOverflow') == 'clip') {
-						if(elem.attr('title') != undefined) {
+          var titleAttr;
+					if(elem.attr('title') !== undefined || elem.css('textOverflow') == 'ellipsis' || elem.css('textOverflow') == 'clip') {
+						if(elem.attr('title') !== undefined) {
 							titleAttr =	elem.attr('title');
 						} else {
 							titleAttr = elem.text();
 						}
 						elem.removeAttr('title');
 						elem.attr('data-title', titleAttr);
-						titleModal = $('<div class="' + elemClass + '_container animated"></div>');
+						var titleModal = $('<div class="' + elemClass + '_container animated"></div>');
 						elemObj = $('.' + elemClass + '_container');
-						placement = elem.attr('data-placement');
-						if (placement == undefined) {
+						var placement = elem.attr('data-placement');
+						if (placement === undefined) {
 							placement = 'bottom';
 						}
 						if (elemObj) {
 							elemObj.remove();
 						}
 						elem.append(titleModal.append(titleAttr));
-						getPlacement();
+						getPlacement(placement);
 					}
 				});
 
 				getElem.on('mouseleave', function() {
 					elem = $(this);
-					if(elem.attr('data-title') != undefined){
+          var titleAttr;
+					if(elem.attr('data-title') !== undefined){
 						titleAttr =	elem.attr('data-title');
 						elem.removeAttr('data-title');
 						elem.attr('title', titleAttr);
@@ -889,7 +892,7 @@ Github: https://github.com/vadimsva/popModal
 					}
 				});
 				
-				function getPlacement() {
+				function getPlacement(placement) {
 					elemObj = $('.' + elemClass + '_container');
 					var eLeft, eTop,
 					eMLeft = elem.css('marginLeft'),
@@ -1050,7 +1053,7 @@ Github: https://github.com/vadimsva/popModal
 		function getAnimTime() {
 			if (!animTime) {
 				animTime = elemObj.css('transitionDuration');
-				if (animTime != undefined) {
+				if (animTime !== undefined) {
 					animTime = animTime.replace('s', '') * 1000;
 				} else {
 					animTime = 0;
@@ -1064,12 +1067,12 @@ Github: https://github.com/vadimsva/popModal
 			return methods.init.apply( this, arguments );
 		}
 
-	}
+	};
 	
 	$('* [data-confirmmodal-bind]').bind('click', function() {
 		var elemBind = $(this).attr('data-confirmmodal-bind');
 		var params = {};
-		if ($(this).attr('data-topoffset') != undefined) {
+		if ($(this).attr('data-topoffset') !== undefined) {
 			params['topOffset'] = $(this).attr('data-topoffset');
 		}
 		$(elemBind).confirmModal(params);
@@ -1081,5 +1084,5 @@ Github: https://github.com/vadimsva/popModal
         o.handler();
       }
     }
-  }
+  };
 })(jQuery);
