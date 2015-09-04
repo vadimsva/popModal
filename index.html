@@ -24,8 +24,6 @@ body {background:#f1f1f1}
 .exampleContainer {border-left:5px solid #4081BE;margin:0 -30px 30px}
 .exampleContainer .exampleLive {border-top:1px solid #ddd;padding:20px;background:#fafafa}
 .exampleContainer .exampleLive .exampleLiveTitle {color:#666;font-size:13px;float:right;line-height:34px}
-.exampleContainer1 .exampleLive > button {padding:6px 12px;cursor:pointer;background:#4081BE;border:0;color:#fff;border-radius:3px;text-transform:uppercase;font-weight:500;font-size:13px;line-height:20px}
-.exampleContainer1 .exampleLive > button:hover {background:#3772A8}
 .exampleContainer .exampleCode {background:#2b2f3b;padding:20px}
 .exampleContainer .exampleCode pre {line-height:0}
 .exampleContainer .exampleCode code {white-space:pre-line}
@@ -80,7 +78,7 @@ body {background:#f1f1f1}
 <div id="page">
 
 	<div id="copyrightBlock">
-		<div id="version" title="Current version/date">1.18<span>[05.08.15]</span></div>
+		<div id="version" title="Current version/date">1.19<span>[04.09.15]</span></div>
 		<a href="https://github.com/vadimsva/popModal/releases" id="downloadLink">Download</a>
 		<a href="https://github.com/vadimsva/popModal" id="gitHubLink">GitHub Repo</a>
 	</div>
@@ -288,6 +286,7 @@ body {background:#f1f1f1}
 	
 <div style="display:none">
 <div id="content">
+	<input type="text" class="form-control"><br>
 	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 	<div class="popModal_footer">
 		<button type="button" class="btn btn-primary" data-popmodal-but="ok">ok</button>
@@ -352,7 +351,7 @@ body {background:#f1f1f1}
 </div>
 
 
-<script src="http://cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+<script src="http://cdn.jsdelivr.net/jquery/2.1.4/jquery.min.js"></script>
 <script src="popModal.js"></script>
 <script>
 $(function(){
