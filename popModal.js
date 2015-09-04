@@ -1,5 +1,5 @@
 /*
-popModal - 1.18 [05.08.15]
+popModal - 1.19 [04.09.15]
 Author: vadimsva
 Github: https://github.com/vadimsva/popModal
 */
@@ -9,7 +9,6 @@ Github: https://github.com/vadimsva/popModal
 		var elem = $(this),
 		elemObj,
 		isFixed = '',
-		expandView = true,
 		closeBut = '',
 		elemClass = 'popModal',
 		overflowContentClass,
@@ -77,7 +76,6 @@ Github: https://github.com/vadimsva/popModal
 						_options.html(function(loadedContent) {
 							tooltipContent.empty().append(loadedContent);
 							elemObj = $('.' + elemClass);
-							expandView = true;
 							getPlacement();
 						});
 					} else {
@@ -114,14 +112,15 @@ Github: https://github.com/vadimsva/popModal
 					if (_options.onLoad && $.isFunction(_options.onLoad)) {
 						_options.onLoad();
 					}
+					$(_options.html).trigger('load');
 
 					elemObj.on('destroyed', function() {
 						if (_options.onClose && $.isFunction(_options.onClose)) {
 							_options.onClose();
 						}
+						$(_options.html).trigger('close');
 					});
 
-					getView();
 					getPlacement();
 
 					if (_options.onDocumentClickClose) {
@@ -178,6 +177,7 @@ Github: https://github.com/vadimsva/popModal
 							popModalClose();
 						}
 						$(this).off('click');
+						$(_options.html).trigger('okbut');
 					});
 
 					elemObj.find('[data-popmodal-but="cancel"]').on('click', function() {
@@ -186,6 +186,7 @@ Github: https://github.com/vadimsva/popModal
 						}
 						popModalClose();
 						$(this).off('click');
+						$(_options.html).trigger('cancelbut');
 					});
 
 					$('html').on('keydown.' + elemClass + 'Event', function(event) {
@@ -202,17 +203,6 @@ Github: https://github.com/vadimsva/popModal
 			}
 		};
 		
-		function getView() {
-			expandView = true;
-			var elemParentPos = elem.parent().css('position');
-			if (elemParentPos != 'absolute' || elemParentPos != 'fixed') {
-				var elemObjContent = elemObj.find('.' + elemClass + '_content');
-				if (elemObjContent.width() < 270 && elemObjContent.height() <= 20 && elemObj.find('.' + elemClass + '_footer').length === 0) {
-					expandView = false;
-				}
-			}
-		}
-		
 		function getPlacement() {
 			if (_options.inline) {
 				var eLeft = elem.position().left;
@@ -227,23 +217,8 @@ Github: https://github.com/vadimsva/popModal
 			eMTop = parseInt(elem.css('marginTop')),
 			eHeight = elem.outerHeight(),
 			eWidth = elem.outerWidth(),
-			eObjMaxWidth = parseInt(elemObj.css('maxWidth')),
-			eObjMinWidth = parseInt(elemObj.css('minWidth')),
 			eObjWidth,
 			eObjHeight = elemObj.outerHeight();
-			
-			if (expandView) {
-				if (isNaN(eObjMaxWidth)) {
-					eObjMaxWidth = 300;
-				}
-				eObjWidth = eObjMaxWidth;
-			} else {
-				if (isNaN(eObjMinWidth)) {
-					eObjMinWidth = 180;
-				}
-				eObjWidth = eObjMinWidth;
-			}
-			elemObj.css({width: eObjWidth + 'px'});
 			
 			var placement,
 			eOffsetLeft = elem.offset().left,
@@ -686,11 +661,13 @@ Github: https://github.com/vadimsva/popModal
 				if (_options.onLoad && $.isFunction(_options.onLoad)) {
 					_options.onLoad(elemObj, currentDialog + 1);
 				}
+				elem.trigger('load', {el: elemObj, current: currentDialog + 1});
 
 				elemObj.on('destroyed', function() {
 					if (_options.onClose && $.isFunction(_options.onClose)) {
 						_options.onClose();
 					}
+					elem.trigger('close');
 				});
 				
 				elemObj.addClass('open');
@@ -716,6 +693,7 @@ Github: https://github.com/vadimsva/popModal
 							dialogModalClose();
 						}
 						$(this).off('click');
+						elem.trigger('okbut');
 					});
 
 					elemObj.find('[data-dialogmodal-but="cancel"]').on('click', function() {
@@ -724,6 +702,7 @@ Github: https://github.com/vadimsva/popModal
 						}
 						dialogModalClose();
 						$(this).off('click');
+						elem.trigger('cancelbut');
 					});
 					
 					elemObj.find('[data-dialogmodal-but="prev"]').on('click', function() {
@@ -768,6 +747,7 @@ Github: https://github.com/vadimsva/popModal
 					if (_options.onChange && $.isFunction(_options.onChange)) {
 						_options.onChange(elemObj, currentDialog + 1);
 					}
+					elem.trigger('change', {el: elemObj, current: currentDialog + 1});
 				}
 
 				elemObj.find('.close').on('click', function() {
