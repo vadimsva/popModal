@@ -217,7 +217,7 @@ Github: https://github.com/vadimsva/popModal
 			eMTop = parseInt(elem.css('marginTop')),
 			eHeight = elem.outerHeight(),
 			eWidth = elem.outerWidth(),
-			eObjWidth,
+			eObjWidth = elemObj.outerWidth(),
 			eObjHeight = elemObj.outerHeight();
 			
 			var placement,
