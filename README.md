@@ -16,10 +16,10 @@ This library includes 6 components:<br>
 
 
 <h4>Direct links to libs</h4>
-<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [31.3Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [31.1Kb]<br>
 <a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [16.1Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [16.6Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [15Kb]
+<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [14.9Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [13.6Kb]
 
 
 Documentation
@@ -49,6 +49,9 @@ Use: <code>false</code> - default, <code>true</code><br>
 <br>
 <code>inline</code> - create popup relative element (boolean).<br>
 Use: <code>true</code> - default, <code>false</code><br>
+<br>
+<code>asMenu</code> - use popup for show as dropdown menu (boolean).<br>
+Use: <code>false</code> - default, <code>true</code><br>
 <br>
 <code>beforeLoadingContent</code> - show text, before loading content (string).<br>
 Use: <code>'Please, waiting...'</code> - default<br>
@@ -259,10 +262,11 @@ $(el).popModal({
   placement : 'bottomLeft',
   showCloseBut : true,
   onDocumentClickClose : true,
-	onDocumentClickClosePrevent : '',
-	overflowContent : false,
-	inline : true,
-	beforeLoadingContent : 'Please, waiting...',
+  onDocumentClickClosePrevent : '',
+  overflowContent : false,
+  inline : true,
+  asMenu : false,
+  beforeLoadingContent : 'Please, waiting...',
   onOkBut : function(){},
   onCancelBut : function(){},
   onLoad : function(){},
