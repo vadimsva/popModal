@@ -1,5 +1,5 @@
 /*
-popModal - 1.19 [04.09.15]
+popModal - 1.20 [01.10.15]
 Author: vadimsva
 Github: https://github.com/vadimsva/popModal
 */
@@ -11,7 +11,8 @@ Github: https://github.com/vadimsva/popModal
 		isFixed = '',
 		closeBut = '',
 		elemClass = 'popModal',
-		overflowContentClass,
+		overflowContentClass = '',
+		asMenuClass,
 		_options,
 		animTime,
 		effectIn = 'fadeIn',
@@ -22,9 +23,8 @@ Github: https://github.com/vadimsva/popModal
 		lt = 'leftTop',
 		lc = 'leftCenter',
 		rt = 'rightTop',
-		rc = 'rightCenter';
-		
-		var currentID;
+		rc = 'rightCenter',
+		currentID;
 	
 		var methods = {
 			init : function(params) {
@@ -36,6 +36,7 @@ Github: https://github.com/vadimsva/popModal
           onDocumentClickClosePrevent : '',
 					overflowContent : false,
 					inline : true,
+					asMenu : false,
 					beforeLoadingContent : 'Please, wait...',
 					onOkBut: function() {return true;},
 					onCancelBut: function() {},
@@ -50,24 +51,29 @@ Github: https://github.com/vadimsva/popModal
 					$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
 					$('.' + elemClass + '_source').replaceWith($('.' + elemClass + '_content').children());
 					$('.' + elemClass).remove();
-
-					if (_options.showCloseBut) {
-						closeBut = $('<button type="button" class="close">&times;</button>');
-					}
+					
 					if (elem.css('position') == 'fixed') {
 						isFixed = 'position:fixed;';
 					}
-					if (_options.overflowContent) {
-					overflowContentClass = elemClass + '_contentOverflow';
+					if (_options.asMenu) {
+						asMenuClass = ' ' + elemClass + '_asMenu';
 					} else {
-						overflowContentClass = '';
+						asMenuClass = '';
+						if (_options.showCloseBut) {
+							closeBut = $('<button type="button" class="close">&times;</button>');
+						}
+						if (_options.overflowContent) {
+							overflowContentClass = ' ' + elemClass + '_contentOverflow';
+						} else {
+							overflowContentClass = '';
+						}
 					}
 					
 					currentID = new Date().getMilliseconds();
 					elem.attr('data-popmodal_id', currentID);
 					
 					var tooltipContainer = $('<div class="' + elemClass + ' animated" style="' + isFixed + '" data-popmodal_id="' + currentID + '"></div>');
-					var tooltipContent = $('<div class="' + elemClass + '_content ' + overflowContentClass + '"></div>');
+					var tooltipContent = $('<div class="' + elemClass + '_content' + overflowContentClass + asMenuClass + '"></div>');
 					tooltipContainer.append(closeBut, tooltipContent);
 					
 					if ($.isFunction(_options.html)) {
@@ -84,7 +90,7 @@ Github: https://github.com/vadimsva/popModal
 						}
 						tooltipContent.append(_options.html);
 					}
-					if($(window).width() <= 500) {
+					if ($(window).width() <= 500) {
 						_options.inline = true;
 					}
 					
@@ -96,8 +102,8 @@ Github: https://github.com/vadimsva/popModal
 					
 					elemObj = $('.' + elemClass);
 					var elemObjFooter = elemObj.find('.' + elemClass + '_footer');
-					if (elemObjFooter) {
-						elemObj.find('.' + elemClass + '_content').css({marginBottom: elemObjFooter.outerHeight() + 'px'});
+					if (elemObjFooter.length != 0) {
+						elemObj.find('.' + elemClass + '_content').css({marginBottom: elemObjFooter.outerHeight() + 15 + 'px'});
 					}
 					
 					if (!$.isFunction(_options.html)) {
@@ -217,7 +223,7 @@ Github: https://github.com/vadimsva/popModal
 			eMTop = parseInt(elem.css('marginTop')),
 			eHeight = elem.outerHeight(),
 			eWidth = elem.outerWidth(),
-			eObjWidth,
+			eObjWidth = elemObj.outerWidth(),
 			eObjHeight = elemObj.outerHeight();
 			
 			var placement,
@@ -524,7 +530,7 @@ Github: https://github.com/vadimsva/popModal
 
 				$(this).on('mouseenter', function() {
 					var elem = $(this).find('> .hintModal_container');
-					if(elem[0].textContent.length > 1){
+					if (elem[0].textContent.length > 1) {
 						elem.addClass('animated fadeInBottom');
 						getPlacement($(this), elem);
 					}
@@ -532,7 +538,7 @@ Github: https://github.com/vadimsva/popModal
 				
 				$(this).on('mouseleave', function() {
 					var elem = $(this).find('> .hintModal_container');
-					if(elem[0].textContent.length > 1){
+					if (elem[0].textContent.length > 1) {
 						elem.removeClass('animated fadeInBottom');
 					}
 				});
@@ -838,8 +844,8 @@ Github: https://github.com/vadimsva/popModal
 				getElem.on('mouseenter', function() {
 					elem = $(this);
           var titleAttr;
-					if(elem.attr('title') !== undefined || elem.css('textOverflow') == 'ellipsis' || elem.css('textOverflow') == 'clip') {
-						if(elem.attr('title') !== undefined) {
+					if (elem.attr('title') !== undefined || elem.css('textOverflow') == 'ellipsis' || elem.css('textOverflow') == 'clip') {
+						if (elem.attr('title') !== undefined) {
 							titleAttr =	elem.attr('title');
 						} else {
 							titleAttr = elem.text();
@@ -863,7 +869,7 @@ Github: https://github.com/vadimsva/popModal
 				getElem.on('mouseleave', function() {
 					elem = $(this);
           var titleAttr;
-					if(elem.attr('data-title') !== undefined){
+					if (elem.attr('data-title') !== undefined){
 						titleAttr =	elem.attr('data-title');
 						elem.removeAttr('data-title');
 						elem.attr('title', titleAttr);
