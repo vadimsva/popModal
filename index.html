@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>popModal</title>
 <style>
-* {margin:0;font-family:Roboto,sans-serif;outline:0;box-sizing:border-box}
+* {margin:0;font-family:Roboto,sans-serif;outline:0;box-sizing:border-box;font-size:14px}
 body {background:#f1f1f1}
 #page {margin:30px auto 100px;width:40%;min-width:800px;min-height:500px}
 #page_content {background:#fff;box-shadow:0 1px 5px #ccc;margin-top:20px}
@@ -19,12 +19,13 @@ body {background:#f1f1f1}
 #gitHubLink {background:#ccc;color:#555;font-weight:500}
 #gitHubLink:hover {background:#aaa;color:#333}
 #version {background:transparent;color:#555;font-weight:500}
-#version span {margin-left:10px;color:#999}
+#version span {margin-left:10px;color:#999;font-size:12px}
 
-.exampleContainer {border-left:5px solid #4081BE;margin:0 -30px 30px}
+.exampleContainer {margin:-1px 0 30px}
 .exampleContainer .exampleLive {border-top:1px solid #ddd;padding:20px;background:#fafafa}
+.exampleContainer .exampleLive:after {content:'';clear:both;display:table}
 .exampleContainer .exampleLive .exampleLiveTitle {color:#666;font-size:13px;float:right;line-height:34px}
-.exampleContainer .exampleCode {background:#2b2f3b;padding:20px}
+.exampleContainer .exampleCode {background:#2b2f3b;padding:20px;overflow:auto}
 .exampleContainer .exampleCode pre {line-height:0}
 .exampleContainer .exampleCode code {white-space:pre-line}
 .exampleContainer .exampleCode code * {font-family:consolas;font-size:13px}
@@ -56,18 +57,18 @@ body {background:#f1f1f1}
 
 
 /* tabs */
-.tabs_container {padding:10px 15px 0;border-bottom:1px solid #ddd}
+.tabs_container {padding:10px 5px 0;border-bottom:1px solid #ddd}
 .tabs_container:after {content:'';clear:both;display:table}
 .tabs_container > .tab {float:left;line-height:40px;cursor:pointer;border-bottom:2px solid transparent;color:#555;margin:0 15px;margin-bottom:-1px;font-size:14px}
 .tabs_container > .tab.active {border-color:#007ec4;color:#000}
 .tabs_container > .tab:hover {color:#000}
 .page_container {}
-.page_container > .page {display:none;padding:30px}
+.page_container > .page {display:none;padding:0 0 30px}
 .page_container > .page.active {display:block}
 
 
 @media (max-width: 840px){
-#page {width:auto;min-width:0;margin:30px 30px 100px}
+#page {width:auto;min-width:0;margin:20px 20px 100px}
 }
 </style>
 <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500">
@@ -78,7 +79,7 @@ body {background:#f1f1f1}
 <div id="page">
 
 	<div id="copyrightBlock">
-		<div id="version" title="Current version/date">1.19<span>[04.09.15]</span></div>
+		<div id="version" title="Current version/date">1.20<span>[01.10.15]</span></div>
 		<a href="https://github.com/vadimsva/popModal/releases" id="downloadLink">Download</a>
 		<a href="https://github.com/vadimsva/popModal" id="gitHubLink">GitHub Repo</a>
 	</div>
@@ -113,6 +114,7 @@ body {background:#f1f1f1}
 						<p class="tab"><span class="key">onDocumentClickClosePrevent</span> : <span class="val">''</span>,</p>
 						<p class="tab"><span class="key">overflowContent</span> : <span class="val">false</span>,</p>
 						<p class="tab"><span class="key">inline</span> : <span class="val">true</span>,</p>
+						<p class="tab"><span class="key">asMenu</span> : <span class="val">false</span>,</p>
 						<p class="tab"><span class="key">beforeLoadingContent</span> : <span class="val">'Please, wait...'</span>,</p>
 						<p class="tab"><span class="key">onOkBut</span> : <span class="val">function() {}</span>,</p>
 						<p class="tab"><span class="key">onCancelBut</span> : <span class="val">function() {}</span>,</p>
@@ -140,8 +142,21 @@ body {background:#f1f1f1}
 				
 				<div class="exampleContainer">
 					<div class="exampleLive">
+						<div class="exampleLiveTitle">show as menu</div>
+						<button id="popModal_ex3" class="btn btn-primary">Example</button>
+					</div>
+					<div class="exampleCode"><pre><code>
+						<p><span class="text">$('</span><span class="tag">#elem</span><span class="text">').popModal(</span>{</p>
+						<p class="tab"><span class="key">html</span> : <span class="val">$('#content').html()</span>,</p>
+						<p class="tab"><span class="key">asMenu</span> : <span class="val">true</span></p>
+						<p>}<span class="text">)</span>;</p>
+					</code></pre></div>
+				</div>
+				
+				<div class="exampleContainer">
+					<div class="exampleLive">
 						<div class="exampleLiveTitle">inline bind</div>
-						<button id="popModal_ex3" class="btn btn-primary" data-popmodal-bind="#content">Example</button>
+						<button id="popModal_ex4" class="btn btn-primary" data-popmodal-bind="#content">Example</button>
 					</div>
 					<div class="exampleCode"><pre><code>
 						<p>&lt;<span class="tag">button</span> <span class="key">id</span>=<span class="val">"elem"</span> <span class="key">data-popmodal-bind</span>=<span class="val">"#content"</span> <span class="key">data-placement</span>=<span class="val">"bottomLeft"</span> <span class="key">data-showclose-but</span>=<span class="val">"true"</span> <span class="key">data-overflowcontent</span>=<span class="val">"true"</span> <span class="key">data-ondocumentclick-close</span>=<span class="val">"true"</span> <span class="key">data-ondocumentclick-close-prevent</span>=<span class="val">""</span>&gt;<span class="text">example</span>&lt;/<span class="tag">button</span>&gt;</p>
@@ -175,7 +190,7 @@ body {background:#f1f1f1}
 						<div class="exampleLiveTitle">default params</div>
 						<button class="hintModal btn btn-primary">Example
 							<div class="hintModal_container">
-								Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+								Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
 							</div>
 						</button>
 					</div>
@@ -289,13 +304,26 @@ body {background:#f1f1f1}
 	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 	<div class="popModal_footer">
 		<button type="button" class="btn btn-primary" data-popmodal-but="ok">ok</button>
-		<button type="button" class="btn btn-default"data-popmodal-but="cancel">cancel</button>
+		<button type="button" class="btn btn-default" data-popmodal-but="cancel">cancel</button>
 	</div>
 </div>
 </div>
 
 <div id="content2" style="display:none">
 	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+</div>
+
+<div style="display:none">
+<div id="content3">
+	<ul>
+		<li><a href="">Menu 1</a></li>
+		<li><a href="">Menu 2</a></li>
+		<li><a href="">Menu 3</a></li>
+		<li><a href="">Menu 4</a></li>
+		<li></li>
+		<li><a href="">Menu 5</a></li>
+	</ul>
+</div>
 </div>
 
 <div id="dialog_content" class="dialog_content" style="display:none">
@@ -312,7 +340,7 @@ body {background:#f1f1f1}
 	</div>
 	<div class="dialogModal_footer">
 		<button type="button" class="btn btn-primary" data-dialogmodal-but="next">Next</button>
-		<button type="button" class="btn btn-default"data-dialogmodal-but="cancel">Cancel</button>
+		<button type="button" class="btn btn-default" data-dialogmodal-but="cancel">Cancel</button>
 	</div>
 </div>
 
@@ -323,7 +351,7 @@ body {background:#f1f1f1}
 	</div>
 	<div class="dialogModal_footer">
 		<button type="button" class="btn btn-primary" data-dialogmodal-but="next">Next</button>
-		<button type="button" class="btn btn-default"data-dialogmodal-but="cancel">Cancel</button>
+		<button type="button" class="btn btn-default" data-dialogmodal-but="cancel">Cancel</button>
 	</div>
 </div>
 
@@ -335,7 +363,7 @@ body {background:#f1f1f1}
 	<div class="dialogModal_footer">
 		<button type="button" class="btn btn-default btn-left" data-dialogmodal-but="prev">Back</button>
 		<button type="button" class="btn btn-primary" data-dialogmodal-but="ok">Ok</button>
-		<button type="button" class="btn btn-default"data-dialogmodal-but="cancel">Cancel</button>
+		<button type="button" class="btn btn-default" data-dialogmodal-but="cancel">Cancel</button>
 	</div>
 </div>
 
@@ -345,7 +373,7 @@ body {background:#f1f1f1}
 	</div>
 	<div class="confirmModal_footer">
 		<button type="button" class="btn btn-primary" data-confirmmodal-but="ok">Ok</button>
-		<button type="button" class="btn btn-default"data-confirmmodal-but="cancel">Cancel</button>
+		<button type="button" class="btn btn-default" data-confirmmodal-but="cancel">Cancel</button>
 	</div>
 </div>
 
@@ -363,6 +391,7 @@ $(function(){
 			onDocumentClickClosePrevent : '',
 			overflowContent : false,
 			inline : true,
+			asMenu : false,
 			beforeLoadingContent : 'Please, wait...',
 			onOkBut : function() {},
 			onCancelBut : function() {},
@@ -378,6 +407,14 @@ $(function(){
 					callback(content);
 				});
 			}
+		});
+	});
+	
+	$('#popModal_ex3').click(function(){
+		$('#popModal_ex3').popModal({
+			html : $('#content3'),
+			placement : 'bottomLeft',
+			asMenu : true
 		});
 	});
 	
