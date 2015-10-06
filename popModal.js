@@ -72,7 +72,7 @@ Github: https://github.com/vadimsva/popModal
 					currentID = new Date().getMilliseconds();
 					elem.attr('data-popmodal_id', currentID);
 					
-					var tooltipContainer = $('<div class="' + elemClass + ' animated" style="' + isFixed + '" data-popmodal_id="' + currentID + '"></div>');
+					var tooltipContainer = $('<div class="' + elemClass + ' animated" style="' + isFixed + '" data-popmodal_id="' + currentID + '" role="tooltip"></div>');
 					var tooltipContent = $('<div class="' + elemClass + '_content' + overflowContentClass + asMenuClass + '"></div>');
 					tooltipContainer.append(closeBut, tooltipContent);
 					
@@ -852,7 +852,7 @@ Github: https://github.com/vadimsva/popModal
 						}
 						elem.removeAttr('title');
 						elem.attr('data-title', titleAttr);
-						var titleModal = $('<div class="' + elemClass + '_container animated"></div>');
+						var titleModal = $('<div class="' + elemClass + '_container animated" role="tooltip"></div>');
 						elemObj = $('.' + elemClass + '_container');
 						var placement = elem.attr('data-placement');
 						if (placement === undefined) {
