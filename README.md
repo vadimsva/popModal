@@ -146,9 +146,9 @@ To change position, add additional class <code>class="hintModal_center"</code> o
 <code>topOffset</code> - top offset in px for dialog, useful if some elements on page have position: fixed (integer).<br>
 Use: <code>0</code>.<br>
 <code>top</code> - top offset for dialog, uses for <code>type:'modal'</code> (string).<br>
-Use: <code>'10%'</code>.<br>
-<code>type</code> - type of dialog, use <code>modal</code> if you want to show dialog not from top (string).<br>
-Use: <code>''</code> - default, <code>'modal'</code>.<br>
+Use: <code>'10%'</code> - default.<br>
+<code>type</code> - type of dialog (string).<br>
+Use: <code>''</code> - default, <code>'modal'</code> to show dialog not from top.<br>
 <code>onOkBut</code> - code execution by clicking on OK button, contained in dialog (function).<br>
 Use: <code>function(){}</code>.<br>
 For work you need put an attribute to element - <code>data-dialogmodal-but="ok"</code>. <i>Dialog will close automatically</i><br>
