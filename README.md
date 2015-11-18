@@ -16,10 +16,10 @@ This library includes 6 components:<br>
 
 
 <h4>Direct links to libs</h4>
-<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [31.1Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [16.1Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [14.9Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [13.6Kb]
+<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [32.8Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [17Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [16.1Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [15.1Kb]
 
 
 Documentation
@@ -108,7 +108,7 @@ Also you may use inline bind
 Use: <code>2500</code> - default, <code>-1</code> for infinity<br>
 <br>
 <code>placement</code> - position (string).<br>
-Use: <code>'center'</code> - default, <code>'leftTop'</code>, <code>'centerTop'</code>, <code>'rightTop'</code>, <code>'leftBottom'</code>, <code>'centerBottom'</code>, <code>'rightBottom'</code><br>
+Use: <code>'center'</code> - default, <code>'leftTop'</code>, <code>'centerTop'</code>, <code>'rightTop'</code>, <code>'leftBottom'</code>, <code>'centerBottom'</code>, <code>'rightBottom'</code>, <code>'centerTopSlide'</code>, <code>'centerBottomSlide'</code>, <code>'leftTopSlide'</code>, <code>'leftBottomSlide'</code>, <code>'rightTopSlide'</code>, <code>'rightBottomSlide</code><br>
 <br>
 <code>type</code> - visual style (string).<br>
 Use: <code>'notify'</code> - default, <code>'alert'</code>, <code>'simple'</code>, <code>'dark'</code><br>
@@ -145,6 +145,10 @@ To change position, add additional class <code>class="hintModal_center"</code> o
 <h5>Parameters</h5>
 <code>topOffset</code> - top offset in px for dialog, useful if some elements on page have position: fixed (integer).<br>
 Use: <code>0</code>.<br>
+<code>top</code> - top offset for dialog, uses for <code>type:'modal'</code> (string).<br>
+Use: <code>'10%'</code>.<br>
+<code>type</code> - type of dialog, use <code>modal</code> if you want to show dialog not from top (string).<br>
+Use: <code>''</code> - default, <code>'modal'</code>.<br>
 <code>onOkBut</code> - code execution by clicking on OK button, contained in dialog (function).<br>
 Use: <code>function(){}</code>.<br>
 For work you need put an attribute to element - <code>data-dialogmodal-but="ok"</code>. <i>Dialog will close automatically</i><br>
