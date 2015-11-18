@@ -1,5 +1,5 @@
 /*
-popModal - 1.20 [01.10.15]
+popModal - 1.21 [18.11.15]
 Author: vadimsva
 Github: https://github.com/vadimsva/popModal
 */
@@ -610,6 +610,11 @@ Github: https://github.com/vadimsva/popModal
 		
 	};
 	$('.hintModal').hintModal();
+	document.addEventListener("DOMNodeInserted", function(event) {
+		if ($(event.target).hasClass('hintModal')) {
+			$('.hintModal').hintModal();
+		}
+	}, false);
 })(jQuery);
 
 
@@ -628,6 +633,8 @@ Github: https://github.com/vadimsva/popModal
 			init : function(params) {
 				var _defaults = {
 					topOffset: 0,
+					top: '10%',
+					type: '',
 					onOkBut: function() {return true;},
 					onCancelBut: function() {},
 					onLoad: function() {},
@@ -640,14 +647,22 @@ Github: https://github.com/vadimsva/popModal
 				$('.' + elemClass + ' .' + prevBut + ', .' + elemClass + ' .' + nextBut).off('click');
 				$('.' + elemClass).remove();
 
+				if (_options.type == '') {
+					_options.top = 0;
+				} else {
+					_options.top = 'calc(' + _options.top + ' + 60px)';
+				}
+				
 				var currentDialog = 0,
 				maxDialog = elem.length - 1,
-				dialogMain = $('<div class="' + elemClass + '" style="top:' + _options.topOffset + 'px"></div>'),
+				dialogMain = $('<div class="' + elemClass + ' ' + _options.type + '" style="top:' + _options.topOffset + 'px"></div>'),
+				dialogContainer = $('<div class="' + elemClass + '_container" style="top:' + _options.top + '"></div>'),
 				dialogTop = $('<div class="' + elemClass + '_top animated"></div>'),
 				dialogHeader = $('<div class="' + elemClass + '_header"></div>'),
 				dialogBody = $('<div class="' + elemClass + '_body animated"></div>'),
 				dialogCloseBut = $('<button type="button" class="close">&times;</button>');
-				dialogMain.append(dialogTop, dialogBody);
+				dialogMain.append(dialogContainer);
+				dialogContainer.append(dialogTop, dialogBody);
 				dialogTop.append(dialogHeader);
 				dialogHeader.append(dialogCloseBut);
 				dialogBody.append(elem[currentDialog].innerHTML);
@@ -658,8 +673,10 @@ Github: https://github.com/vadimsva/popModal
 				dialogHeader.append('<span>' + elem.find('.' + elemClass + '_header')[currentDialog].innerHTML + '</span>');
 				
 				$('body').append(dialogMain).addClass(elemClass + 'Open');
-				var getScrollBarWidth = dialogMain.outerWidth() - dialogMain[0].scrollWidth;
-				dialogTop.css({right:getScrollBarWidth + 'px'});
+				if (_options.type == '') {
+					var getScrollBarWidth = dialogMain.outerWidth() - dialogMain[0].scrollWidth;
+					dialogTop.css({right:getScrollBarWidth + 'px'});
+				}
 				
 				elemObj = $('.' + elemClass);
 				getAnimTime();
@@ -678,6 +695,9 @@ Github: https://github.com/vadimsva/popModal
 				
 				elemObj.addClass('open');
 				setTimeout(function() {
+					if (_options.type != '') {
+						dialogContainer.css({opacity:1});
+					}
 					dialogTop.addClass('fadeInTopBig');
 					dialogBody.addClass('fadeInTopBig');
 				}, animTime + 100);
@@ -814,6 +834,12 @@ Github: https://github.com/vadimsva/popModal
 		if ($(this).attr('data-topoffset') !== undefined) {
 			params['topOffset'] = $(this).attr('data-topoffset');
 		}
+		if ($(this).attr('data-top') !== undefined) {
+			params['top'] = $(this).attr('data-top');
+		}
+		if ($(this).attr('data-topoffset') !== undefined) {
+			params['type'] = $(this).attr('data-type');
+		}
 		$(elemBind).dialogModal(params);
 	});
 
@@ -941,6 +967,11 @@ Github: https://github.com/vadimsva/popModal
 		
 	};
 	$('.titleModal').titleModal();
+	document.addEventListener("DOMNodeInserted", function(event) {
+		if ($(event.target).hasClass('titleModal')) {
+			$('.titleModal').titleModal();
+		}
+	}, false);
 })(jQuery);
 
 
@@ -990,6 +1021,11 @@ Github: https://github.com/vadimsva/popModal
 				elemObj.addClass('open');
 				setTimeout(function() {
 					dialogBody.addClass('fadeInTopBig');
+					
+					setTimeout(function() {
+						dialogBody.removeClass('fadeInTopBig').addClass('open');
+					}, animTime + 100);
+					
 				}, animTime + 100);
 				
 				bindFooterButtons();
@@ -1018,6 +1054,28 @@ Github: https://github.com/vadimsva/popModal
 						confirmModalClose();
 						$(this).off('click');
 					});
+					
+					
+					function needConfirm() {
+						dialogBody.addClass('needConfirm');
+						setTimeout(function() {
+							dialogBody.removeClass('needConfirm');
+						}, animTime + 100);
+					}
+					
+					elemObj.on('click', function(event) {
+						var target = $(event.target);
+						if (!target.parents().andSelf().is(dialogBody)) {	
+							needConfirm();
+						}
+					});
+					
+					$('html').on('keydown.' + elemClass + 'Event', function(event) {
+						if (event.keyCode == 27) {
+							needConfirm();
+						}
+					});
+					
 				}
 				
 			},
