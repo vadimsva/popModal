@@ -21,10 +21,10 @@ body {background:#f1f1f1}
 #version {background:transparent;color:#555;font-weight:500}
 #version span {margin-left:10px;color:#999;font-size:12px}
 
-.exampleContainer {margin:-1px 0 30px}
-.exampleContainer .exampleLive {border-top:1px solid #ddd;padding:20px;background:#fafafa}
+.exampleContainer {margin:-1px 0 50px}
+.exampleContainer .exampleLive {padding:20px;font-size:14px}
 .exampleContainer .exampleLive:after {content:'';clear:both;display:table}
-.exampleContainer .exampleLive .exampleLiveTitle {color:#666;font-size:13px;float:right;line-height:34px}
+.exampleContainer .exampleLive .exampleLiveTitle {border-left:5px solid #0084ff;margin:-20px -20px 20px;padding:10px 20px 10px 15px;font-size:20px;text-transform:uppercase}
 .exampleContainer .exampleCode {background:#2b2f3b;padding:20px;overflow:auto}
 .exampleContainer .exampleCode pre {line-height:0}
 .exampleContainer .exampleCode code {white-space:pre-line}
@@ -63,7 +63,7 @@ body {background:#f1f1f1}
 .tabs_container > .tab.active {border-color:#007ec4;color:#000}
 .tabs_container > .tab:hover {color:#000}
 .page_container {}
-.page_container > .page {display:none;padding:0 0 30px}
+.page_container > .page {display:none}
 .page_container > .page.active {display:block}
 
 
@@ -79,7 +79,7 @@ body {background:#f1f1f1}
 <div id="page">
 
 	<div id="copyrightBlock">
-		<div id="version" title="Current version/date">1.20<span>[01.10.15]</span></div>
+		<div id="version" title="Current version/date">1.21<span>[18.11.15]</span></div>
 		<a href="https://github.com/vadimsva/popModal/releases" id="downloadLink">Download</a>
 		<a href="https://github.com/vadimsva/popModal" id="gitHubLink">GitHub Repo</a>
 	</div>
@@ -214,6 +214,8 @@ body {background:#f1f1f1}
 					<div class="exampleCode"><pre><code>
 						<p><span class="text">$('</span><span class="tag">#content</span><span class="text">').dialogModal(</span>{</p>
 						<p class="tab"><span class="key">topOffset</span> : <span class="val">0</span>,</p>
+						<p class="tab"><span class="key">top</span> : <span class="val">'10%'</span>,</p>
+						<p class="tab"><span class="key">type</span> : <span class="val">''</span>,</p>
 						<p class="tab"><span class="key">onOkBut</span> : <span class="val">function() {}</span>,</p>
 						<p class="tab"><span class="key">onCancelBut</span> : <span class="val">function() {}</span>,</p>
 						<p class="tab"><span class="key">onLoad</span> : <span class="val">function(<span class="var2">el</span>, <span class="var2">current</span>) {}</span>,</p>
@@ -233,10 +235,10 @@ body {background:#f1f1f1}
 				<div class="exampleContainer">
 					<div class="exampleLive">
 						<div class="exampleLiveTitle">inline bind</div>
-						<button id="dialogModal_ex2" class="btn btn-primary" data-dialogmodal-bind=".dialog_content" data-topoffset="0">Example</button>
+						<button id="dialogModal_ex2" class="btn btn-primary" data-dialogmodal-bind=".dialog_content" data-topoffset="0" data-top="10%" data-type="modal">Example</button>
 					</div>
 					<div class="exampleCode"><pre><code>
-						<p>&lt;<span class="tag">button</span> <span class="key">data-dialogmodal-bind</span>=<span class="val">"#content"</span> <span class="key">data-topoffset</span>=<span class="val">"0"</span>&gt;<span class="text">example</span>&lt;/<span class="tag">button</span>&gt;</p>
+						<p>&lt;<span class="tag">button</span> <span class="key">data-dialogmodal-bind</span>=<span class="val">"#content"</span> <span class="key">data-topoffset</span>=<span class="val">"0"</span> <span class="key">data-top</span>=<span class="val">"10%"</span> <span class="key">data-type</span>=<span class="val">"modal"</span>&gt;<span class="text">example</span>&lt;/<span class="tag">button</span>&gt;</p>
 					</code></pre></div>
 				</div>
 				
@@ -256,10 +258,10 @@ body {background:#f1f1f1}
 				<div class="exampleContainer">
 					<div class="exampleLive">
 						<div class="exampleLiveTitle">with ellipsis text</div>
-						<div class="titleModal" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:200px">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</div>
+						<div class="titleModal light" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:200px">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</div>
 					</div>
 					<div class="exampleCode"><pre><code>
-						<p>&lt;<span class="tag">div</span> <span class="key">style</span>=<span class="val">"overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:200px"</span> <span class="key">class</span>=<span class="val">"titleModal"</span> <span class="key">data-placement</span>=<span class="val">"bottom"</span>&gt;<span class="text">Lorem Ipsum is simply dummy text</span>&lt;/<span class="tag">div</span>&gt;</p>
+						<p>&lt;<span class="tag">div</span> <span class="key">style</span>=<span class="val">"overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:200px"</span> <span class="key">class</span>=<span class="val">"titleModal light"</span> <span class="key">data-placement</span>=<span class="val">"bottom"</span>&gt;<span class="text">Lorem Ipsum is simply dummy text</span>&lt;/<span class="tag">div</span>&gt;</p>
 					</code></pre></div>
 				</div>
 				
@@ -350,6 +352,7 @@ body {background:#f1f1f1}
 		Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 	</div>
 	<div class="dialogModal_footer">
+		<button type="button" class="btn btn-default btn-left" data-dialogmodal-but="prev">Back</button>
 		<button type="button" class="btn btn-primary" data-dialogmodal-but="next">Next</button>
 		<button type="button" class="btn btn-default" data-dialogmodal-but="cancel">Cancel</button>
 	</div>
@@ -431,6 +434,8 @@ $(function(){
 	$('#dialogModal_ex1').click(function(){
 		$('.dialog_content').dialogModal({
 			topOffset: 0,
+			top: '10%',
+			type: '',
 			onOkBut: function() {},
 			onCancelBut: function() {},
 			onLoad: function(el, current) {},
@@ -487,6 +492,7 @@ $(function(){
 		
 	};
 	$('html').tab();
+	
 })(jQuery);
 	
 });
