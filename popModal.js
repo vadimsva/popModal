@@ -1,5 +1,5 @@
 /*
-popModal - 1.21 [18.11.15]
+popModal - 1.22 [18.03.16]
 Author: vadimsva
 Github: https://github.com/vadimsva/popModal
 */
@@ -136,7 +136,7 @@ Github: https://github.com/vadimsva/popModal
 								popModalClose();
 							}
               var target = $(event.target);
-							if (!target.parents().andSelf().is('.' + elemClass) && !target.parents().andSelf().is(elem)) {
+							if (!target.parents().addBack().is('.' + elemClass) && !target.parents().addBack().is(elem)) {
 								var zIndex = parseInt(target.parents().filter(function() {
 									return $(this).css('zIndex') !== 'auto';
 								}).first().css('zIndex'));
@@ -887,7 +887,7 @@ Github: https://github.com/vadimsva/popModal
 						if (elemObj) {
 							elemObj.remove();
 						}
-						elem.append(titleModal.append(titleAttr));
+						elem.after(titleModal.append(titleAttr)); //elem.append
 						getPlacement(placement);
 					}
 				});
@@ -906,26 +906,19 @@ Github: https://github.com/vadimsva/popModal
 				
 				function getPlacement(placement) {
 					elemObj = $('.' + elemClass + '_container');
-					var eLeft, eTop,
+					var eLeft = elem.position().left,
+					eTop = elem.position().top,
 					eMLeft = elem.css('marginLeft'),
 					eMTop = elem.css('marginTop'),
-					eMBottom = elem.css('marginBottom'),
 					eHeight = elem.outerHeight(),
 					eWidth = elem.outerWidth(),
-					eObjMTop = elemObj.css('marginTop'),
 					eObjWidth = elemObj.outerWidth(),
 					eObjHeight = elemObj.outerHeight();
-					if (elem.css('position') == 'fixed' || elem.css('position') == 'absolute') {
-						eLeft = 0;
-						eTop = 0;
-					} else {
-						eLeft = elem.position().left;
-						eTop = elem.position().top;
-					}
+
 					switch (placement) {
 						case 'bottom':
 							elemObj.css({
-								marginTop: parseInt(eObjMTop) - parseInt(eMBottom) + 'px',
+								top: eTop + parseInt(eMTop) + eHeight - 5 + 'px',
 								left: eLeft + parseInt(eMLeft) + (eWidth - eObjWidth) / 2  + 'px'
 							}).addClass(effectIn + 'Bottom');	
 						break;
@@ -1065,7 +1058,7 @@ Github: https://github.com/vadimsva/popModal
 					
 					elemObj.on('click', function(event) {
 						var target = $(event.target);
-						if (!target.parents().andSelf().is(dialogBody)) {	
+						if (!target.parents().addBack().is(dialogBody)) {	
 							needConfirm();
 						}
 					});
