@@ -1,8 +1,9 @@
 /*
-popModal - 1.22 [18.03.16]
+popModal - 1.23 [11.04.16]
 Author: vadimsva
 Github: https://github.com/vadimsva/popModal
 */
+$(function() {
 /* popModal */
 (function($) {
 	$.fn.popModal = function(method) {
@@ -391,6 +392,9 @@ Github: https://github.com/vadimsva/popModal
 		}
 		if ($(this).attr('data-inline') !== undefined) {
 			params['inline'] = (/^true$/i).test($(this).attr('data-inline'));
+		}
+		if ($(this).attr('data-asmenu') !== undefined) {
+			params['asMenu'] = (/^false$/i).test($(this).attr('data-asmenu'));
 		}
 		if ($(this).attr('data-beforeloading-content') !== undefined) {
 			params['beforeLoadingContent'] = $(this).attr('data-beforeloading-content');
@@ -1123,3 +1127,4 @@ Github: https://github.com/vadimsva/popModal
     }
   };
 })(jQuery);
+});
