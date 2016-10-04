@@ -76,6 +76,20 @@ Use: <code>function(){}</code><br>
 Use: <code>$('html').popModal("hide");</code><br>
 <br>
 
+<h5>Triggers</h5>
+<code>load</code> - execution before shows.<br>
+Use: <code>$(el).on('load', function() {});</code><br>
+<br>
+<code>close</code> - execution after closed.<br>
+Use: <code>$(el).on('close', function() {});</code><br>
+<br>
+<code>okbut</code> - execution by clicking on OK button.<br>
+Use: <code>$(el).on('okbut', function() {});</code><br>
+<br>
+<code>cancelbut</code> - execution by clicking on Cancel button.<br>
+Use: <code>$(el).on('close', function() {});</code><br>
+<br>
+
 <h5>Notes</h5>
 You may use external click function for element
 <pre>
@@ -118,6 +132,11 @@ Use: <code>true</code> - default, <code>false</code><br>
 <br>
 <code>onClose</code> - code execution after popup closed (function).<br>
 Use: <code>function(){}</code><br>
+
+<h5>Triggers</h5>
+<code>close</code> - execution after closed.<br>
+Use: <code>$(el).on('close', function() {});</code><br>
+<br>
 
 <h5>Notes</h5>
 <i>You can close this notification popup, by clicking on any place, close button or press ESC.</i><br>
@@ -173,6 +192,24 @@ You can use parameters <code>el</code> and <code>current</code> for example to c
 <code>hide</code> - for close dialogModal.<br>
 Use: <code>$('html').dialogModal("hide");</code><br>
 <br>
+
+<h5>Triggers</h5>
+<code>load</code> - execution before dialog shows.<br>
+Use: <code>$(el).on('load', function() {});</code><br>
+<br>
+<code>close</code> - execution after dialog closed.<br>
+Use: <code>$(el).on('close', function() {});</code><br>
+<br>
+<code>okbut</code> - execution by clicking on OK button.<br>
+Use: <code>$(el).on('okbut', function() {});</code><br>
+<br>
+<code>cancelbut</code> - execution by clicking on Cancel button.<br>
+Use: <code>$(el).on('close', function() {});</code><br>
+<br>
+<code>change</code> - execution after dialog page change.<br>
+Use: <code>$(el).on('change', function() {});</code><br>
+<br>
+
 
 <h5>Notes</h5>
 You may use external click function for element
@@ -236,6 +273,20 @@ Use: <code>function(){}</code><br>
 <h5>Methods</h5>
 <code>hide</code> - for close confirmModal.<br>
 Use: <code>$('html').confirmModal("hide");</code><br>
+<br>
+
+<h5>Triggers</h5>
+<code>load</code> - execution before shows.<br>
+Use: <code>$(el).on('load', function() {});</code><br>
+<br>
+<code>close</code> - execution after closed.<br>
+Use: <code>$(el).on('close', function() {});</code><br>
+<br>
+<code>okbut</code> - execution by clicking on OK button.<br>
+Use: <code>$(el).on('okbut', function() {});</code><br>
+<br>
+<code>cancelbut</code> - execution by clicking on Cancel button.<br>
+Use: <code>$(el).on('close', function() {});</code><br>
 <br>
 
 <h5>Notes</h5>
