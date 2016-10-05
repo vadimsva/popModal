@@ -29,64 +29,49 @@ Documentation
 <p><i>$(el).popModal({param1 : value1, param2 : value2, ...});</i></p>
 
 <h5>Parameters</h5>
-<code>html</code> - static html, dinamic html, string, function (object, string, function). Use function if you want load content via ajax.<br>
+- <code><b>html</b></code> - static html, dinamic html, string, function (object, string, function). Use function if you want load content via ajax.<br>
 Use: <code>el.append(html)</code>, <code>$(el).html()</code>, <code>'text'</code> or <code>function(){}</code><br>
-<br>
-<code>placement</code> - popup position (string).<br>
+- <code><b>placement</b></code> - popup position (string).<br>
 Use: <code>'bottomLeft'</code> - default, <code>'bottomCenter'</code>, <code>'bottomRight'</code>, <code>'leftTop'</code>, <code>'leftCenter'</code>, <code>'rightTop'</code>, <code>'rightCenter'</code><br>
-<br>
-<code>showCloseBut</code> - show/hide close button on popup (boolean).<br>
+- <code><b>showCloseBut</b></code> - show/hide close button on popup (boolean).<br>
 Use: <code>true</code> - default, <code>false</code><br>
-<br>
-<code>onDocumentClickClose</code> - close popup when click on any place (boolean).<br>
+- <code><b>onDocumentClickClose</b></code> - close popup when click on any place (boolean).<br>
 Use: <code>true</code> - default, <code>false</code><br>
-<br>
-<code>onDocumentClickClosePrevent</code> - prevent close popup when click on specified elements (string).<br>
+- <code><b>onDocumentClickClosePrevent</b></code> - prevent close popup when click on specified elements (string).<br>
 Use: <code>el</code> or <code>'.el'</code><br>
-<br>
-<code>overflowContent</code> - overflow content (boolean).<br>
+- <code><b>overflowContent</b></code> - overflow content (boolean).<br>
 Use: <code>false</code> - default, <code>true</code><br>
-<br>
-<code>inline</code> - create popup relative element (boolean).<br>
+- <code><b>inline</b></code> - create popup relative element (boolean).<br>
 Use: <code>true</code> - default, <code>false</code><br>
-<br>
-<code>asMenu</code> - use popup for show as dropdown menu (boolean).<br>
+- <code><b>asMenu</b></code> - use popup for show as dropdown menu (boolean).<br>
 Use: <code>false</code> - default, <code>true</code><br>
-<br>
-<code>beforeLoadingContent</code> - show text, before loading content (string).<br>
+- <code><b>beforeLoadingContent</b></code> - show text, before loading content (string).<br>
 Use: <code>'Please, waiting...'</code> - default<br>
-<br>
-<code>onOkBut</code> - code execution by clicking on OK button, contained in popup (function).<br>
+- <code><b>onOkBut</b></code> - code execution by clicking on OK button, contained in popup (function).<br>
 Use: <code>function(){}</code>.<br>
 For work you need put an attribute to element - <code>data-popmodal-but="ok"</code>. <i>Popup will close automatically</i><br>
-<br>
-<code>onCancelBut</code> - code execution by clicking on Cancel button, contained in popup (function).<br>
+- <code><b>onCancelBut</b></code> - code execution by clicking on Cancel button, contained in popup (function).<br>
 Use: <code>function(){}</code>.<br>
 For work you need put an attribute to element - <code>data-popmodal-but="cancel"</code>. <i>Popup will close automatically</i><br>
-<br>
-<code>onLoad</code> - code execution before popup shows (function).<br>
+- <code><b>onLoad</b></code> - code execution before popup shows (function).<br>
 Use: <code>function(){}</code><br>
-<br>
-<code>onClose</code> - code execution after popup closed (function).<br>
+- <code><b>onClose</b></code> - code execution after popup closed (function).<br>
 Use: <code>function(){}</code><br>
 <br>
 
 <h5>Methods</h5>
-<code>hide</code> - for close popModal.<br>
+- <code><b>hide</b></code> - for close popModal.<br>
 Use: <code>$('html').popModal("hide");</code><br>
 <br>
 
 <h5>Triggers</h5>
-<code>load</code> - execution before shows.<br>
+- <code><b>load</b></code> - execution before shows.<br>
 Use: <code>$(el).on('load', function() {});</code><br>
-<br>
-<code>close</code> - execution after closed.<br>
+- <code><b>close</b></code> - execution after closed.<br>
 Use: <code>$(el).on('close', function() {});</code><br>
-<br>
-<code>okbut</code> - execution by clicking on OK button.<br>
+- <code><b>okbut</b></code> - execution by clicking on OK button.<br>
 Use: <code>$(el).on('okbut', function() {});</code><br>
-<br>
-<code>cancelbut</code> - execution by clicking on Cancel button.<br>
+- <code><b>cancelbut</b></code> - execution by clicking on Cancel button.<br>
 Use: <code>$(el).on('close', function() {});</code><br>
 <br>
 
@@ -118,26 +103,21 @@ Also you may use inline bind
 <p><i>$(content).notifyModal({param1 : value1, param2 : value2, ...});</i></p>
 
 <h5>Parameters</h5>
-<code>duration</code> - duration for show notification in ms (integer)<br>
+- <code><b>duration</b></code> - duration for show notification in ms (integer)<br>
 Use: <code>2500</code> - default, <code>-1</code> for infinity<br>
-<br>
-<code>placement</code> - position (string).<br>
+- <code><b>placement</b></code> - position (string).<br>
 Use: <code>'center'</code> - default, <code>'leftTop'</code>, <code>'centerTop'</code>, <code>'rightTop'</code>, <code>'leftBottom'</code>, <code>'centerBottom'</code>, <code>'rightBottom'</code>, <code>'centerTopSlide'</code>, <code>'centerBottomSlide'</code>, <code>'leftTopSlide'</code>, <code>'leftBottomSlide'</code>, <code>'rightTopSlide'</code>, <code>'rightBottomSlide</code><br>
-<br>
-<code>type</code> - visual style (string).<br>
+- <code><b>type</b></code> - visual style (string).<br>
 Use: <code>'notify'</code> - default, <code>'alert'</code>, <code>'simple'</code>, <code>'dark'</code><br>
-<br>
-<code>overlay</code> - show notification popup on top of the content (boolean).<br>
+- <code><b>overlay</b></code> - show notification popup on top of the content (boolean).<br>
 Use: <code>true</code> - default, <code>false</code><br>
-<br>
-<code>icon</code> - show icon (boolean).<br>
+- <code><b>icon</b></code> - show icon (boolean).<br>
 Use: <code>false</code> - default, <code>true</code><br>
-<br>
-<code>onClose</code> - code execution after popup closed (function).<br>
+- <code><b>onClose</b></code> - code execution after popup closed (function).<br>
 Use: <code>function(){}</code><br>
 
 <h5>Triggers</h5>
-<code>close</code> - execution after closed.<br>
+- <code><b>close</b></code> - execution after closed.<br>
 Use: <code>$(el).on('close', function() {});</code><br>
 <br>
 
@@ -165,51 +145,43 @@ To change position, add additional class <code>class="hintModal_center"</code> o
 <p><i>$(content).dialogModal({param1 : value1, param2 : value2, ...});</i></p>
 
 <h5>Parameters</h5>
-<code>topOffset</code> - top offset for dialog, useful if some elements on page have position: fixed (integer, string).<br>
+- <code><b>topOffset</b></code> - top offset for dialog, useful if some elements on page have position: fixed (integer, string).<br>
 Use: <code>0</code> - default, <code>'10%'</code>.<br>
-<code>top</code> - top offset for dialog, uses for <code>type:'modal'</code> (integer, string).<br>
+- <code><b>top</b></code> - top offset for dialog, uses for <code>type:'modal'</code> (integer, string).<br>
 Use: <code>0</code> - default, <code>'10%'</code>.<br>
-<code>type</code> - type of dialog (string).<br>
+- <code><b>type</b></code> - type of dialog (string).<br>
 Use: <code>''</code> - default, <code>'modal'</code> to show dialog not from top.<br>
-<code>onOkBut</code> - code execution by clicking on OK button, contained in dialog (function).<br>
+- <code><b>onOkBut</b></code> - code execution by clicking on OK button, contained in dialog (function).<br>
 Use: <code>function(){}</code>.<br>
 For work you need put an attribute to element - <code>data-dialogmodal-but="ok"</code>. <i>Dialog will close automatically</i><br>
-<br>
-<code>onCancelBut</code> - code execution by clicking on Cancel button, contained in dialog (function).<br>
+- <code><b>onCancelBut</b></code> - code execution by clicking on Cancel button, contained in dialog (function).<br>
 Use: <code>function(){}</code>.<br>
 For work you need put an attribute to element - <code>data-dialogmodal-but="cancel"</code>. <i>Dialog will close automatically</i><br>
-<br>
-<code>onLoad</code> - code execution before dialog shows (function).<br>
+- <code><b>onLoad</b></code> - code execution before dialog shows (function).<br>
 Use: <code>function(el, current){}</code><br>
 You can use parameters <code>el</code> and <code>current</code> for example to change html.<br>
-<br>
-<code>onClose</code> - code execution after dialog closed (function).<br>
+- <code><b>onClose</b></code> - code execution after dialog closed (function).<br>
 Use: <code>function(){}</code><br>
-<br>
-<code>onChange</code> - code execution after dialog page change (function).<br>
+- <code><b>onChange</b></code> - code execution after dialog page change (function).<br>
 Use: <code>function(el, current){}</code><br>
 You can use parameters <code>el</code> and <code>current</code> for example to change html.<br>
 <br>
 
 <h5>Methods</h5>
-<code>hide</code> - for close dialogModal.<br>
+- <code><b>hide</b></code> - for close dialogModal.<br>
 Use: <code>$('html').dialogModal("hide");</code><br>
 <br>
 
 <h5>Triggers</h5>
-<code>load</code> - execution before dialog shows.<br>
+- <code><b>load</b></code> - execution before dialog shows.<br>
 Use: <code>$(el).on('load', function() {});</code><br>
-<br>
-<code>close</code> - execution after dialog closed.<br>
+- <code><b>close</b></code> - execution after dialog closed.<br>
 Use: <code>$(el).on('close', function() {});</code><br>
-<br>
-<code>okbut</code> - execution by clicking on OK button.<br>
+- <code><b>okbut</b></code> - execution by clicking on OK button.<br>
 Use: <code>$(el).on('okbut', function() {});</code><br>
-<br>
-<code>cancelbut</code> - execution by clicking on Cancel button.<br>
+- <code><b>cancelbut</b></code> - execution by clicking on Cancel button.<br>
 Use: <code>$(el).on('close', function() {});</code><br>
-<br>
-<code>change</code> - execution after dialog page change.<br>
+- <code><b>change</b></code> - execution after dialog page change.<br>
 Use: <code>$(el).on('change', function() {});</code><br>
 <br>
 
@@ -256,41 +228,35 @@ You can use another style for titleModal, add <code>class="light"</code> to elem
 <p><i>$(content).confirmModal({param1 : value1, param2 : value2, ...});</i></p>
 
 <h5>Parameters</h5>
-<code>topOffset</code> - top offset for dialog, useful if some elements on page have position: fixed (integer, string).<br>
+- <code><b>topOffset</b></code> - top offset for dialog, useful if some elements on page have position: fixed (integer, string).<br>
 Use: <code>0</code> - default, <code>'10%'</code>.<br>
-<code>top</code> - top offset for dialog, uses for <code>type:'modal'</code> (integer, string).<br>
+- <code><b>top</b></code> - top offset for dialog, uses for <code>type:'modal'</code> (integer, string).<br>
 Use: <code>0</code> - default, <code>'10%'</code>.<br>
-<code>onOkBut</code> - code execution by clicking on OK button, contained in dialog (function).<br>
+- <code><b>onOkBut</b></code> - code execution by clicking on OK button, contained in dialog (function).<br>
 Use: <code>function(){}</code>.<br>
 For work you need put an attribute to element - <code>data-confirmmodal-but="ok"</code>. <i>Dialog will close automatically</i><br>
-<br>
-<code>onCancelBut</code> - code execution by clicking on Cancel button, contained in dialog (function).<br>
+- <code><b>onCancelBut</b></code> - code execution by clicking on Cancel button, contained in dialog (function).<br>
 Use: <code>function(){}</code>.<br>
 For work you need put an attribute to element - <code>data-confirmmodal-but="cancel"</code>. <i>Dialog will close automatically</i><br>
-<br>
-<code>onLoad</code> - code execution before dialog shows (function).<br>
+- <code><b>onLoad</b></code> - code execution before dialog shows (function).<br>
 Use: <code>function(){}</code><br>
-<br>
-<code>onClose</code> - code execution after dialog closed (function).<br>
+- <code><b>onClose</b></code> - code execution after dialog closed (function).<br>
 Use: <code>function(){}</code><br>
 <br>
 
 <h5>Methods</h5>
-<code>hide</code> - for close confirmModal.<br>
+- <code><b>hide</b></code> - for close confirmModal.<br>
 Use: <code>$('html').confirmModal("hide");</code><br>
 <br>
 
 <h5>Triggers</h5>
-<code>load</code> - execution before shows.<br>
+- <code><b>load</b></code> - execution before shows.<br>
 Use: <code>$(el).on('load', function() {});</code><br>
-<br>
-<code>close</code> - execution after closed.<br>
+- <code><b>close</b></code> - execution after closed.<br>
 Use: <code>$(el).on('close', function() {});</code><br>
-<br>
-<code>okbut</code> - execution by clicking on OK button.<br>
+- <code><b>okbut</b></code> - execution by clicking on OK button.<br>
 Use: <code>$(el).on('okbut', function() {});</code><br>
-<br>
-<code>cancelbut</code> - execution by clicking on Cancel button.<br>
+- <code><b>cancelbut</b></code> - execution by clicking on Cancel button.<br>
 Use: <code>$(el).on('close', function() {});</code><br>
 <br>
 
