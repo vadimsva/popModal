@@ -1,5 +1,5 @@
 /*
-popModal - 1.23 [11.04.16]
+popModal - 1.24 [05.10.16]
 Author: vadimsva
 Github: https://github.com/vadimsva/popModal
 */
@@ -9,9 +9,9 @@ $(function() {
 	$.fn.popModal = function(method) {
 		var elem = $(this),
 		elemObj,
-		isFixed = '',
 		closeBut = '',
 		elemClass = 'popModal',
+		elemData = 'data-popmodal',
 		overflowContentClass = '',
 		asMenuClass,
 		_options,
@@ -45,17 +45,14 @@ $(function() {
 					onClose: function() {}
 				};
 				_options = $.extend(_defaults, params);
-				
-				if ( $('body').find('.' + elemClass).length !== 0 && $('body').find('.' + elemClass).attr('data-popmodal_id') == elem.attr('data-popmodal_id') ) {
+
+				if ( $('body').find('div[' + elemData + ']').length !== 0 && $('body').find('div[' + elemData + ']').attr(elemData + '_id') == elem.attr(elemData + '_id') ) {
 					popModalClose();
 				} else {
 					$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
 					$('.' + elemClass + '_source').replaceWith($('.' + elemClass + '_content').children());
 					$('.' + elemClass).remove();
 					
-					if (elem.css('position') == 'fixed') {
-						isFixed = 'position:fixed;';
-					}
 					if (_options.asMenu) {
 						asMenuClass = ' ' + elemClass + '_asMenu';
 					} else {
@@ -65,15 +62,13 @@ $(function() {
 						}
 						if (_options.overflowContent) {
 							overflowContentClass = ' ' + elemClass + '_contentOverflow';
-						} else {
-							overflowContentClass = '';
 						}
 					}
 					
 					currentID = new Date().getMilliseconds();
-					elem.attr('data-popmodal_id', currentID);
+					elem.attr(elemData + '_id', currentID);
 					
-					var tooltipContainer = $('<div class="' + elemClass + ' animated" style="' + isFixed + '" data-popmodal_id="' + currentID + '"></div>');
+					var tooltipContainer = $('<div class="' + elemClass + ' animated" style="' + (elem.css('position') == 'fixed' ? 'position:fixed;' : '') + '" ' + elemData + '_id="' + currentID + '" ' + elemData + '="open"></div>');
 					var tooltipContent = $('<div class="' + elemClass + '_content' + overflowContentClass + asMenuClass + '"></div>');
 					tooltipContainer.append(closeBut, tooltipContent);
 					
@@ -82,12 +77,12 @@ $(function() {
 						tooltipContent.append(beforeLoadingContent);
 						_options.html(function(loadedContent) {
 							tooltipContent.empty().append(loadedContent);
-							elemObj = $('.' + elemClass);
+							elemObj = $('div[' + elemData + ']');
 							getPlacement();
 						});
 					} else {
 						if ($.type(_options.html) == 'object') {
-							_options.html.after($('<div class="popModal_source"></div>'));
+							_options.html.after($('<div class="' + elemClass + '_source"></div>'));
 						}
 						tooltipContent.append(_options.html);
 					}
@@ -101,7 +96,7 @@ $(function() {
 						$('body').append(tooltipContainer);
 					}
 					
-					elemObj = $('.' + elemClass);
+					elemObj = $('div[' + elemData + ']');
 					var elemObjFooter = elemObj.find('.' + elemClass + '_footer');
 					if (elemObjFooter.length != 0) {
 						elemObj.find('.' + elemClass + '_content').css({marginBottom: elemObjFooter.outerHeight() + 15 + 'px'});
@@ -170,12 +165,12 @@ $(function() {
 						$(this).off('click');
 					});
 					
-					elemObj.find('[data-popmodal-but="close"]').on('click', function() {
+					elemObj.find('[' + elemData + '-but="close"]').on('click', function() {
 						popModalClose();
 						$(this).off('click');
 					});
 
-					elemObj.find('[data-popmodal-but="ok"]').on('click', function(event) {
+					elemObj.find('[' + elemData + '-but="ok"]').on('click', function(event) {
 						var ok;
 						if (_options.onOkBut && $.isFunction(_options.onOkBut)) {
 							ok = _options.onOkBut(event);
@@ -187,7 +182,7 @@ $(function() {
 						$(_options.html).trigger('okbut');
 					});
 
-					elemObj.find('[data-popmodal-but="cancel"]').on('click', function() {
+					elemObj.find('[' + elemData + '-but="cancel"]').on('click', function() {
 						if (_options.onCancelBut && $.isFunction(_options.onCancelBut)) {
 							_options.onCancelBut();
 						}
@@ -335,7 +330,8 @@ $(function() {
 		}
 		
 		function popModalClose() {
-			elemObj = $('.' + elemClass);
+			elemObj = $('div[' + elemData + ']');
+			elem.removeAttr(elemData + '_id');
 			if (elemObj.length) {
 				reverseEffect();
 				getAnimTime();
@@ -418,7 +414,6 @@ $(function() {
 		var elem = $(this),
 		elemObj,
 		elemClass = 'notifyModal',
-		onTopClass = '',
 		_options,
 		animTime;
 		
@@ -429,16 +424,13 @@ $(function() {
 					placement: 'center',
 					type: 'notify',
 					overlay : true,
+					icon: false,
 					onClose: function() {}
 				};
 				_options = $.extend(_defaults, params);
 				
-				if (_options.overlay) {
-					onTopClass = 'overlay';
-				}
-				
 				$('.' + elemClass).remove();
-				var notifyContainer = $('<div class="' + elemClass + ' ' + _options.placement + ' ' + onTopClass + ' ' + _options.type + '"></div>');
+				var notifyContainer = $('<div class="' + elemClass + ' ' + _options.placement + ' ' + (_options.overlay ? 'overlay' : '') + ' ' + _options.type + ' ' + (_options.icon ? 'icon' : '') + '"></div>');
 				var notifyContent = $('<div class="' + elemClass + '_content"></div>');
 				var closeBut = $('<button type="button" class="close">&times;</button>');
 				if (elem[0] === undefined) {
@@ -478,6 +470,7 @@ $(function() {
 				if (_options.onClose && $.isFunction(_options.onClose)) {
 					_options.onClose();
 				}
+				elemObj.trigger('close');
 			}, animTime);
 		}
 
@@ -637,7 +630,7 @@ $(function() {
 			init : function(params) {
 				var _defaults = {
 					topOffset: 0,
-					top: '10%',
+					top: 0,
 					type: '',
 					onOkBut: function() {return true;},
 					onCancelBut: function() {},
@@ -651,16 +644,14 @@ $(function() {
 				$('.' + elemClass + ' .' + prevBut + ', .' + elemClass + ' .' + nextBut).off('click');
 				$('.' + elemClass).remove();
 
-				if (_options.type == '') {
-					_options.top = 0;
-				} else {
+				if (_options.type != '') {
 					_options.top = 'calc(' + _options.top + ' + 60px)';
 				}
 				
 				var currentDialog = 0,
 				maxDialog = elem.length - 1,
-				dialogMain = $('<div class="' + elemClass + ' ' + _options.type + '" style="top:' + _options.topOffset + 'px"></div>'),
-				dialogContainer = $('<div class="' + elemClass + '_container" style="top:' + _options.top + '"></div>'),
+				dialogMain = $('<div class="' + elemClass + ' ' + _options.type + '" style="top:' + (isNaN(_options.topOffset) ? _options.topOffset : _options.topOffset + 'px') + '"></div>'),
+				dialogContainer = $('<div class="' + elemClass + '_container" style="top:' + (isNaN(_options.top) ? _options.top : _options.top + 'px') + '"></div>'),
 				dialogTop = $('<div class="' + elemClass + '_top animated"></div>'),
 				dialogHeader = $('<div class="' + elemClass + '_header"></div>'),
 				dialogBody = $('<div class="' + elemClass + '_body animated"></div>'),
@@ -678,7 +669,8 @@ $(function() {
 				
 				$('body').append(dialogMain).addClass(elemClass + 'Open');
 				if (_options.type == '') {
-					var getScrollBarWidth = dialogMain.outerWidth() - dialogMain[0].scrollWidth;
+					var getScrollBarWidth = dialogMain.outerWidth() - dialogContainer[0].scrollWidth;
+					console.log(getScrollBarWidth)
 					dialogTop.css({right:getScrollBarWidth + 'px'});
 				}
 				
@@ -891,7 +883,7 @@ $(function() {
 						if (elemObj) {
 							elemObj.remove();
 						}
-						elem.after(titleModal.append(titleAttr)); //elem.append
+						elem.after(titleModal.append(titleAttr));
 						getPlacement(placement);
 					}
 				});
@@ -985,6 +977,7 @@ $(function() {
 			init : function(params) {
 				var _defaults = {
 					topOffset: 0,
+					top: 0,
 					onOkBut: function() {return true;},
 					onCancelBut: function() {},
 					onLoad: function() {},
@@ -995,8 +988,8 @@ $(function() {
 				$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
 				$('.' + elemClass).remove();
 
-				var	dialogMain = $('<div class="' + elemClass + '" style="top:' + _options.topOffset + 'px"></div>'),
-				dialogBody = $('<div class="' + elemClass + '_body animated"></div>');
+				var	dialogMain = $('<div class="' + elemClass + '" style="top:' + (isNaN(_options.topOffset) ? _options.topOffset : _options.topOffset + 'px') + '"></div>'),
+				dialogBody = $('<div class="' + elemClass + '_body animated' + (_options.top != 0 ? ' modal' : '' ) + '" style="top:' + (isNaN(_options.top) ? _options.top : _options.top + 'px') + '"></div>');
 				dialogMain.append(dialogBody);
 				dialogBody.append(elem[0].innerHTML);
 				
@@ -1008,11 +1001,13 @@ $(function() {
 				if (_options.onLoad && $.isFunction(_options.onLoad)) {
 					_options.onLoad();
 				}
+				elem.trigger('load');
 
 				elemObj.on('destroyed', function() {
 					if (_options.onClose && $.isFunction(_options.onClose)) {
 						_options.onClose();
 					}
+					elem.trigger('close');
 				});
 				
 				elemObj.addClass('open');
@@ -1041,6 +1036,7 @@ $(function() {
 						if (ok !== false) {
 							confirmModalClose();
 						}
+						elem.trigger('okbut');
 						$(this).off('click');
 					});
 
@@ -1048,6 +1044,7 @@ $(function() {
 						if (_options.onCancelBut && $.isFunction(_options.onCancelBut)) {
 							_options.onCancelBut();
 						}
+						elem.trigger('cancelbut');
 						confirmModalClose();
 						$(this).off('click');
 					});
@@ -1115,6 +1112,9 @@ $(function() {
 		var params = {};
 		if ($(this).attr('data-topoffset') !== undefined) {
 			params['topOffset'] = $(this).attr('data-topoffset');
+		}
+		if ($(this).attr('data-top') !== undefined) {
+			params['top'] = $(this).attr('data-top');
 		}
 		$(elemBind).confirmModal(params);
 	});
