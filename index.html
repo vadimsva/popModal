@@ -79,7 +79,7 @@ body {background:#f1f1f1}
 <div id="page">
 
 	<div id="copyrightBlock">
-		<div id="version" title="Current version/date">1.23<span>[11.04.16]</span></div>
+		<div id="version" title="Current version/date">1.24<span>[05.10.16]</span></div>
 		<a href="https://github.com/vadimsva/popModal/releases" id="downloadLink">Download</a>
 		<a href="https://github.com/vadimsva/popModal" id="gitHubLink">GitHub Repo</a>
 	</div>
@@ -177,6 +177,7 @@ body {background:#f1f1f1}
 						<p class="tab"><span class="key">placement</span> : <span class="val">'center'</span>,</p>
 						<p class="tab"><span class="key">overlay</span> : <span class="val">true</span>,</p>
 						<p class="tab"><span class="key">type</span> : <span class="val">'notify'</span>,</p>
+						<p class="tab"><span class="key">icon</span> : <span class="val">false</span>,</p>
 						<p class="tab"><span class="key">onClose</span> : <span class="val">function() {}</span></p>
 						<p>}<span class="text">)</span>;</p>
 					</code></pre></div>
@@ -214,7 +215,7 @@ body {background:#f1f1f1}
 					<div class="exampleCode"><pre><code>
 						<p><span class="text">$('</span><span class="tag">#content</span><span class="text">').dialogModal(</span>{</p>
 						<p class="tab"><span class="key">topOffset</span> : <span class="val">0</span>,</p>
-						<p class="tab"><span class="key">top</span> : <span class="val">'10%'</span>,</p>
+						<p class="tab"><span class="key">top</span> : <span class="val">0</span>,</p>
 						<p class="tab"><span class="key">type</span> : <span class="val">''</span>,</p>
 						<p class="tab"><span class="key">onOkBut</span> : <span class="val">function() {}</span>,</p>
 						<p class="tab"><span class="key">onCancelBut</span> : <span class="val">function() {}</span>,</p>
@@ -287,10 +288,10 @@ body {background:#f1f1f1}
 				<div class="exampleContainer">
 					<div class="exampleLive">
 						<div class="exampleLiveTitle">inline bind</div>
-						<button id="confirmModal_ex2" class="btn btn-primary" data-confirmmodal-bind="#confirm_content" data-topoffset="0">Example</button>
+						<button id="confirmModal_ex2" class="btn btn-primary" data-confirmmodal-bind="#confirm_content" data-topoffset="0" data-top="10%">Example</button>
 					</div>
 					<div class="exampleCode"><pre><code>
-						<p>&lt;<span class="tag">button</span> <span class="key">data-confirmmodal-bind</span>=<span class="val">"#content"</span> <span class="key">data-topoffset</span>=<span class="val">"0"</span>&gt;<span class="text">example</span>&lt;/<span class="tag">button</span>&gt;</p>
+						<p>&lt;<span class="tag">button</span> <span class="key">data-confirmmodal-bind</span>=<span class="val">"#content"</span> <span class="key">data-topoffset</span>=<span class="val">"0"</span> <span class="key">data-top</span>=<span class="val">"0"</span>&gt;<span class="text">example</span>&lt;/<span class="tag">button</span>&gt;</p>
 					</code></pre></div>
 				</div>
 				
@@ -312,7 +313,7 @@ body {background:#f1f1f1}
 </div>
 
 <div id="content2" style="display:none">
-	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+	Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 </div>
 
 <div style="display:none">
@@ -375,7 +376,7 @@ body {background:#f1f1f1}
 	Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 	</div>
 	<div class="confirmModal_footer">
-		<button type="button" class="btn btn-primary" data-confirmmodal-but="ok">Ok</button>
+		<button type="button" class="btn btn-primary" data-confirmmodal-but="ok">Confirm</button>
 		<button type="button" class="btn btn-default" data-confirmmodal-but="cancel">Cancel</button>
 	</div>
 </div>
@@ -427,6 +428,7 @@ $(function(){
 			placement : 'center',
 			overlay : true,
 			type : 'notify',
+			icon: false,
 			onClose : function() {}
 		});
 	});
@@ -434,7 +436,7 @@ $(function(){
 	$('#dialogModal_ex1').click(function(){
 		$('.dialog_content').dialogModal({
 			topOffset: 0,
-			top: '10%',
+			top: 0,
 			type: '',
 			onOkBut: function() {},
 			onCancelBut: function() {},
@@ -454,6 +456,7 @@ $(function(){
 	$('#confirmModal_ex1').click(function(){
 		$('#confirm_content').confirmModal({
 			topOffset: 0,
+			top: 0,
 			onOkBut: function() {},
 			onCancelBut: function() {},
 			onLoad: function() {},
