@@ -16,10 +16,10 @@ This library includes 6 components:<br>
 
 
 <h4>Direct links to libs</h4>
-<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [32.5Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [16.8Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [16.1Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [15.1Kb]
+<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [33.2Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [17.4Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [17.3Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [16.3Kb]
 
 
 Documentation
@@ -130,6 +130,9 @@ Use: <code>'notify'</code> - default, <code>'alert'</code>, <code>'simple'</code
 <code>overlay</code> - show notification popup on top of the content (boolean).<br>
 Use: <code>true</code> - default, <code>false</code><br>
 <br>
+<code>icon</code> - show icon (boolean).<br>
+Use: <code>false</code> - default, <code>true</code><br>
+<br>
 <code>onClose</code> - code execution after popup closed (function).<br>
 Use: <code>function(){}</code><br>
 
@@ -162,10 +165,10 @@ To change position, add additional class <code>class="hintModal_center"</code> o
 <p><i>$(content).dialogModal({param1 : value1, param2 : value2, ...});</i></p>
 
 <h5>Parameters</h5>
-<code>topOffset</code> - top offset in px for dialog, useful if some elements on page have position: fixed (integer).<br>
-Use: <code>0</code>.<br>
-<code>top</code> - top offset for dialog, uses for <code>type:'modal'</code> (string).<br>
-Use: <code>'10%'</code> - default.<br>
+<code>topOffset</code> - top offset for dialog, useful if some elements on page have position: fixed (integer, string).<br>
+Use: <code>0</code> - default, <code>'10%'</code>.<br>
+<code>top</code> - top offset for dialog, uses for <code>type:'modal'</code> (integer, string).<br>
+Use: <code>0</code> - default, <code>'10%'</code>.<br>
 <code>type</code> - type of dialog (string).<br>
 Use: <code>''</code> - default, <code>'modal'</code> to show dialog not from top.<br>
 <code>onOkBut</code> - code execution by clicking on OK button, contained in dialog (function).<br>
@@ -253,8 +256,10 @@ You can use another style for titleModal, add <code>class="light"</code> to elem
 <p><i>$(content).confirmModal({param1 : value1, param2 : value2, ...});</i></p>
 
 <h5>Parameters</h5>
-<code>topOffset</code> - top offset in px for dialog, useful if some elements on page have position: fixed (integer).<br>
-Use: <code>0</code>.<br>
+<code>topOffset</code> - top offset for dialog, useful if some elements on page have position: fixed (integer, string).<br>
+Use: <code>0</code> - default, <code>'10%'</code>.<br>
+<code>top</code> - top offset for dialog, uses for <code>type:'modal'</code> (integer, string).<br>
+Use: <code>0</code> - default, <code>'10%'</code>.<br>
 <code>onOkBut</code> - code execution by clicking on OK button, contained in dialog (function).<br>
 Use: <code>function(){}</code>.<br>
 For work you need put an attribute to element - <code>data-confirmmodal-but="ok"</code>. <i>Dialog will close automatically</i><br>
