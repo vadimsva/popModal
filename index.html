@@ -79,7 +79,7 @@ body {background:#f1f1f1}
 <div id="page">
 
 	<div id="copyrightBlock">
-		<div id="version" title="Current version/date">1.24<span>[05.10.16]</span></div>
+		<div id="version" title="Current version/date">1.25<span>[15.08.17]</span></div>
 		<a href="https://github.com/vadimsva/popModal/releases" id="downloadLink">Download</a>
 		<a href="https://github.com/vadimsva/popModal" id="gitHubLink">GitHub Repo</a>
 	</div>
@@ -116,10 +116,10 @@ body {background:#f1f1f1}
 						<p class="tab"><span class="key">inline</span> : <span class="val">true</span>,</p>
 						<p class="tab"><span class="key">asMenu</span> : <span class="val">false</span>,</p>
 						<p class="tab"><span class="key">beforeLoadingContent</span> : <span class="val">'Please, wait...'</span>,</p>
-						<p class="tab"><span class="key">onOkBut</span> : <span class="val">function() {}</span>,</p>
-						<p class="tab"><span class="key">onCancelBut</span> : <span class="val">function() {}</span>,</p>
-						<p class="tab"><span class="key">onLoad</span> : <span class="val">function() {}</span>,</p>
-						<p class="tab"><span class="key">onClose</span> : <span class="val">function() {}</span></p>
+						<p class="tab"><span class="key">onOkBut</span> : <span class="val">function(<span class="var2">event</span>, <span class="var2">el</span>) {}</span>,</p>
+						<p class="tab"><span class="key">onCancelBut</span> : <span class="val">function(<span class="var2">event</span>, <span class="var2">el</span>) {}</span>,</p>
+						<p class="tab"><span class="key">onLoad</span> : <span class="val">function(<span class="var2">el</span>) {}</span>,</p>
+						<p class="tab"><span class="key">onClose</span> : <span class="val">function(<span class="var2">el</span>) {}</span></p>
 						<p>}<span class="text">)</span>;</p>
 					</code></pre></div>
 				</div>
@@ -178,7 +178,8 @@ body {background:#f1f1f1}
 						<p class="tab"><span class="key">overlay</span> : <span class="val">true</span>,</p>
 						<p class="tab"><span class="key">type</span> : <span class="val">'notify'</span>,</p>
 						<p class="tab"><span class="key">icon</span> : <span class="val">false</span>,</p>
-						<p class="tab"><span class="key">onClose</span> : <span class="val">function() {}</span></p>
+						<p class="tab"><span class="key">onLoad</span> : <span class="val">function(<span class="var2">el</span>) {}</span></p>
+						<p class="tab"><span class="key">onClose</span> : <span class="val">function(<span class="var2">el</span>) {}</span></p>
 						<p>}<span class="text">)</span>;</p>
 					</code></pre></div>
 				</div>
@@ -217,10 +218,10 @@ body {background:#f1f1f1}
 						<p class="tab"><span class="key">topOffset</span> : <span class="val">0</span>,</p>
 						<p class="tab"><span class="key">top</span> : <span class="val">0</span>,</p>
 						<p class="tab"><span class="key">type</span> : <span class="val">''</span>,</p>
-						<p class="tab"><span class="key">onOkBut</span> : <span class="val">function() {}</span>,</p>
-						<p class="tab"><span class="key">onCancelBut</span> : <span class="val">function() {}</span>,</p>
+						<p class="tab"><span class="key">onOkBut</span> : <span class="val">function(<span class="var2">event</span>, <span class="var2">el</span>, <span class="var2">current</span>) {}</span>,</p>
+						<p class="tab"><span class="key">onCancelBut</span> : <span class="val">function(<span class="var2">event</span>, <span class="var2">el</span>, <span class="var2">current</span>) {}</span>,</p>
 						<p class="tab"><span class="key">onLoad</span> : <span class="val">function(<span class="var2">el</span>, <span class="var2">current</span>) {}</span>,</p>
-						<p class="tab"><span class="key">onClose</span> : <span class="val">function() {}</span>,</p>
+						<p class="tab"><span class="key">onClose</span> : <span class="val">function(<span class="var2">el</span>, <span class="var2">current</span>) {}</span>,</p>
 						<p class="tab"><span class="key">onChange</span> : <span class="val">function(<span class="var2">el</span>, <span class="var2">current</span>) {</span></p>
 						<p class="tab2"><span class="text">if(<span class="var2">current</span> == <span class="var">3</span>)</span>{</p>
 						<p class="tab3"><span class="var2">el</span><span class="text">.find(</span><span class="val">'.dialogModal_header span'</span><span class="text">).text(<span class="var">'Page 3'</span>)</span>;</p>
@@ -277,10 +278,10 @@ body {background:#f1f1f1}
 					<div class="exampleCode"><pre><code>
 						<p><span class="text">$('</span><span class="tag">#content</span><span class="text">').confirmModal(</span>{</p>
 						<p class="tab"><span class="key">topOffset</span> : <span class="val">0</span>,</p>
-						<p class="tab"><span class="key">onOkBut</span> : <span class="val">function() {}</span>,</p>
-						<p class="tab"><span class="key">onCancelBut</span> : <span class="val">function() {}</span>,</p>
-						<p class="tab"><span class="key">onLoad</span> : <span class="val">function() {}</span>,</p>
-						<p class="tab"><span class="key">onClose</span> : <span class="val">function() {}</span></p>
+						<p class="tab"><span class="key">onOkBut</span> : <span class="val">function(<span class="var2">event</span>, <span class="var2">el</span>) {}</span>,</p>
+						<p class="tab"><span class="key">onCancelBut</span> : <span class="val">function(<span class="var2">event</span>, <span class="var2">el</span>) {}</span>,</p>
+						<p class="tab"><span class="key">onLoad</span> : <span class="val">function(<span class="var2">el</span>) {}</span>,</p>
+						<p class="tab"><span class="key">onClose</span> : <span class="val">function(<span class="var2">el</span>) {}</span></p>
 						<p>}<span class="text">)</span>;</p>
 					</code></pre></div>
 				</div>
@@ -381,8 +382,7 @@ body {background:#f1f1f1}
 	</div>
 </div>
 
-
-<script src="https://cdn.jsdelivr.net/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery/3.2.1/jquery.min.js"></script>
 <script src="popModal.js"></script>
 <script>
 $(function(){
@@ -397,10 +397,10 @@ $(function(){
 			inline : true,
 			asMenu : false,
 			beforeLoadingContent : 'Please, wait...',
-			onOkBut : function() {},
-			onCancelBut : function() {},
-			onLoad : function() {},
-			onClose : function() {}
+			onOkBut : function(event, el) {},
+			onCancelBut : function(event, el) {},
+			onLoad : function(el) {},
+			onClose : function(el) {}
 		});
 	});
 		
@@ -429,7 +429,8 @@ $(function(){
 			overlay : true,
 			type : 'notify',
 			icon: false,
-			onClose : function() {}
+			onLoad : function(el) {},
+			onClose : function(el) {}
 		});
 	});
 	
@@ -438,10 +439,10 @@ $(function(){
 			topOffset: 0,
 			top: 0,
 			type: '',
-			onOkBut: function() {},
-			onCancelBut: function() {},
+			onOkBut: function(event, el, current) {},
+			onCancelBut: function(event, el, current) {},
 			onLoad: function(el, current) {},
-			onClose: function() {},
+			onClose: function(el, current) {},
 			onChange: function(el, current) {
 				if(current == 3){
 					el.find('.dialogModal_header span').text('Page 3');
@@ -457,10 +458,10 @@ $(function(){
 		$('#confirm_content').confirmModal({
 			topOffset: 0,
 			top: 0,
-			onOkBut: function() {},
-			onCancelBut: function() {},
-			onLoad: function() {},
-			onClose: function() {}
+			onOkBut: function(event, el) {},
+			onCancelBut: function(event, el) {},
+			onLoad: function(el) {},
+			onClose: function(el) {}
 		});
 	});
 	
