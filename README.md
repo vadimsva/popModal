@@ -16,10 +16,10 @@ This library includes 6 components:<br>
 
 
 <h4>Direct links to libs</h4>
-<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [33.2Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.js" target="_blank"><b>popModal.js</b></a> [34Kb]<br>
 <a href="http://vadimsva.github.io/popModal/popModal.min.js" target="_blank"><b>popModal.min.js</b></a> [17.4Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [17.3Kb]<br>
-<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [16.3Kb]
+<a href="http://vadimsva.github.io/popModal/popModal.css" target="_blank"><b>popModal.css</b></a> [17.8Kb]<br>
+<a href="http://vadimsva.github.io/popModal/popModal.min.css" target="_blank"><b>popModal.min.css</b></a> [16.4Kb]
 
 
 Documentation
@@ -113,10 +113,14 @@ Use: <code>'notify'</code> - default, <code>'alert'</code>, <code>'simple'</code
 Use: <code>true</code> - default, <code>false</code><br>
 - <code><b>icon</b></code> - show icon (boolean).<br>
 Use: <code>false</code> - default, <code>true</code><br>
+- <code><b>onLoad</b></code> - code execution before popup shows (function).<br>
+Use: <code>function(){}</code><br>
 - <code><b>onClose</b></code> - code execution after popup closed (function).<br>
 Use: <code>function(){}</code><br>
 
 <h5>Triggers</h5>
+- <code><b>load</b></code> - execution before shows.<br>
+Use: <code>$(el).on('load', function() {});</code><br>
 - <code><b>close</b></code> - execution after closed.<br>
 Use: <code>$(el).on('close', function() {});</code><br>
 <br>
@@ -293,10 +297,10 @@ $(el).popModal({
   inline : true,
   asMenu : false,
   beforeLoadingContent : 'Please, waiting...',
-  onOkBut : function(){},
-  onCancelBut : function(){},
-  onLoad : function(){},
-  onClose : function(){}
+  onOkBut : function(event, el){},
+  onCancelBut : function(event, el){},
+  onLoad : function(el){},
+  onClose : function(el){}
 });
 </pre>
 <pre>
