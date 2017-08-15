@@ -1,5 +1,5 @@
 /*
-popModal - 1.24 [05.10.16]
+popModal - 1.25 [15.08.17]
 Author: vadimsva
 Github: https://github.com/vadimsva/popModal
 */
@@ -112,15 +112,15 @@ $(function() {
 					}					
 
 					if (_options.onLoad && $.isFunction(_options.onLoad)) {
-						_options.onLoad();
+						_options.onLoad(elemObj);
 					}
-					$(_options.html).trigger('load');
+					$(_options.html).trigger('load', {el: elemObj});
 
 					elemObj.on('destroyed', function() {
 						if (_options.onClose && $.isFunction(_options.onClose)) {
-							_options.onClose();
+							_options.onClose(elemObj);
 						}
-						$(_options.html).trigger('close');
+						$(_options.html).trigger('close', {el: elemObj});
 					});
 
 					getPlacement();
@@ -173,22 +173,22 @@ $(function() {
 					elemObj.find('[' + elemData + '-but="ok"]').on('click', function(event) {
 						var ok;
 						if (_options.onOkBut && $.isFunction(_options.onOkBut)) {
-							ok = _options.onOkBut(event);
+							ok = _options.onOkBut(event, elemObj);
 						}
 						if (ok !== false) {
 							popModalClose();
 						}
 						$(this).off('click');
-						$(_options.html).trigger('okbut');
+						$(_options.html).trigger('okbut', {event: event, el: elemObj});
 					});
 
-					elemObj.find('[' + elemData + '-but="cancel"]').on('click', function() {
+					elemObj.find('[' + elemData + '-but="cancel"]').on('click', function(event) {
 						if (_options.onCancelBut && $.isFunction(_options.onCancelBut)) {
-							_options.onCancelBut();
+							_options.onCancelBut(event, elemObj);
 						}
 						popModalClose();
 						$(this).off('click');
-						$(_options.html).trigger('cancelbut');
+						$(_options.html).trigger('cancelbut', {event: event, el: elemObj});
 					});
 
 					$('html').on('keydown.' + elemClass + 'Event', function(event) {
@@ -258,6 +258,9 @@ $(function() {
 				: deltaC > 0;
 			}
 			
+			if ((/^top/).test(_options.placement) || _options.placement == '') {
+				_options.placement = bl;
+			}
 			if ((/^bottom/).test(_options.placement)) {
 				placement = optimalPosition(_options.placement);
 			} else if ((/^left/).test(_options.placement)) {
@@ -425,6 +428,7 @@ $(function() {
 					type: 'notify',
 					overlay : true,
 					icon: false,
+					onLoad: function() {},
 					onClose: function() {}
 				};
 				_options = $.extend(_defaults, params);
@@ -444,6 +448,11 @@ $(function() {
 
 				elemObj = $('.' + elemClass);
 				getAnimTime();
+				
+				if (_options.onLoad && $.isFunction(_options.onLoad)) {
+					_options.onLoad(elemObj);
+				}
+				notifyContainer.trigger('load', {el: elemObj});
 				
 				elemObj.addClass('open');
 				elemObj.click(function() {
@@ -468,9 +477,9 @@ $(function() {
 					clearTimeout(notifDur);
 				}
 				if (_options.onClose && $.isFunction(_options.onClose)) {
-					_options.onClose();
+					_options.onClose(elemObj);
 				}
-				elemObj.trigger('close');
+				elemObj.trigger('close', {el: elemObj});
 			}, animTime);
 		}
 
@@ -684,9 +693,9 @@ $(function() {
 
 				elemObj.on('destroyed', function() {
 					if (_options.onClose && $.isFunction(_options.onClose)) {
-						_options.onClose();
+						_options.onClose(elemObj, currentDialog + 1);
 					}
-					elem.trigger('close');
+					elem.trigger('close', {el: elemObj, current: currentDialog + 1});
 				});
 				
 				elemObj.addClass('open');
@@ -709,22 +718,22 @@ $(function() {
 					elemObj.find('[data-dialogmodal-but="ok"]').on('click', function(event) {
 						var ok;
 						if (_options.onOkBut && $.isFunction(_options.onOkBut)) {
-							ok = _options.onOkBut(event);
+							ok = _options.onOkBut(event, elemObj, currentDialog + 1);
 						}
 						if (ok !== false) {
 							dialogModalClose();
 						}
 						$(this).off('click');
-						elem.trigger('okbut');
+						elem.trigger('okbut', {event: event, el: elemObj, current: currentDialog + 1});
 					});
 
-					elemObj.find('[data-dialogmodal-but="cancel"]').on('click', function() {
+					elemObj.find('[data-dialogmodal-but="cancel"]').on('click', function(event) {
 						if (_options.onCancelBut && $.isFunction(_options.onCancelBut)) {
-							_options.onCancelBut();
+							_options.onCancelBut(event, elemObj, currentDialog + 1);
 						}
 						dialogModalClose();
 						$(this).off('click');
-						elem.trigger('cancelbut');
+						elem.trigger('cancelbut', {event: event, el: elemObj, current: currentDialog + 1});
 					});
 					
 					elemObj.find('[data-dialogmodal-but="prev"]').on('click', function() {
@@ -997,17 +1006,17 @@ $(function() {
 				
 				elemObj = $('.' + elemClass);
 				getAnimTime();
-
+				
 				if (_options.onLoad && $.isFunction(_options.onLoad)) {
-					_options.onLoad();
+					_options.onLoad(elemObj);
 				}
-				elem.trigger('load');
+				elem.trigger('load', {el: elemObj});
 
 				elemObj.on('destroyed', function() {
 					if (_options.onClose && $.isFunction(_options.onClose)) {
-						_options.onClose();
+						_options.onClose(elemObj);
 					}
-					elem.trigger('close');
+					elem.trigger('close', {el: elemObj});
 				});
 				
 				elemObj.addClass('open');
@@ -1031,20 +1040,20 @@ $(function() {
 					elemObj.find('[data-confirmmodal-but="ok"]').on('click', function(event) {
 						var ok;
 						if (_options.onOkBut && $.isFunction(_options.onOkBut)) {
-							ok = _options.onOkBut(event);
+							ok = _options.onOkBut(event, elemObj);
 						}
 						if (ok !== false) {
 							confirmModalClose();
 						}
-						elem.trigger('okbut');
+						elem.trigger('okbut', {event: event, el: elemObj});
 						$(this).off('click');
 					});
 
-					elemObj.find('[data-confirmmodal-but="cancel"]').on('click', function() {
+					elemObj.find('[data-confirmmodal-but="cancel"]').on('click', function(event) {
 						if (_options.onCancelBut && $.isFunction(_options.onCancelBut)) {
-							_options.onCancelBut();
+							_options.onCancelBut(event, elemObj);
 						}
-						elem.trigger('cancelbut');
+						elem.trigger('cancelbut', {event: event, el: elemObj});
 						confirmModalClose();
 						$(this).off('click');
 					});
