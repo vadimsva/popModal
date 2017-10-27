@@ -1,14 +1,15 @@
 /*
-popModal - 1.25 [15.08.17]
+popModal - 1.26 [27.10.17]
 Author: vadimsva
 Github: https://github.com/vadimsva/popModal
 */
 /* popModal */
 .popModal {position:absolute;background:#fff;padding:15px;border:1px solid #c5d0db;box-shadow:0 2px 8px rgba(0,0,0,0.12);text-align:left;max-width:300px;min-width:180px;z-index:9997;box-sizing:border-box;border-radius:3px}
+.popModal.expand {max-width:500px}
 .popModal .close {line-height:16px;font-size:28px;width:16px;font-weight:bold;font-family:serif;position:absolute;right:8px;top:8px;color:#000;opacity:0.2;padding:0;cursor:pointer;background:transparent;border:0;outline:0}
 .popModal .close:hover {opacity:1}
 .popModal .popModal_content {margin:15px auto;word-wrap:break-word;font-family:sans-serif;font-size:14px;font-weight:initial;font-style:initial;color:initial;text-decoration:initial;text-transform:initial;padding:initial}
-.popModal .popModal_content.popModal_contentOverflow {max-height:200px;overflow-y:auto;overflow-x:hidden;margin:15px -8px;padding:0 7px}
+.popModal .popModal_content.popModal_contentOverflow {max-height:300px;overflow-y:auto;overflow-x:hidden;margin:15px -8px;padding:0 7px}
 .popModal .popModal_content:before {content:'';position:absolute;left:0;right:0;height:20px;bottom:-20px}
 .popModal .popModal_content.popModal_asMenu {margin:-5px -15px}
 .popModal .popModal_content.popModal_asMenu ul {list-style:none;padding:0}
@@ -60,13 +61,19 @@ Github: https://github.com/vadimsva/popModal
 .notifyModal.simple .notifyModal_content {background:#fff;color:#333}
 .notifyModal.dark .notifyModal_content {background:#333;color:#ccc}
 .notifyModal.dark .notifyModal_content .close {color:#ccc}
-.notifyModal.leftTop {top:0;left:0}
-.notifyModal.centerTop {top:0;left:0;right:0}
-.notifyModal.rightTop {top:0;right:0}
+.notifyModal.leftTop,
+.notifyModal.leftTopSlide {top:0;left:0}
+.notifyModal.centerTop,
+.notifyModal.centerTopSlide {top:0;left:0;right:0}
+.notifyModal.rightTop,
+.notifyModal.rightTopSlide {top:0;right:0}
 .notifyModal.center {top:35%;bottom:auto;left:0;right:0}
-.notifyModal.leftBottom {bottom:0;left:0}
-.notifyModal.centerBottom {bottom:0;left:0;right:0}
-.notifyModal.rightBottom {bottom:0;right:0}
+.notifyModal.leftBottom,
+.notifyModal.leftBottomSlide {bottom:0;left:0}
+.notifyModal.centerBottom,
+.notifyModal.centerBottomSlide {bottom:0;left:0;right:0}
+.notifyModal.rightBottom,
+.notifyModal.rightBottomSlide {bottom:0;right:0}
 .notifyModal.center .notifyModal_content {left:0;right:0;top:35%}
 .notifyModal.leftTop .notifyModal_content {left:20px;top:20px}
 .notifyModal.centerTop .notifyModal_content {left:0;right:0;top:20px}
@@ -76,16 +83,16 @@ Github: https://github.com/vadimsva/popModal
 .notifyModal.rightBottom .notifyModal_content {right:20px;bottom:20px}
 .notifyModal.centerTopSlide.open .notifyModal_content,
 .notifyModal.centerBottomSlide.open .notifyModal_content {transform:scale(1) translateY(0)}
-.notifyModal.centerTopSlide .notifyModal_content {top:0;left:0;right:0;transform:scale(1) translateY(-100%)}
-.notifyModal.centerBottomSlide .notifyModal_content {bottom:0;left:0;right:0;transform:scale(1) translateY(100%)}
 .notifyModal.leftTopSlide.open .notifyModal_content,
 .notifyModal.leftBottomSlide.open .notifyModal_content,
 .notifyModal.rightTopSlide.open .notifyModal_content,
 .notifyModal.rightBottomSlide.open .notifyModal_content {transform:scale(1) translateX(0)}
-.notifyModal.leftTopSlide .notifyModal_content {left:0;top:20px;transform:scale(1) translateX(-100%)}
-.notifyModal.leftBottomSlide .notifyModal_content {left:0;bottom:20px;transform:scale(1) translateX(-100%)}
-.notifyModal.rightTopSlide .notifyModal_content {right:0;top:20px;transform:scale(1) translateX(100%)}
-.notifyModal.rightBottomSlide .notifyModal_content {right:0;bottom:20px;transform:scale(1) translateX(100%)}
+.notifyModal.centerTopSlide .notifyModal_content {top:0;left:0;right:0;transform:scale(1) translateY(-100%);border-radius:0 0 3px 3px}
+.notifyModal.centerBottomSlide .notifyModal_content {bottom:0;left:0;right:0;transform:scale(1) translateY(100%);border-radius:3px 3px 0 0}
+.notifyModal.leftTopSlide .notifyModal_content {left:0;top:20px;transform:scale(1) translateX(-100%);border-radius:0 3px 3px 0}
+.notifyModal.leftBottomSlide .notifyModal_content {left:0;bottom:20px;transform:scale(1) translateX(-100%);border-radius:0 3px 3px 0}
+.notifyModal.rightTopSlide .notifyModal_content {right:0;top:20px;transform:scale(1) translateX(100%);border-radius:3px 0 0 3px}
+.notifyModal.rightBottomSlide .notifyModal_content {right:0;bottom:20px;transform:scale(1) translateX(100%);border-radius:3px 0 0 3px}
 .notifyModal .notifyModal_content .close {line-height:16px;font-size:28px;width:16px;font-weight:bold;font-family:serif;position:absolute;right:8px;top:8px;color:#000;opacity:0.2;padding:0;cursor:pointer;background:transparent;border:0;outline:0}
 .notifyModal .notifyModal_content .close:hover {opacity:1}
 .notifyModal.icon .notifyModal_content:after {position:absolute;top:50%;bottom:0;left:20px;font-size:60px;line-height:0}
