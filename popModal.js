@@ -702,12 +702,11 @@ $(function() {
 				dialogTop.append(dialogHeader);
 				dialogHeader.append(dialogCloseBut);
 				dialogBody.append(elem[currentDialog].innerHTML);
-				
-				parent = elem.parent();
+
 				elem.each(function() {
 					source_array.append($(this));
 				});
-				parent.append($('<div class="' + elemClass + '_source"></div>'));
+				elem.parent().append($('<div class="' + elemClass + '_source"></div>'));
 
 				if (maxDialog > 0) {
 					dialogHeader.append($('<div class="' + nextBut + '">&rsaquo;</div><div class="' + prevBut + ' notactive">&lsaquo;</div>'));
@@ -1052,11 +1051,10 @@ $(function() {
 				dialogMain.append(dialogBody);
 				dialogBody.append(elem[0].innerHTML);
 				
-				parent = elem.parent();
 				elem.each(function() {
 					source_array.append($(this));
 				});
-				parent.append($('<div class="' + elemClass + '_source"></div>'));
+				elem.parent().append($('<div class="' + elemClass + '_source"></div>'));
 				
 				$('body').append(dialogMain).addClass(elemClass + 'Open');
 				
